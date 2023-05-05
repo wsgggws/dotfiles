@@ -1,0 +1,51 @@
+tap "homebrew/bundle"
+# Shell extension to jump to frequently used directories
+brew "autojump"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Create and view interactive cheat sheets for *nix commands
+brew "cheat"
+# Pack, ship and run any application as a lightweight container
+brew "docker"
+# Isolated development environments using Docker
+brew "docker-compose"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# Interpreter for PostScript and PDF
+brew "ghostscript"
+# Improved top (interactive process viewer)
+brew "htop"
+# User-friendly cURL replacement (command-line HTTP client)
+brew "httpie"
+# Configurable static site generator
+brew "hugo"
+# Tools and libraries to manipulate images in many formats
+brew "imagemagick"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Linux virtual machines
+brew "lima"
+# Powerful, lightweight programming language
+brew "lua"
+# Package manager for the Lua programming language
+brew "luarocks"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.9"
+# Python interface to Tcl/Tk
+brew "python-tk@3.9"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# CLI tool that moves files or folder to the trash
+brew "trash"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Internet file retriever
+brew "wget"
+# Utility to hide menu bar items
+cask "hiddenbar"
+# Open-source keystroke visualizer
+cask "keycastr"
