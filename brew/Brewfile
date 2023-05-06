@@ -25,6 +25,8 @@ brew "hugo"
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Simple terminal UI for git commands
+brew "lazygit"
 # Linux virtual machines
 brew "lima"
 # Powerful, lightweight programming language
@@ -33,6 +35,8 @@ brew "lua"
 brew "luarocks"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Framework for managing multi-language pre-commit hooks
+brew "pre-commit"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
 # Python interface to Tcl/Tk
