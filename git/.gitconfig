@@ -1,4 +1,10 @@
 # This is Git's per-user configuration file.
+[github]
+    user = Navy.Tian
+
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/
+
 [user]
 	name = wsgggws@gmail.com
 	email = Navy.Tian
@@ -6,3 +12,8 @@
 [core]
 	quotepath = false
 	editor = nvim
+	excludesfile = /Users/hj.tian/.gitignore
+
+[alias]
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate

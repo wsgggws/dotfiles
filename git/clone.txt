@@ -1,0 +1,16 @@
+# config
+git clone git@github.com:wsgggws/nvim.git ~/.config/
+
+# github
+git clone git@github.com:wsgggws/dotfiles.git ~/github/
+git clone git@github.com:wsgggws/wsgggws.github.io.git ~/github/
+git clone git@github.com:wsgggws/leetcode.git ~/github/
+git clone git@github.com:wsgggws/soft-engineer-tools.git ~/github/
+
+# zsh-plugins
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions\n
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting\n
+
+# softwares
+git clone https://github.com/drwetter/testssl.sh.git ~/softwares/
+git clone https://github.com/catppuccin/iterm.git ~/softwares/
