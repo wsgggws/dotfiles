@@ -1,0 +1,27 @@
+# search in single file
+rg 'fast\w+' README.md
+
+# special significance '()
+rg 'fn write\('
+rg -F 'fn write('
+
+# Manual filtering: globs
+# limit ourselves to TOML files
+rg clap -g '*.toml'
+# to search anything but *.toml files
+rg clap -g '!*.toml'
+
+# Manual filtering: file types
+rg 'fn run' --type rust
+rg 'fn run' -trust
+
+# you can blacklist file types
+rg clap --type-not rust
+rg clap -Trust
+
+# Replacements, but it does NOT change origin text
+rg fast README.md --replace FAST
+rg fast README.md -r FAST
+
+rg 'fast\s+(\w+)' README.md -r 'fast-$1'
+rg 'fast\s+(?P<word>\w+)' README.md -r 'fast-$word'
