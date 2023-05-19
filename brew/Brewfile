@@ -27,12 +27,16 @@ brew "imagemagick"
 brew "jq"
 # Simple terminal UI for git commands
 brew "lazygit"
+# Emulator for x86 and PowerPC
+brew "qemu"
 # Linux virtual machines
 brew "lima"
 # Powerful, lightweight programming language
 brew "lua"
 # Package manager for the Lua programming language
 brew "luarocks"
+# Netwide Assembler (NASM) is an 80x86 assembler
+brew "nasm"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 # Framework for managing multi-language pre-commit hooks
@@ -41,6 +45,8 @@ brew "pre-commit"
 brew "python@3.9"
 # Python interface to Tcl/Tk
 brew "python-tk@3.9"
+# Persistent key-value database, with built-in net interface
+brew "redis"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # CLI tool that moves files or folder to the trash
@@ -53,3 +59,5 @@ brew "wget"
 cask "hiddenbar"
 # Open-source keystroke visualizer
 cask "keycastr"
+# Network protocol analyzer
+cask "wireshark"
