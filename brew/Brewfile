@@ -3,6 +3,8 @@ tap "homebrew/bundle"
 brew "autojump"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# GNU binary tools for native development
+brew "binutils"
 # Create and view interactive cheat sheets for *nix commands
 brew "cheat"
 # Pack, ship and run any application as a lightweight container
@@ -13,6 +15,14 @@ brew "docker-compose"
 brew "fd"
 # Command-line fuzzy finder written in Go
 brew "fzf"
+# GNU multiple precision arithmetic library
+brew "gmp"
+# C library for multiple-precision floating-point computations
+brew "mpfr"
+# C library for the arithmetic of high precision complex numbers
+brew "libmpc"
+# GNU compiler collection
+brew "gcc"
 # Interpreter for PostScript and PDF
 brew "ghostscript"
 # Improved top (interactive process viewer)
@@ -27,6 +37,10 @@ brew "imagemagick"
 brew "jq"
 # Simple terminal UI for git commands
 brew "lazygit"
+# Collision detection between two convex shapes
+brew "libccd"
+# C library SSHv1/SSHv2 client and server protocols
+brew "libssh"
 # Emulator for x86 and PowerPC
 brew "qemu"
 # Linux virtual machines
@@ -39,12 +53,16 @@ brew "luarocks"
 brew "nasm"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@3"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
 # Python interface to Tcl/Tk
 brew "python-tk@3.9"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.8"
 # Persistent key-value database, with built-in net interface
 brew "redis"
 # Search tool like grep and The Silver Searcher
