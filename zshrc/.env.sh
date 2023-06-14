@@ -1,6 +1,11 @@
 alias bi='brew install'
 alias src="exec zsh"
 alias rm=trash
+alias python3=/opt/homebrew/bin/python3.8
+alias python=/opt/homebrew/bin/python3.8
+alias pip3=/opt/homebrew/bin/pip3.8
+alias pip=/opt/homebrew/bin/pip3.8
+alias brewbackup='brew bundle dump --describe --force --file="~/github/dotfiles/brew/Brewfile"'
 
 # ****** start 给cd命令别名为 cd 并ls
 which -a cd | grep 'cd: aliased to cdd' >/dev/null
@@ -69,3 +74,6 @@ _fzf_comprun() {
 }
 alias f='fzf --bind "enter:become(nvim {})"'
 # ******* start fzf config
+
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
