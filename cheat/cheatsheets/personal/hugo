@@ -1,3 +1,10 @@
-hugo server
+# create a page in projets/anysays/blogs directors
 
-hugo new post
+hugo new --kind page projets/xxx.md
+
+hugo new --kind page anysays/xxx.md
+
+hugo new --kind page blogs/xxx.md
+
+# start server
+hugo server

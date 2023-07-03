@@ -1,0 +1,100 @@
+# Buffer manager
+Shift l,h   # left, right buffer 
+<leader>,   # choice buffers
+<leader>fr  # choice all buffers
+<leader>bb  # choice recent buffer
+<leader>b_  # buffers action
+
+# Diffview and gitsigns, 
+<leader>vh  # DiffviewFileHistory
+<leader>vd  # DiffviewOpen
+<leader>vc  # DiffviewClose
+<leader>tb  # toggle blame for current line
+
+# flit.nvim + leap.nvim
+f/F/t/T{char}      # 单步跳, search char then jump
+s/S/gs{char}{char} # 双步跳, search char char then jump
+s/S<space><space>  # to jump to an empty line.
+
+# friendly-snippets
+...
+
+# markdown-preview
+<leader>mp  # markdown-preview toggle
+
+# text-object + mini.ai
+vac  # around class
+vaf  # around function
+vai  # around indent
+vao  # around Block, conditional, loop
+vap  # around paragraph
+vi?  # inside with prompt
+va?
+va(a( # 多次选择
+
+# indentscope
+[
+'
+]
+
+# easy-align
+ga=  # Around the 1st occurrences
+ga2= # Around the 2nd occurrences
+ga*= # Around all occurrences
+ga**= # Left/Right alternating alignment around all occurrences
+ga<Enter> # Switching between left/right/center alignment modes
+
+# trouble
+<leader>xx  # Document diagnostics
+
+# marks
+mm  # Toggle mark 'm'
+m.  # next available mark
+m/  # show all marks from the current buffer
+m<space>  # Delete all marks from the current buffer
+'   # show all marks
+
+# swap
+g>/<  # swap with right/left word
+gp  # start swap mode
+    - j/k  # choose item
+    - h/l  # swap item
+    - u/<C-r> # undo/redo
+    - g/G  # group items/ UnGroup item
+    - s/S  # sort items
+    - r    # reverse
+    - <ESC> # exit
+
+# titlecase
+gz/gzz # 句子变标题
+gu/U/~  # 变小写 变大写 大小写互换
+
+# Spectre
+<leader>So  # Spectre Open
+<leader>Sw  # Spectre search current word
+<leader>Sf  # Spectre search current word in current file
+?           # help, very important;)
+
+# symbols-outline
+<leader>cs  # code symbols-outline
+?           # show help
+
+# projects
+<leader>pp  # open projects list
+<C-a>       # add this project to projects
+<Esc>?      # change to normal model, then show its help
+
+# telescope.nvim
+<leader>/  or <leader>sg  # search something in current project
+<leader>sw                # search current word in current project
+<space><space>            # search file in current project
+<leader>sb                # search something in current buffer
+<leader>sm                # search marks
+<leader>sc/C              # search executed command
+<leader>sd/D              # search diagnostics
+<leader>sk                # search key mapping, very inmportant!
+
+# toggleterm.nvim  
+<leader>tt/r  # term bottom or right
+<leader>tl/s  # term current line or selected
+<leader>tT    # term in Tab
