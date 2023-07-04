@@ -1,23 +1,20 @@
 # Buffer manager
-Shift l,h   # left, right buffer 
+<ESC>L/H         # left, right buffer 
 <leader>,   # choice buffers
-<leader>fr  # choice all buffers
 <leader>bb  # choice recent buffer
+<leader>fr  # choice all buffers
 <leader>b_  # buffers action
 
 # Diffview and gitsigns, 
-<leader>vh  # DiffviewFileHistory
-<leader>vd  # DiffviewOpen
-<leader>vc  # DiffviewClose
-<leader>tb  # toggle blame for current line
+<leader>gf  # DiffviewFileHistory
+<leader>go  # DiffviewOpen
+<leader>gq  # DiffviewClose
+<leader>gb  # toggle blame for current line
 
 # flit.nvim + leap.nvim
 f/F/t/T{char}      # 单步跳, search char then jump
 s/S/gs{char}{char} # 双步跳, search char char then jump
 s/S<space><space>  # to jump to an empty line.
-
-# friendly-snippets
-...
 
 # markdown-preview
 <leader>mp  # markdown-preview toggle
@@ -34,8 +31,9 @@ va(a( # 多次选择
 
 # indentscope
 [
-'
 ]
+'   # show all marks
+"   # show all register
 
 # easy-align
 ga=  # Around the 1st occurrences
@@ -52,7 +50,6 @@ mm  # Toggle mark 'm'
 m.  # next available mark
 m/  # show all marks from the current buffer
 m<space>  # Delete all marks from the current buffer
-'   # show all marks
 
 # swap
 g>/<  # swap with right/left word
