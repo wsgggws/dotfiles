@@ -1,4 +1,5 @@
 tap "homebrew/bundle"
+tap "universal-ctags/universal-ctags"
 # Shell extension to jump to frequently used directories
 brew "autojump"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -7,12 +8,16 @@ brew "bat"
 brew "binutils"
 # Create and view interactive cheat sheets for *nix commands
 brew "cheat"
+# Configurable talking characters in ASCII art
+brew "cowsay"
 # Pack, ship and run any application as a lightweight container
 brew "docker"
 # Isolated development environments using Docker
 brew "docker-compose"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
+# Infamous electronic fortune-cookie generator
+brew "fortune"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # GNU multiple precision arithmetic library
@@ -25,6 +30,8 @@ brew "libmpc"
 brew "gcc"
 # Interpreter for PostScript and PDF
 brew "ghostscript"
+# GNU implementation of the famous stream editor
+brew "gnu-sed"
 # Improved top (interactive process viewer)
 brew "htop"
 # User-friendly cURL replacement (command-line HTTP client)
@@ -53,26 +60,26 @@ brew "luarocks"
 brew "nasm"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@3"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
 # Python interface to Tcl/Tk
 brew "python-tk@3.9"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.8"
 # Persistent key-value database, with built-in net interface
 brew "redis"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# Terminal based presentation tool
+brew "slides"
 # CLI tool that moves files or folder to the trash
 brew "trash"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Internet file retriever
 brew "wget"
+# Maintained ctags implementation
+brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
 # Utility to hide menu bar items
 cask "hiddenbar"
 # Open-source keystroke visualizer
