@@ -1,15 +1,23 @@
+# 有提示的单字符
+<space> z g ' " v
+
 # Buffer manager
 <ESC>L/H         # left, right buffer 
-<leader>,   # choice buffers
-<leader>bb  # choice recent buffer
-<leader>fr  # choice all buffers
-<leader>b_  # buffers action
+<leader>,        # choice buffers
+<leader>bb       # choice recent buffer
+<leader>fr       # choice all buffers
+<leader>b_       # buffers action
 
 # Diffview and gitsigns, 
 <leader>gf  # DiffviewFileHistory
 <leader>go  # DiffviewOpen
 <leader>gq  # DiffviewClose
 <leader>gb  # toggle blame for current line
+
+# windows
+<leader>w                   # 窗口操作如 split
+<C-h/j/k/l>                 # 窗口跳转
+<c-s-h/j/k/l>/<C-w>         # 窗口调整
 
 # flit.nvim + leap.nvim
 f/F/t/T{char}      # 单步跳, search char then jump
@@ -51,9 +59,10 @@ m.  # next available mark
 m/  # show all marks from the current buffer
 m<space>  # Delete all marks from the current buffer
 
-# swap
+# gomove + swap
+<A-S-h/j/k/l>   # move block or line to left,up,down,right
 g>/<  # swap with right/left word
-gp  # start swap mode
+gS  # start swap mode
     - j/k  # choose item
     - h/l  # swap item
     - u/<C-r> # undo/redo
@@ -82,16 +91,22 @@ gu/U/~  # 变小写 变大写 大小写互换
 <Esc>?      # change to normal model, then show its help
 
 # telescope.nvim
-<leader>/  or <leader>sg  # search something in current project
-<leader>sw                # search current word in current project
-<space><space>            # search file in current project
-<leader>sb                # search something in current buffer
-<leader>sm                # search marks
-<leader>sc/C              # search executed command
-<leader>sd/D              # search diagnostics
-<leader>sk                # search key mapping, very inmportant!
+<leader>/  or <leader>sg               # search something in current project
+<leader>sw                             # search current word in current project
+<space><space> or <leader>ff           # search file in current project
+<leader>sb                             # search something in current buffer
+<leader>sm                             # search marks
+<leader>sc/C                           # search executed command
+<leader>sd/D                           # search diagnostics
+<leader>sk                             # search key mapping, very inmportant!
 
 # toggleterm.nvim  
 <leader>tt/r  # term bottom or right
 <leader>tl/s  # term current line or selected
 <leader>tT    # term in Tab
+
+# flod, ufo
+zR/r/M/m        # flod less or flod more 
+za/A/o/O        # flod current cursor
+zt/<enter>/z/b  # move this line to top/center,bottom
+
