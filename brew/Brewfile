@@ -1,13 +1,20 @@
 tap "homebrew/bundle"
+tap "pot-app/tap"
 tap "universal-ctags/universal-ctags"
 # Shell extension to jump to frequently used directories
 brew "autojump"
+# Bourne-Again SHell, a UNIX command interpreter
+brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # GNU binary tools for native development
 brew "binutils"
 # Create and view interactive cheat sheets for *nix commands
 brew "cheat"
+# GNU multiple precision arithmetic library
+brew "gmp"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
 # Configurable talking characters in ASCII art
 brew "cowsay"
 # Pack, ship and run any application as a lightweight container
@@ -20,8 +27,6 @@ brew "fd"
 brew "fortune"
 # Command-line fuzzy finder written in Go
 brew "fzf"
-# GNU multiple precision arithmetic library
-brew "gmp"
 # C library for multiple-precision floating-point computations
 brew "mpfr"
 # C library for the arithmetic of high precision complex numbers
@@ -30,6 +35,10 @@ brew "libmpc"
 brew "gcc"
 # Interpreter for PostScript and PDF
 brew "ghostscript"
+# Distributed revision control system
+brew "git"
+# Render markdown on the CLI
+brew "glow"
 # GNU implementation of the famous stream editor
 brew "gnu-sed"
 # Improved top (interactive process viewer)
@@ -60,6 +69,8 @@ brew "luarocks"
 brew "nasm"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Outputs current CPU temperature for OSX
+brew "osx-cpu-temp"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
 # Interpreted, interactive, object-oriented programming language
@@ -80,9 +91,17 @@ brew "tree"
 brew "wget"
 # Maintained ctags implementation
 brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
+# Enable Windows-like alt-tab
+cask "alt-tab"
+# Utilities designed to make common development tasks easier
+cask "devtoys"
 # Utility to hide menu bar items
 cask "hiddenbar"
 # Open-source keystroke visualizer
 cask "keycastr"
+# Replacement for Docker Desktop
+cask "orbstack"
+# Cross-platform software for text translation and recognize
+cask "pot"
 # Network protocol analyzer
 cask "wireshark"
