@@ -1,6 +1,12 @@
 tap "homebrew/bundle"
 tap "pot-app/tap"
 tap "universal-ctags/universal-ctags"
+# Image format providing lossless and lossy compression for web images
+brew "webp"
+# New file format for still image compression
+brew "jpeg-xl"
+# Codec library for encoding and decoding AV1 video streams
+brew "aom"
 # Shell extension to jump to frequently used directories
 brew "autojump"
 # Bourne-Again SHell, a UNIX command interpreter
@@ -41,12 +47,16 @@ brew "git"
 brew "glow"
 # GNU implementation of the famous stream editor
 brew "gnu-sed"
+# GNU Transport Layer Security (TLS) Library
+brew "gnutls"
 # Improved top (interactive process viewer)
 brew "htop"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # Configurable static site generator
 brew "hugo"
+# ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
+brew "libheif"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
