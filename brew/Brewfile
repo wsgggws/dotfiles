@@ -1,3 +1,4 @@
+tap "daipeihust/tap"
 tap "homebrew/bundle"
 tap "pot-app/tap"
 tap "universal-ctags/universal-ctags"
@@ -17,6 +18,8 @@ brew "bat"
 brew "binutils"
 # Create and view interactive cheat sheets for *nix commands
 brew "cheat"
+# Cross-platform make
+brew "cmake"
 # GNU multiple precision arithmetic library
 brew "gmp"
 # GNU File, Shell, and Text utilities
@@ -99,6 +102,8 @@ brew "trash"
 brew "tree"
 # Internet file retriever
 brew "wget"
+# Switch your input method through terminal
+brew "daipeihust/tap/im-select"
 # Maintained ctags implementation
 brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
 # Enable Windows-like alt-tab
