@@ -116,7 +116,7 @@ cask "hiddenbar"
 cask "keycastr"
 # Replacement for Docker Desktop
 cask "orbstack"
-# Cross-platform software for text translation and recognize
-cask "pot"
+# GPU-accelerated cross-platform terminal emulator and multiplexer
+cask "wezterm"
 # Network protocol analyzer
 cask "wireshark"
