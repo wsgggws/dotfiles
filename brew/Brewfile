@@ -84,6 +84,8 @@ brew "luarocks"
 brew "nasm"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Platform built on V8 to build network applications
+brew "node"
 # Outputs current CPU temperature for OSX
 brew "osx-cpu-temp"
 # Framework for managing multi-language pre-commit hooks
