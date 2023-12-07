@@ -1,6 +1,8 @@
 tap "daipeihust/tap"
 tap "homebrew/bundle"
+tap "homebrew/services"
 tap "pot-app/tap"
+tap "sjzar/tap"
 tap "universal-ctags/universal-ctags"
 # Image format providing lossless and lossy compression for web images
 brew "webp"
@@ -91,7 +93,7 @@ brew "python@3.9"
 # Python interface to Tcl/Tk
 brew "python-tk@3.9"
 # Persistent key-value database, with built-in net interface
-brew "redis"
+brew "redis", restart_service: true
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Terminal based presentation tool
@@ -104,6 +106,8 @@ brew "tree"
 brew "wget"
 # Switch your input method through terminal
 brew "daipeihust/tap/im-select"
+# ips is a command-line tool and library that facilitates the querying, dumping, and packaging of IP geolocation databases.
+brew "sjzar/tap/ips"
 # Maintained ctags implementation
 brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
 # Enable Windows-like alt-tab
