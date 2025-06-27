@@ -5,9 +5,17 @@ ZSH_THEME="robbyrussell"
 plugins=(
   git
   zoxide
+  fzf
   history
   zsh-autosuggestions
   fast-syntax-highlighting
+  python
+  poetry
+  pip
+  docker
+  tmux
+  extract
+  zsh-you-should-use
 )
 
 source $ZSH/oh-my-zsh.sh
