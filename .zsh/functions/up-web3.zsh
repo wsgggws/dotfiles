@@ -36,8 +36,8 @@ function up-web3() {
 
   # FTP服务器信息
   local upload_url="ftp://ftp.appsflyer.club/xiejianhe/"
-  local username="xbftp"
-  local password="xiaobu2016"
+  local username="$FTP_UPLOAD_USER"
+  local password="$FTP_UPLOAD_PASS"
 
   # 上传到FTP服务器
   echo "正在上传 ${filename} 到FTP服务器..."
