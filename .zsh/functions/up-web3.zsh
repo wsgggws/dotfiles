@@ -35,7 +35,7 @@ function up-web3() {
   fi
 
   # FTP服务器信息
-  local upload_url="ftp://ftp.appsflyer.club/xiejianhe/"
+  local upload_url="$FTP_UPLOAD_URL"
   local username="$FTP_UPLOAD_USER"
   local password="$FTP_UPLOAD_PASS"
 
