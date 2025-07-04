@@ -10,4 +10,4 @@ alias src="source ~/.zshrc"
 alias ls='eza --icons=auto'
 alias vw='nvim ~/.wezterm.lua'
 
-alias brewbackup='brew bundle dump --describe --force --file="~/github/dotfiles/brew/Brewfile"'
+alias brewbackup='brew bundle dump --describe --force --file="~/.config/brew/Brewfile"'

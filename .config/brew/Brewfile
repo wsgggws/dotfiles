@@ -1,0 +1,198 @@
+tap "daipeihust/tap"
+tap "homebrew/bundle"
+tap "homebrew/services"
+tap "pot-app/tap"
+tap "sjzar/tap"
+tap "universal-ctags/universal-ctags"
+# Run your GitHub Actions locally
+brew "act"
+# New file format for still image compression
+brew "jpeg-xl"
+# Codec library for encoding and decoding AV1 video streams
+brew "aom"
+# Bourne-Again SHell, a UNIX command interpreter
+brew "bash"
+# C library of Git core methods that is re-entrant and linkable
+brew "libgit2"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# GNU binary tools for native development
+brew "binutils"
+# Create and view interactive cheat sheets for *nix commands
+brew "cheat"
+# Cross-platform make
+brew "cmake"
+# GNU multiple precision arithmetic library
+brew "gmp"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# Apjanke's fork of the classic cowsay project
+brew "cowsay"
+# Secure runtime for JavaScript and TypeScript
+brew "deno"
+# Pack, ship and run any application as a lightweight container
+brew "docker", link: false
+# Isolated development environments using Docker
+brew "docker-compose", link: false
+# Modern, maintained replacement for ls
+brew "eza"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# GNU Transport Layer Security (TLS) Library
+brew "gnutls"
+# C library SSHv1/SSHv2 client and server protocols
+brew "libssh"
+# Play, record, convert, and stream audio and video
+brew "ffmpeg"
+# Infamous electronic fortune-cookie generator
+brew "fortune"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# C library for multiple-precision floating-point computations
+brew "mpfr"
+# C library for the arithmetic of high precision complex numbers
+brew "libmpc"
+# GNU compiler collection
+brew "gcc"
+# GNU debugger
+brew "gdb"
+# Interpreter for PostScript and PDF
+brew "ghostscript"
+# Distributed revision control system
+brew "git"
+# Quickly rewrite git repository history
+brew "git-filter-repo"
+# Render markdown on the CLI
+brew "glow"
+# GNU implementation of the famous stream editor
+brew "gnu-sed"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
+# Improved top (interactive process viewer)
+brew "htop"
+# User-friendly cURL replacement (command-line HTTP client)
+brew "httpie"
+# Configurable static site generator
+brew "hugo"
+# ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
+brew "libheif"
+# C/C++ seam carving library
+brew "liblqr"
+# Library for reading RAW files from digital photo cameras
+brew "libraw"
+# Tools and libraries to manipulate images in many formats
+brew "imagemagick"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Simple terminal UI for git commands
+brew "lazygit"
+# Collision detection between two convex shapes
+brew "libccd"
+# General purpose TCP-IP emulator
+brew "libslirp"
+# Next-gen compiler infrastructure
+brew "llvm"
+# LLVM Project Linker
+brew "lld"
+# Powerful, lightweight programming language
+brew "lua"
+# Package manager for the Lua programming language
+brew "luarocks"
+# Netwide Assembler (NASM) is an 80x86 assembler
+brew "nasm"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
+# Port scanning utility for large networks
+brew "nmap"
+# Platform built on V8 to build network applications
+brew "node"
+# Outputs current CPU temperature for OSX
+brew "osx-cpu-temp"
+# Framework for managing multi-language pre-commit hooks
+brew "pre-commit"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.9"
+# Python interface to Tcl/Tk
+brew "python-tk@3.9"
+# Generic machine emulator and virtualizer
+brew "qemu"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Extremely fast Python linter, written in Rust
+brew "ruff"
+# Terminal based presentation tool
+brew "slides"
+# Tool Command Language
+brew "tcl-tk"
+# Terminal multiplexer
+brew "tmux"
+# Manage complex tmux sessions easily
+brew "tmuxinator"
+# CLI tool that moves files or folder to the trash
+brew "trash", link: true
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Maintained ctags implementation
+brew "universal-ctags", args: ["HEAD"]
+# Internet file retriever
+brew "wget"
+# HTTP benchmarking tool
+brew "wrk"
+# Yet Another Dotfiles Manager
+brew "yadm"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# ips is a command-line tool and library that facilitates the querying, dumping, and packaging of IP geolocation databases.
+brew "sjzar/tap/ips"
+cask "font-maple-mono"
+cask "font-maple-mono-cn"
+cask "font-maple-mono-nf"
+cask "font-maple-mono-nf-cn"
+cask "font-maple-mono-normal"
+cask "font-maple-mono-normal-cn"
+cask "font-maple-mono-normal-nf"
+cask "font-maple-mono-normal-nf-cn"
+# Utility to hide menu bar items
+cask "hiddenbar"
+# Open-source keystroke visualiser
+cask "keycastr"
+# Intercept, modify, replay, save HTTP/S traffic
+cask "mitmproxy"
+# Open-source code editor
+cask "visual-studio-code"
+# GPU-accelerated cross-platform terminal emulator and multiplexer
+cask "wezterm"
+vscode "batisteo.vscode-django"
+vscode "binarybytes.snippets"
+vscode "charliermarsh.ruff"
+vscode "christian-kohler.npm-intellisense"
+vscode "cstrap.python-snippets"
+vscode "davidanson.vscode-markdownlint"
+vscode "dbaeumer.vscode-eslint"
+vscode "develiteio.api-blueprint-viewer"
+vscode "eamodio.gitlens"
+vscode "ecmel.vscode-html-css"
+vscode "esbenp.prettier-vscode"
+vscode "firefox-devtools.vscode-firefox-debug"
+vscode "formulahendry.code-runner"
+vscode "github.copilot"
+vscode "github.copilot-chat"
+vscode "github.vscode-github-actions"
+vscode "golang.go"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-azuretools.vscode-docker"
+vscode "ms-ceintl.vscode-language-pack-zh-hans"
+vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-vscode-remote.remote-containers"
+vscode "ms-vscode.cmake-tools"
+vscode "ms-vscode.cpptools"
+vscode "ms-vscode.cpptools-extension-pack"
+vscode "ms-vscode.cpptools-themes"
+vscode "ms-vscode.makefile-tools"
+vscode "redhat.vscode-yaml"
+vscode "ritwickdey.liveserver"
+vscode "shd101wyy.markdown-preview-enhanced"
+vscode "vue.volar"
