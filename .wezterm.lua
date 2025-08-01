@@ -4,18 +4,15 @@
 -- config.color_scheme = "tokyonight_night"
 -- config.color_scheme = "Catppuccin Latte"
 -- config.color_scheme = "Gruvbox light, soft (base16)"
--- config.colors = {
--- 	background = "#EBDBB2",
--- }
 -- config.default_cursor_style = "BlinkingUnderline"
 
 local wezterm = require("wezterm")
 local act = wezterm.action
 local config = wezterm.config_builder and wezterm.config_builder() or {}
 config.color_scheme = "Catppuccin Mocha"
-config.font_size = 17
-config.font = wezterm.font("Maple Mono Normal NF CN")
--- config.font = wezterm.font("JetBrains Maple Mono")
+config.font_size = 16
+-- config.font = wezterm.font("Maple Mono Normal NF CN")
+config.font = wezterm.font("JetBrains Maple Mono")
 config.window_decorations = "RESIZE"
 config.default_cursor_style = "BlinkingBar"
 config.hide_tab_bar_if_only_one_tab = true
@@ -24,6 +21,7 @@ config.window_padding = { left = 6, right = 6, top = 16, bottom = 0 }
 -- config.window_padding = { left = 6, right = 6, top = 36, bottom = 0 }
 config.tab_bar_at_bottom = true
 config.window_close_confirmation = "NeverPrompt"
+config.window_background_opacity = 0.98
 
 -- config.key_tables = {
 -- 	resize_pane = {

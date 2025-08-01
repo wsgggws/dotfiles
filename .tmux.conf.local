@@ -94,6 +94,7 @@ tmux_conf_theme_colour_5="#ffff00"    # yellow
 tmux_conf_theme_colour_6="#080808"    # dark gray
 tmux_conf_theme_colour_7="#e4e4e4"    # white
 tmux_conf_theme_colour_8="#080808"    # dark gray
+tmux_conf_theme_colour_8="#ebdbb2"    # dark gray
 tmux_conf_theme_colour_9="#ffff00"    # yellow
 tmux_conf_theme_colour_10="#ff00af"   # pink
 tmux_conf_theme_colour_11="#5fff00"   # green
