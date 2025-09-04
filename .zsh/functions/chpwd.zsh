@@ -18,6 +18,12 @@ function chpwd() {
         */server_tg_lb)
             conda activate SERVER39
             ;;
+        */web3_user)
+            conda activate web3_user
+            ;;
+        */server_lucky_admin)
+            conda activate server_lucky_admin
+            ;;
         *)
             conda deactivate && conda deactivate
             ;;
