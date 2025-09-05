@@ -19,7 +19,7 @@ function up-web3() {
 
   # 创建tar包，排除不需要的目录，确保跨平台兼容性
   echo "正在创建压缩包 ${filename}..."
-  tar --exclude="web3base/local_config" --exclude=".git" --exclude=".venv" --exclude="tool" --exclude="downloads" --exclude="**/__pycache__" --exclude="**/*.pyc" --exclude="nacos-data" --exclude="k8s" -czf "$filepath" .
+  tar --exclude="web3base/local_config" --exclude=".git" --exclude=".venv" --exclude="downloads" --exclude="**/__pycache__" --exclude="**/*.pyc" --exclude="nacos-data" --exclude="k8s" -czf "$filepath" .
 
   if [ $? -ne 0 ]; then
     echo "创建压缩包失败"
