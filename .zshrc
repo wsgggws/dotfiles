@@ -20,6 +20,9 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# 避免多次加载 zsh-autosuggestions
+[[ -n "$ZSH_AUTOSUGGEST_LOADED" ]] || export ZSH_AUTOSUGGEST_LOADED=1
+
 # === 载入 aliases
 [[ -f ~/.zsh/aliases.zsh ]] && source ~/.zsh/aliases.zsh
 
