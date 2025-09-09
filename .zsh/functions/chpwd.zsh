@@ -1,6 +1,6 @@
 function chpwd() {
     case "$PWD" in
-        */news-summary)
+        */api.rss.navydev.top)
             conda activate NS11
             ;;
         */ReadLecture-web-server)
@@ -23,6 +23,9 @@ function chpwd() {
             ;;
         */server_lucky_admin)
             conda activate server_lucky_admin
+            ;;
+        */AI-Video-Transcriber)
+            conda activate Transcriber
             ;;
         *)
             conda deactivate && conda deactivate
