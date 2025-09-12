@@ -52,5 +52,6 @@ else
     fi
 fi
 unset __conda_setup
+export CONDA_AUTO_ACTIVATE_BASE=false
 # <<< conda initialize <<<
-
+chpwd

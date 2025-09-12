@@ -6,10 +6,7 @@ function chpwd() {
         */ReadLecture-web-server)
             conda activate RL
             ;;
-        */web3_property)
-            conda activate web3_property
-            ;;
-        */peak)
+        */web3_property|*/peak)
             conda activate web3_property
             ;;
         */bitslots_game)
@@ -28,7 +25,10 @@ function chpwd() {
             conda activate Transcriber
             ;;
         *)
-            conda deactivate && conda deactivate
-            ;;
+          # 确保彻底退出所有 conda env
+          while [[ "$CONDA_DEFAULT_ENV" != "" ]]; do
+            conda deactivate
+          done
+          ;;
     esac
 }
