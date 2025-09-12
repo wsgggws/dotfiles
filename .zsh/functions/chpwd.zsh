@@ -7,16 +7,16 @@ function chpwd() {
             conda activate RL
             ;;
         */web3_property)
-            conda activate PEAK
+            conda activate web3_property
             ;;
         */peak)
-            conda activate PEAK
+            conda activate web3_property
             ;;
         */bitslots_game)
-            conda activate GAME39
+            conda activate bitslots_game
             ;;
         */server_tg_lb)
-            conda activate SERVER39
+            conda activate server_tg_lb
             ;;
         */web3_user)
             conda activate web3_user
