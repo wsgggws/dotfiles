@@ -1,6 +1,7 @@
 [core]
         quotepath = false
         autocrlf = input
+	hooksPath = /Users/navy/.githooks
         # excludesfile = ~/.gitignore
 [user]
         name = wsgggws
