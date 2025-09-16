@@ -463,8 +463,8 @@ set -g @continuum-restore 'on'
 
 set -g @plugin 'omerxx/tmux-floax'
 set -g @floax-bind 'Space'
-set -g @floax-width '82%'
-set -g @floax-height '82%'
+set -g @floax-width '86%'
+set -g @floax-height '86%'
 
 set -g @plugin 'tmux-plugins/tmux-open'
 

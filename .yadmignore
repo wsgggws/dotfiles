@@ -1,0 +1,6 @@
+.raycast/scripts/Redash-*.sh
+.raycast/scripts/Lark-*.sh
+.raycast/scripts/Grafana-*.sh
+.raycast/scripts/Aliyun-*.sh
+.raycast/scripts/Gitlab-*.sh
+.raycast/scripts/Nacos-*.sh
