@@ -3,6 +3,6 @@
 # @raycast.schemaVersion 1
 # @raycast.title Navy crabtris.navydev.top
 # @raycast.mode silent
-# @raycast.icon 🌐
+# @raycast.icon 🦀
 
 open "https://crabtris.navydev.top/"
