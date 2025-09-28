@@ -24,6 +24,9 @@ function chpwd() {
         */AI-Video-Transcriber)
             conda activate Transcriber
             ;;
+        */api.desktop.navydev.top)
+            conda activate api.desktop.navydev.top
+            ;;
         *)
           # 确保彻底退出所有 conda env
           while [[ "$CONDA_DEFAULT_ENV" != "" ]]; do
