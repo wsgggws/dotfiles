@@ -10,5 +10,6 @@ else
         export PATH="/Users/navy/miniconda3/bin:$PATH"
     fi
 fi
+# export CONDA_AUTO_ACTIVATE_BASE=false
 unset __conda_setup  && conda deactivate && chpwd
 # <<< conda initialize <<<
