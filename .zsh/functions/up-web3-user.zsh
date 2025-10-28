@@ -17,6 +17,13 @@ function up-web3-user() {
   # 确保downloads目录存在
   mkdir -p "$PWD/downloads"
 
+  # 注册清理函数（无论是否成功，最后都删除 downloads 下的文件）
+  cleanup() {
+    echo "清理本地临时文件..."
+    rm -rf "$PWD/downloads/"*
+  }
+  trap cleanup EXIT
+
   # 创建tar包，排除不需要的目录
   echo "正在创建压缩包 ${filename}..."
   tar --exclude="web3base/local_config" --exclude=".git" --exclude=".venv" --exclude="tool" --exclude="downloads" --exclude="**/__pycache__" --exclude="**/*.pyc" --exclude="nacos-data" --exclude="k8s" -czf "$filepath" .

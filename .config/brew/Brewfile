@@ -1,8 +1,10 @@
+tap "dail8859/notepadnext"
 tap "daipeihust/tap"
 tap "homebrew/bundle"
 tap "homebrew/services"
 tap "pot-app/tap"
 tap "sjzar/tap"
+tap "tw93/tap"
 tap "universal-ctags/universal-ctags"
 # Run your GitHub Actions locally
 brew "act"
@@ -108,6 +110,8 @@ brew "nmap"
 brew "node"
 # Outputs current CPU temperature for OSX
 brew "osx-cpu-temp"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
 # Interpreted, interactive, object-oriented programming language
@@ -116,10 +120,14 @@ brew "python@3.9"
 brew "python-tk@3.9"
 # Generic machine emulator and virtualizer
 brew "qemu"
+# SVG rendering tool and library
+brew "resvg"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Extremely fast Python linter, written in Rust
 brew "ruff"
+# 7-Zip is a file archiver with a high compression ratio
+brew "sevenzip"
 # Terminal based presentation tool
 brew "slides"
 # Tool Command Language
@@ -140,10 +148,16 @@ brew "wget"
 brew "wrk"
 # Yet Another Dotfiles Manager
 brew "yadm"
+# Blazing fast terminal file manager written in Rust, based on async I/O
+brew "yazi"
+# Suite of barcodes-reading tools
+brew "zbar"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # ips is a command-line tool and library that facilitates the querying, dumping, and packaging of IP geolocation databases.
 brew "sjzar/tap/ips"
+# Comprehensive macOS cleanup and application uninstall tool
+brew "tw93/tap/mole"
 cask "font-maple-mono"
 cask "font-maple-mono-cn"
 cask "font-maple-mono-nf"
@@ -152,16 +166,19 @@ cask "font-maple-mono-normal"
 cask "font-maple-mono-normal-cn"
 cask "font-maple-mono-normal-nf"
 cask "font-maple-mono-normal-nf-cn"
+cask "font-symbols-only-nerd-font"
 # Utility to hide menu bar items
 cask "hiddenbar"
 # Open-source keystroke visualiser
 cask "keycastr"
+# GPU-based terminal emulator
+cask "kitty"
 # Intercept, modify, replay, save HTTP/S traffic
 cask "mitmproxy"
+# A cross-platform, reimplementation of Notepad++.
+cask "notepadnext"
 # Open-source code editor
 cask "visual-studio-code"
-# GPU-accelerated cross-platform terminal emulator and multiplexer
-cask "wezterm"
 vscode "batisteo.vscode-django"
 vscode "binarybytes.snippets"
 vscode "charliermarsh.ruff"
@@ -170,6 +187,7 @@ vscode "cstrap.python-snippets"
 vscode "davidanson.vscode-markdownlint"
 vscode "dbaeumer.vscode-eslint"
 vscode "develiteio.api-blueprint-viewer"
+vscode "dracula-theme.theme-dracula"
 vscode "eamodio.gitlens"
 vscode "ecmel.vscode-html-css"
 vscode "esbenp.prettier-vscode"
@@ -197,3 +215,5 @@ vscode "redhat.vscode-yaml"
 vscode "ritwickdey.liveserver"
 vscode "shd101wyy.markdown-preview-enhanced"
 vscode "vue.volar"
+go "github.com/Done-0/fuck-u-code/cmd/fuck-u-code"
+go "golang.org/x/tools/cmd/goimports"
