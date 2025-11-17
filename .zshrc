@@ -38,3 +38,5 @@ for func_file in ~/.zsh/functions/*.zsh; do
 done
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+. "$HOME/.local/bin/env"
