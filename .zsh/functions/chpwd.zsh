@@ -1,11 +1,5 @@
 function chpwd() {
     case "$PWD" in
-        */api.rss.navydev.top)
-            conda activate NS11
-            ;;
-        */ReadLecture-web-server)
-            conda activate RL
-            ;;
         */web3_property|*/peak)
             conda activate web3_property
             ;;
@@ -20,12 +14,6 @@ function chpwd() {
             ;;
         */server_lucky_admin)
             conda activate server_lucky_admin
-            ;;
-        */AI-Video-Transcriber)
-            conda activate Transcriber
-            ;;
-        */api.desktop.navydev.top)
-            conda activate api.desktop.navydev.top
             ;;
         *)
           # 确保彻底退出所有 conda env
