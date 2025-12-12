@@ -1,42 +1,49 @@
-export ZSH="$HOME/.oh-my-zsh"
+# =================================
+#     1. Homebrew + zsh-completions
+# =================================
+if type brew &>/dev/null; then
+  # 使用原生方法增加 FPATH（避免重复）
+  FPATH="$(brew --prefix)/share/zsh-completions:$FPATH"
 
-ZSH_THEME="robbyrussell"
+  autoload -Uz compinit
+  # 使用安全模式，避免 Homebrew 权限问题警告
+  compinit -d ~/.cache/zsh/compdump
+fi
 
-plugins=(
-  git
-  zoxide
-  fzf
-  history
-  zsh-autosuggestions
-  fast-syntax-highlighting
-  python
-  poetry
-  pip
-  docker
-  tmux
-  extract
-  zsh-you-should-use
-)
+# =================================
+#     2. 载入用户自己的配置
+# =================================
+[[ -f ~/.zsh/aliases.zsh ]]       && source ~/.zsh/aliases.zsh
+[[ -f ~/.zsh/env.sh ]]            && source ~/.zsh/env.sh
+[[ -f ~/.zsh/secret.env ]]        && source ~/.zsh/secret.env
 
-source $ZSH/oh-my-zsh.sh
-
-# 避免多次加载 zsh-autosuggestions
-[[ -n "$ZSH_AUTOSUGGEST_LOADED" ]] || export ZSH_AUTOSUGGEST_LOADED=1
-
-# === 载入 aliases
-[[ -f ~/.zsh/aliases.zsh ]] && source ~/.zsh/aliases.zsh
-
-# === 载入环境变量
-[[ -f ~/.zsh/env.sh ]] && source ~/.zsh/env.sh
-
-# === 载入 secret 环境变量（慎重）
-[[ -f ~/.zsh/secret.env ]] && source ~/.zsh/secret.env
-
-# === 载入所有函数
+# 从 ~/.zsh/functions 批量载入函数
 for func_file in ~/.zsh/functions/*.zsh; do
   [[ -f "$func_file" ]] && source "$func_file"
 done
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# FZF（如已安装）
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
-. "$HOME/.local/bin/env"
+# =================================
+#     3. ESC 相关行为修复 (关键)
+# =================================
+# 强制使用 Emacs 模式，阻止 zsh 自动进入 vicmd
+bindkey -e
+
+# 禁用 autosuggestions 的 ESC fallback
+export ZSH_AUTOSUGGEST_USE_FALLBACK=false
+
+# =================================
+#     4. 插件加载顺序（正确顺序）
+# =================================
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# syntax-highlighting 必须最后加载，这是官方要求
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# =================================
+#     5. Starship 初始化
+# =================================
+# Starship 无冲突初始化
+eval "$(starship init zsh)"

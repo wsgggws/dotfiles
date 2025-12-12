@@ -400,11 +400,10 @@ set -g visual-silence off
 set -g monitor-bell off
 set -g monitor-activity off
 
-
 # force Vi mode
 #   really you should export VISUAL or EDITOR environment variable, see manual
-set -g status-keys vi
-set -g mode-keys vi
+# set -g status-keys vi
+# set -g mode-keys vi
 
 # replace C-b by C-a instead of using both prefixes
 set -gu prefix2
@@ -455,22 +454,25 @@ tmux_conf_uninstall_plugins_on_reload=true
 
 # to enable a plugin, use the 'set -g @plugin' syntax:
 # visit https://github.com/tmux-plugins for available plugins
-#set -g @plugin 'tmux-plugins/tmux-copycat'
-#set -g @plugin 'tmux-plugins/tmux-cpu'
+# set -g @plugin 'tmux-plugins/tmux-open'
+# set -g @plugin 'tmux-plugins/tmux-copycat'
+# set -g @plugin 'tmux-plugins/tmux-yank'
+# set -g @plugin 'christoomey/vim-tmux-navigator'
+
+set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @continuum-restore 'on'
 
 set -g @plugin 'omerxx/tmux-floax'
 set -g @floax-bind 'Space'
-set -g @floax-width '86%'
-set -g @floax-height '86%'
+set -g @floax-width '90%'
+set -g @floax-height '90%'
 
-set -g @plugin 'tmux-plugins/tmux-open'
 
 set-option -g cursor-style "blink-beam"
 
-set -g status-padding -1
+# set -g status-padding -1
 
 
 # -- custom variables ----------------------------------------------------------

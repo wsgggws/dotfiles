@@ -1,0 +1,6 @@
+add_newline = false
+format = '$directory$git_branch$character'
+
+[directory]
+truncation_length = 3
+truncate_to_repo = false
