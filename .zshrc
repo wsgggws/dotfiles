@@ -4,6 +4,7 @@
 if type brew &>/dev/null; then
   # 使用原生方法增加 FPATH（避免重复）
   FPATH="$(brew --prefix)/share/zsh-completions:$FPATH"
+  FPATH="$(brew --prefix)/share/zsh/site-functions:$FPATH"
 
   autoload -Uz compinit
   # 使用安全模式，避免 Homebrew 权限问题警告
@@ -47,3 +48,5 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # =================================
 # Starship 无冲突初始化
 eval "$(starship init zsh)"
+
+. "$HOME/.local/bin/env"

@@ -1,0 +1,26 @@
+line-length = 120
+indent-width = 4
+fix = true
+preview = true
+
+[lint]
+fixable = ["ALL"]
+select = [
+  "I",
+  "E",
+  "F",
+  "B",   # flake8-bugbear（非常推荐）
+  "UP",  # pyupgrade
+  "SIM", # 简化代码
+]
+# E501: 单行代码长度超过最大限制
+# E402: 模块导入不在文件顶部, 按需要加载
+ignore = ["E501"]
+
+[lint.isort]
+combine-as-imports = true
+
+[format]
+quote-style = "double"
+indent-style = "space"
+preview = true
