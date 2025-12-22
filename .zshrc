@@ -23,9 +23,6 @@ for func_file in ~/.zsh/functions/*.zsh; do
   [[ -f "$func_file" ]] && source "$func_file"
 done
 
-# FZF（如已安装）
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-
 # =================================
 #     3. ESC 相关行为修复 (关键)
 # =================================
@@ -43,10 +40,17 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # syntax-highlighting 必须最后加载，这是官方要求
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+. "$HOME/.local/bin/env"
+
+# 强制光标为闪烁竖线（beam）
+echo -ne '\e[5 q'
+
+# FZF（如已安装）
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
 # =================================
 #     5. Starship 初始化
 # =================================
 # Starship 无冲突初始化
 eval "$(starship init zsh)"
 
-. "$HOME/.local/bin/env"

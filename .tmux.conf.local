@@ -415,6 +415,53 @@ unbind C-a
 # if you don't want Oh my tmux! to alter a binding or a setting, use #!important
 # bind c new-window -c '#{pane_current_path}' #!important
 
+# 由 Claude Sonnet 4.5 提供, 显示 session, window 预览，并使用 fzf 模糊搜索与切换
+unbind w
+unbind s
+bind-key -T prefix w display-popup -E -w 75% -h 80% \
+"current_session=\$(tmux display-message -p '#S'); \
+current_window=\$(tmux display-message -p '#I'); \
+tmux list-windows -a -F '#{session_name}:#{window_index}:#{window_name}' \
+| awk -v cs=\"\$current_session\" -v cw=\"\$current_window\" -F: '\
+{\
+  if (\$1 == cs && \$2 == cw) \
+    print \"\\033[1;32m\" \$0 \"\\033[0m\"; \
+  else \
+    print \$0; \
+}' \
+| fzf --ansi --reverse \
+    --border=rounded \
+    --prompt='> ' \
+    --pointer='►' \
+    --color='header:italic,prompt:cyan,pointer:green' \
+    --preview 'echo {} | sed \"s/\\x1b\\[[0-9;]*m//g\" | awk -F: \"{print \\\$1\\\":\\\"\\\$2}\" | xargs tmux capture-pane -ep -t' \
+    --preview-window=right:68%:border-left \
+| sed 's/\x1b\[[0-9;]*m//g' \
+| awk -F: '{print \$1\":\"\$2}' \
+| xargs -I {} tmux switch-client -t {}"
+
+bind-key -T prefix s display-popup -E -w 75% -h 80% \
+"current_session=\$(tmux display-message -p '#S'); \
+current_window=\$(tmux display-message -p '#I'); \
+tmux list-windows -a -F '#{session_name}:#{window_index}:#{window_name}' \
+| awk -v cs=\"\$current_session\" -v cw=\"\$current_window\" -F: '\
+{\
+  if (\$1 == cs && \$2 == cw) \
+    print \"\\033[1;32m\" \$0 \"\\033[0m\"; \
+  else \
+    print \$0; \
+}' \
+| fzf --ansi --reverse \
+    --border=rounded \
+    --prompt='> ' \
+    --pointer='►' \
+    --color='header:italic,prompt:cyan,pointer:green' \
+    --preview 'echo {} | sed \"s/\\x1b\\[[0-9;]*m//g\" | awk -F: \"{print \\\$1\\\":\\\"\\\$2}\" | xargs tmux capture-pane -ep -t' \
+    --preview-window=right:68%:border-left \
+| sed 's/\x1b\[[0-9;]*m//g' \
+| awk -F: '{print \$1\":\"\$2}' \
+| xargs -I {} tmux switch-client -t {}"
+
 # move status line to top
 #set -g status-position top
 
@@ -470,7 +517,7 @@ set -g @floax-width '90%'
 set -g @floax-height '90%'
 
 
-set-option -g cursor-style "blink-beam"
+set -g cursor-style bar
 
 # set -g status-padding -1
 
