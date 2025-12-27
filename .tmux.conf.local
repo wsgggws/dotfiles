@@ -163,9 +163,13 @@ tmux_conf_theme_message_command_bg="$tmux_conf_theme_colour_1"
 tmux_conf_theme_message_command_attr="bold"
 
 # window modes style
-tmux_conf_theme_mode_fg="$tmux_conf_theme_colour_1"
-tmux_conf_theme_mode_bg="$tmux_conf_theme_colour_5"
+# tmux_conf_theme_mode_fg="$tmux_conf_theme_colour_1"
+# tmux_conf_theme_mode_bg="$tmux_conf_theme_colour_5"
+# tmux_conf_theme_mode_attr="bold"
+tmux_conf_theme_mode_fg="#d0ffd0"
+tmux_conf_theme_mode_bg="#1f3d2b"
 tmux_conf_theme_mode_attr="bold"
+
 
 # status line style
 tmux_conf_theme_status_fg="$tmux_conf_theme_colour_3"
@@ -391,7 +395,7 @@ tmux_conf_urlscan_options="--compact --dedupe"
 #set -g history-limit 10000
 
 # start with mouse mode enabled
-set -g mouse off
+set -g mouse on
 # 关闭响铃声音
 set -g bell-action none
 set -g visual-bell off
@@ -415,56 +419,39 @@ unbind C-a
 # if you don't want Oh my tmux! to alter a binding or a setting, use #!important
 # bind c new-window -c '#{pane_current_path}' #!important
 
-# 由 Claude Sonnet 4.5 提供, 显示 session, window 预览，并使用 fzf 模糊搜索与切换
-unbind w
+# 功能由 Claude Sonnet 4.5 实现
+# 1. 按 prefix + s 打开所有窗口列表（按最近使用排序）
+# 2. 当前窗口绿色高亮，多 pane 窗口显示 [Xp] 标记
+# 3. 右侧实时预览窗口内容
+# 4. Ctrl + / 切换预览开关
+# 5. 选择后自动跳转
 unbind s
-bind-key -T prefix w display-popup -E -w 75% -h 80% \
-"current_session=\$(tmux display-message -p '#S'); \
-current_window=\$(tmux display-message -p '#I'); \
-tmux list-windows -a -F '#{session_name}:#{window_index}:#{window_name}' \
-| awk -v cs=\"\$current_session\" -v cw=\"\$current_window\" -F: '\
-{\
-  if (\$1 == cs && \$2 == cw) \
-    print \"\\033[1;32m\" \$0 \"\\033[0m\"; \
-  else \
-    print \$0; \
-}' \
-| fzf --ansi --reverse \
-    --border=rounded \
-    --prompt='> ' \
-    --pointer='►' \
-    --color='header:italic,prompt:cyan,pointer:green' \
-    --preview 'echo {} | sed \"s/\\x1b\\[[0-9;]*m//g\" | awk -F: \"{print \\\$1\\\":\\\"\\\$2}\" | xargs tmux capture-pane -ep -t' \
-    --preview-window=right:68%:border-left \
-| sed 's/\x1b\[[0-9;]*m//g' \
-| awk -F: '{print \$1\":\"\$2}' \
-| xargs -I {} tmux switch-client -t {}"
-
 bind-key -T prefix s display-popup -E -w 75% -h 80% \
 "current_session=\$(tmux display-message -p '#S'); \
 current_window=\$(tmux display-message -p '#I'); \
-tmux list-windows -a -F '#{session_name}:#{window_index}:#{window_name}' \
+tmux list-windows -a -F '#{window_activity}:#{session_name}:#{window_index}:#{window_name}#{?#{>:#{window_panes},1}, [#{window_panes}p],}' \
+| sort -rn \
+| cut -d: -f2- \
 | awk -v cs=\"\$current_session\" -v cw=\"\$current_window\" -F: '\
 {\
+  display = \$1\":\"\$3; \
+  value = \$1\":\"\$2; \
   if (\$1 == cs && \$2 == cw) \
-    print \"\\033[1;32m\" \$0 \"\\033[0m\"; \
+    print \"\\033[1;32m\" display \"\\033[0m\\t\" value; \
   else \
-    print \$0; \
+    print display \"\\t\" value; \
 }' \
-| fzf --ansi --reverse \
+| fzf --ansi --reverse --with-nth=1 --delimiter='\t' \
     --border=rounded \
-    --prompt='> ' \
+    --prompt='Select window > ' \
     --pointer='►' \
+    --bind 'ctrl-/:toggle-preview' \
     --color='header:italic,prompt:cyan,pointer:green' \
-    --preview 'echo {} | sed \"s/\\x1b\\[[0-9;]*m//g\" | awk -F: \"{print \\\$1\\\":\\\"\\\$2}\" | xargs tmux capture-pane -ep -t' \
+    --preview 'target=\$(echo {2} | sed \"s/\\x1b\\[[0-9;]*m//g\"); \
+      tmux capture-pane -ep -t \"\$target\"' \
     --preview-window=right:68%:border-left \
-| sed 's/\x1b\[[0-9;]*m//g' \
-| awk -F: '{print \$1\":\"\$2}' \
+| awk -F'\t' '{print \$2}' \
 | xargs -I {} tmux switch-client -t {}"
-
-# move status line to top
-#set -g status-position top
-
 
 # -- tpm -----------------------------------------------------------------------
 
@@ -510,6 +497,8 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @continuum-restore 'on'
+set -g @resurrect-save 'S'
+set -g @resurrect-restore 'R'
 
 set -g @plugin 'omerxx/tmux-floax'
 set -g @floax-bind 'Space'

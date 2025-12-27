@@ -6,8 +6,8 @@ alias vim=nvim
 alias ve="nvim ~/.zsh/env.sh"
 alias vz="nvim ~/.zshrc"
 alias vr="nvim ./README.md"
-alias vt="nvim ~/.tmux.conf.local"
 alias vs="nvim ~/.config/starship.toml"
+alias vt='vi "$(mktemp /tmp/vt.XXXXXX)"'
 alias src="source ~/.zshrc"
 
 alias ls='eza --icons=auto'
