@@ -392,7 +392,8 @@ tmux_conf_urlscan_options="--compact --dedupe"
 # this is the place to override or undo settings
 
 # increase history size
-#set -g history-limit 10000
+set -g history-limit 50000
+bind -n C-l send-keys C-l
 
 # start with mouse mode enabled
 set -g mouse on
@@ -452,6 +453,9 @@ tmux list-windows -a -F '#{window_activity}:#{session_name}:#{window_index}:#{wi
     --preview-window=right:68%:border-left \
 | awk -F'\t' '{print \$2}' \
 | xargs -I {} tmux switch-client -t {}"
+
+# bind-key j run-shell "~/.config/tmux/scripts/jumper.sh"
+set-hook -g pane-focus-in 'run-shell "~/.config/tmux/scripts/pan-hook.sh"'
 
 # -- tpm -----------------------------------------------------------------------
 

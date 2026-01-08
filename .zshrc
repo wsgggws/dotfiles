@@ -48,9 +48,10 @@ echo -ne '\e[5 q'
 # FZF（如已安装）
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 # =================================
 #     5. Starship 初始化
 # =================================
 # Starship 无冲突初始化
 eval "$(starship init zsh)"
-

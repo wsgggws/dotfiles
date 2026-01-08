@@ -1,5 +1,8 @@
 add_newline = false
-format = '$directory$git_branch$character'
+format = '$directory$git_branch$cmd_duration$time$character'
+
+[time]
+disabled = false
 
 [directory]
 truncation_length = 3
