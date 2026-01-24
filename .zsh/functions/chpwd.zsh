@@ -2,11 +2,12 @@ function chpwd() {
     local env=""
 
     case "$PWD" in
-        */web3_property|*/peak)           env="web3_property" ;;
-        */bitslots_game)                  env="bitslots_game" ;;
-        */server_tg_lb)                   env="server_tg_lb" ;;
-        */web3_user)                      env="web3_user" ;;
-        */server_lucky_admin)             env="server_lucky_admin" ;;
+        */web3_property|*/peak|*/platform)           env="web3_property" ;;
+        */bitslots_game)                             env="bitslots_game" ;;
+        */server_tg_lb)                              env="server_tg_lb" ;;
+        */web3_user)                                 env="web3_user" ;;
+        */server_lucky_admin)                        env="server_lucky_admin" ;;
+        */lb_cs_gateway)                             env="lb_cs_gateway" ;;
         *) env="" ;;
     esac
 

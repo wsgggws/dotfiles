@@ -392,7 +392,7 @@ tmux_conf_urlscan_options="--compact --dedupe"
 # this is the place to override or undo settings
 
 # increase history size
-set -g history-limit 50000
+set -g history-limit 20000
 bind -n C-l send-keys C-l
 
 # start with mouse mode enabled
@@ -426,6 +426,11 @@ unbind C-a
 # 3. 右侧实时预览窗口内容
 # 4. Ctrl + / 切换预览开关
 # 5. 选择后自动跳转
+
+# 保留原先的 shoose-tree session 功能，只是绑定到 f 键
+unbind-key -T prefix f
+bind-key -T prefix f choose-tree -s
+
 unbind s
 bind-key -T prefix s display-popup -E -w 75% -h 80% \
 "current_session=\$(tmux display-message -p '#S'); \
@@ -454,7 +459,6 @@ tmux list-windows -a -F '#{window_activity}:#{session_name}:#{window_index}:#{wi
 | awk -F'\t' '{print \$2}' \
 | xargs -I {} tmux switch-client -t {}"
 
-# bind-key j run-shell "~/.config/tmux/scripts/jumper.sh"
 set-hook -g pane-focus-in 'run-shell "~/.config/tmux/scripts/pan-hook.sh"'
 
 # -- tpm -----------------------------------------------------------------------
