@@ -1,5 +1,7 @@
+tap "anhoder/go-musicfox"
 tap "dail8859/notepadnext"
 tap "daipeihust/tap"
+tap "farion1231/ccswitch"
 tap "homebrew/bundle"
 tap "homebrew/services"
 tap "pot-app/tap"
@@ -12,6 +14,8 @@ brew "act"
 brew "jpeg-xl"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
+# Text processor and publishing toolchain for AsciiDoc
+brew "asciidoctor", link: false
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # C library of Git core methods that is re-entrant and linkable
@@ -20,22 +24,36 @@ brew "libgit2"
 brew "bat"
 # GNU binary tools for native development
 brew "binutils"
+# GNU multiple precision arithmetic library
+brew "gmp"
+# Command-line interface for Cabal and Hackage
+brew "cabal-install", link: false
+# Mozilla CA bundle for Python
+brew "certifi", link: false
 # Create and view interactive cheat sheets for *nix commands
 brew "cheat"
 # Cross-platform make
-brew "cmake"
-# GNU multiple precision arithmetic library
-brew "gmp"
+brew "cmake", link: false
+# Zsh completion for conda
+brew "conda-zsh-completion"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
 # Apjanke's fork of the classic cowsay project
 brew "cowsay"
+# DuckDuckGo from the terminal
+brew "ddgr"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
+# Standard XML representation system for technical documents
+brew "docbook", link: false
+# XML vocabulary to create presentation-neutral documents
+brew "docbook-xsl", link: false
 # Pack, ship and run any application as a lightweight container
 brew "docker", link: false
 # Isolated development environments using Docker
 brew "docker-compose", link: false
+# Text processing system for reStructuredText
+brew "docutils", link: false
 # Modern, maintained replacement for ls
 brew "eza"
 # Simple, fast and user-friendly alternative to find
@@ -44,7 +62,7 @@ brew "fd"
 brew "gnutls"
 # C library SSHv1/SSHv2 client and server protocols
 brew "libssh"
-# Play, record, convert, and stream audio and video
+# Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
 # Infamous electronic fortune-cookie generator
 brew "fortune"
@@ -58,6 +76,8 @@ brew "libmpc"
 brew "gcc"
 # GNU debugger
 brew "gdb"
+# Glorious Glasgow Haskell Compilation System
+brew "ghc", link: false
 # Interpreter for PostScript and PDF
 brew "ghostscript"
 # Distributed revision control system
@@ -66,10 +86,12 @@ brew "git"
 brew "git-filter-repo"
 # Render markdown on the CLI
 brew "glow"
+# Command-line option parsing utility
+brew "gnu-getopt"
 # GNU implementation of the famous stream editor
 brew "gnu-sed"
 # Open source programming language to build simple/reliable/efficient software
-brew "go"
+brew "go", link: false
 # Improved top (interactive process viewer)
 brew "htop"
 # User-friendly cURL replacement (command-line HTTP client)
@@ -82,7 +104,7 @@ brew "libheif"
 brew "liblqr"
 # Library for reading RAW files from digital photo cameras
 brew "libraw"
-# Tools and libraries to manipulate images in many formats
+# Tools and libraries to manipulate images in select formats
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
@@ -92,6 +114,8 @@ brew "lazygit"
 brew "libccd"
 # General purpose TCP-IP emulator
 brew "libslirp"
+# C library for reading, creating, and modifying zip archives
+brew "libzip", link: false
 # Next-gen compiler infrastructure
 brew "llvm"
 # LLVM Project Linker
@@ -100,14 +124,16 @@ brew "lld"
 brew "lua"
 # Package manager for the Lua programming language
 brew "luarocks"
+# Utility for directing compilation
+brew "make", link: false
 # Netwide Assembler (NASM) is an 80x86 assembler
 brew "nasm"
 # Ambitious Vim-fork focused on extensibility and agility
-brew "neovim"
+brew "neovim", link: false
 # Port scanning utility for large networks
 brew "nmap"
-# Platform built on V8 to build network applications
-brew "node"
+# Manage multiple Node.js versions
+brew "nvm"
 # Outputs current CPU temperature for OSX
 brew "osx-cpu-temp"
 # PDF rendering library (based on the xpdf-3.0 code base)
@@ -130,6 +156,10 @@ brew "ruff"
 brew "sevenzip"
 # Terminal based presentation tool
 brew "slides"
+# Headers for SPICE protocol
+brew "spice-protocol", link: false
+# Log file highlighter
+brew "tailspin"
 # Tool Command Language
 brew "tcl-tk"
 # Terminal multiplexer
@@ -146,6 +176,8 @@ brew "universal-ctags", args: ["HEAD"]
 brew "wget"
 # HTTP benchmarking tool
 brew "wrk"
+# Convert XML to another format (based on XSL or other tools)
+brew "xmlto", link: false
 # Yet Another Dotfiles Manager
 brew "yadm"
 # Blazing fast terminal file manager written in Rust, based on async I/O
@@ -154,10 +186,22 @@ brew "yazi"
 brew "zbar"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"
+# Additional completion definitions for zsh
+brew "zsh-completions"
+# Fish shell like syntax highlighting for zsh
+brew "zsh-syntax-highlighting"
+# go-musicfox是musicfox的重写版，使用Go编写的网易云音乐命令行程序。
+brew "anhoder/go-musicfox/go-musicfox"
 # ips is a command-line tool and library that facilitates the querying, dumping, and packaging of IP geolocation databases.
 brew "sjzar/tap/ips"
 # Comprehensive macOS cleanup and application uninstall tool
 brew "tw93/tap/mole"
+# Configuration manager for Claude Code, Codex, Gemini and OpenCode
+cask "farion1231/ccswitch/cc-switch"
+# Terminal-based AI coding assistant
+cask "claude-code"
 cask "font-maple-mono"
 cask "font-maple-mono-cn"
 cask "font-maple-mono-nf"
@@ -175,8 +219,6 @@ cask "keycastr"
 cask "kitty"
 # Intercept, modify, replay, save HTTP/S traffic
 cask "mitmproxy"
-# A cross-platform, reimplementation of Notepad++.
-cask "notepadnext"
 # Open-source code editor
 cask "visual-studio-code"
 vscode "batisteo.vscode-django"
@@ -197,6 +239,7 @@ vscode "github.copilot"
 vscode "github.copilot-chat"
 vscode "github.vscode-github-actions"
 vscode "golang.go"
+vscode "mechatroner.rainbow-csv"
 vscode "ms-azuretools.vscode-containers"
 vscode "ms-azuretools.vscode-docker"
 vscode "ms-ceintl.vscode-language-pack-zh-hans"
@@ -215,5 +258,3 @@ vscode "redhat.vscode-yaml"
 vscode "ritwickdey.liveserver"
 vscode "shd101wyy.markdown-preview-enhanced"
 vscode "vue.volar"
-go "github.com/Done-0/fuck-u-code/cmd/fuck-u-code"
-go "golang.org/x/tools/cmd/goimports"

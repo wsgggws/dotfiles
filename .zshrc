@@ -50,6 +50,11 @@ echo -ne '\e[5 q'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+
+# 1. ctrl+ee 编辑长命令 2. ctrl+_ 撤销误操作 3. alias -s json="jless"
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^e^e' edit-command-line
 # =================================
 #     5. Starship 初始化
 # =================================
