@@ -460,6 +460,12 @@ tmux list-windows -a -F '#{window_activity}:#{session_name}:#{window_index}:#{wi
 | awk -F'\t' '{print \$2}' \
 | xargs -I {} tmux switch-client -t {}"
 
+# 快速打开 music
+bind-key -T prefix m new-session -d -A -s fun -n music \; switch-client -t fun:music
+
+# 快速回到上一个 session 和 window
+bind-key -T prefix b switch-client -l
+
 set-hook -g pane-focus-in 'run-shell "~/.config/tmux/scripts/pan-hook.sh"'
 
 # -- tpm -----------------------------------------------------------------------
