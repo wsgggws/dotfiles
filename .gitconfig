@@ -53,5 +53,6 @@
         lgs = log --color --graph --pretty=format:'%C(auto)%h%C(reset) %Cgreen%ad%Creset %C(bold blue)%d%C(reset) %C(bold white)%s%C(reset) %C(dim cyan)[%an]%C(reset)' --date=short
         lol = log --graph --decorate --oneline
         hist = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+	clean-branches = "!f() { \n  git branch | grep -v \"master\" | grep -v \"\\*\" | xargs -r git branch -D\n}; f"
 [difftool "kitty"]
 	cmd = kitty +kitten diff $LOCAL $REMOTE
