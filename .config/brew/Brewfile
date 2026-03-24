@@ -10,12 +10,18 @@ tap "tw93/tap"
 tap "universal-ctags/universal-ctags"
 # Run your GitHub Actions locally
 brew "act"
+# Asciicast to GIF converter
+brew "agg"
 # New file format for still image compression
 brew "jpeg-xl"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
+# Standard XML representation system for technical documents
+brew "docbook"
 # Text processor and publishing toolchain for AsciiDoc
-brew "asciidoctor", link: false
+brew "asciidoctor"
+# Record and share terminal sessions
+brew "asciinema"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # C library of Git core methods that is re-entrant and linkable
@@ -27,13 +33,11 @@ brew "binutils"
 # GNU multiple precision arithmetic library
 brew "gmp"
 # Command-line interface for Cabal and Hackage
-brew "cabal-install", link: false
-# Mozilla CA bundle for Python
-brew "certifi", link: false
+brew "cabal-install"
 # Create and view interactive cheat sheets for *nix commands
 brew "cheat"
 # Cross-platform make
-brew "cmake", link: false
+brew "cmake"
 # Zsh completion for conda
 brew "conda-zsh-completion"
 # GNU File, Shell, and Text utilities
@@ -44,24 +48,18 @@ brew "cowsay"
 brew "ddgr"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
-# Standard XML representation system for technical documents
-brew "docbook", link: false
 # XML vocabulary to create presentation-neutral documents
-brew "docbook-xsl", link: false
+brew "docbook-xsl"
 # Pack, ship and run any application as a lightweight container
-brew "docker", link: false
+brew "docker"
 # Isolated development environments using Docker
 brew "docker-compose", link: false
 # Text processing system for reStructuredText
-brew "docutils", link: false
+brew "docutils"
 # Modern, maintained replacement for ls
 brew "eza"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
-# GNU Transport Layer Security (TLS) Library
-brew "gnutls"
-# C library SSHv1/SSHv2 client and server protocols
-brew "libssh"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
 # Infamous electronic fortune-cookie generator
@@ -76,8 +74,6 @@ brew "libmpc"
 brew "gcc"
 # GNU debugger
 brew "gdb"
-# Glorious Glasgow Haskell Compilation System
-brew "ghc", link: false
 # Interpreter for PostScript and PDF
 brew "ghostscript"
 # Distributed revision control system
@@ -90,8 +86,8 @@ brew "glow"
 brew "gnu-getopt"
 # GNU implementation of the famous stream editor
 brew "gnu-sed"
-# Open source programming language to build simple/reliable/efficient software
-brew "go", link: false
+# GNU Transport Layer Security (TLS) Library
+brew "gnutls"
 # Improved top (interactive process viewer)
 brew "htop"
 # User-friendly cURL replacement (command-line HTTP client)
@@ -100,10 +96,6 @@ brew "httpie"
 brew "hugo"
 # ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
 brew "libheif"
-# C/C++ seam carving library
-brew "liblqr"
-# Library for reading RAW files from digital photo cameras
-brew "libraw"
 # Tools and libraries to manipulate images in select formats
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
@@ -112,24 +104,26 @@ brew "jq"
 brew "lazygit"
 # Collision detection between two convex shapes
 brew "libccd"
+# C/C++ seam carving library
+brew "liblqr"
+# Library for reading RAW files from digital photo cameras
+brew "libraw"
 # General purpose TCP-IP emulator
 brew "libslirp"
+# C library SSHv1/SSHv2 client and server protocols
+brew "libssh"
 # C library for reading, creating, and modifying zip archives
-brew "libzip", link: false
-# Next-gen compiler infrastructure
-brew "llvm"
+brew "libzip"
 # LLVM Project Linker
 brew "lld"
 # Powerful, lightweight programming language
 brew "lua"
 # Package manager for the Lua programming language
 brew "luarocks"
-# Utility for directing compilation
-brew "make", link: false
 # Netwide Assembler (NASM) is an 80x86 assembler
 brew "nasm"
 # Ambitious Vim-fork focused on extensibility and agility
-brew "neovim", link: false
+brew "neovim"
 # Port scanning utility for large networks
 brew "nmap"
 # Manage multiple Node.js versions
@@ -140,8 +134,6 @@ brew "osx-cpu-temp"
 brew "poppler"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.9"
 # Python interface to Tcl/Tk
 brew "python-tk@3.9"
 # Generic machine emulator and virtualizer
@@ -156,8 +148,6 @@ brew "ruff"
 brew "sevenzip"
 # Terminal based presentation tool
 brew "slides"
-# Headers for SPICE protocol
-brew "spice-protocol", link: false
 # Log file highlighter
 brew "tailspin"
 # Tool Command Language
@@ -176,8 +166,6 @@ brew "universal-ctags", args: ["HEAD"]
 brew "wget"
 # HTTP benchmarking tool
 brew "wrk"
-# Convert XML to another format (based on XSL or other tools)
-brew "xmlto", link: false
 # Yet Another Dotfiles Manager
 brew "yadm"
 # Blazing fast terminal file manager written in Rust, based on async I/O
@@ -198,7 +186,7 @@ brew "anhoder/go-musicfox/go-musicfox"
 brew "sjzar/tap/ips"
 # Comprehensive macOS cleanup and application uninstall tool
 brew "tw93/tap/mole"
-# Configuration manager for Claude Code, Codex, Gemini and OpenCode
+# Configuration manager for Claude Code, Codex, Gemini CLI, OpenCode and OpenClaw
 cask "farion1231/ccswitch/cc-switch"
 # Terminal-based AI coding assistant
 cask "claude-code"
@@ -258,3 +246,5 @@ vscode "redhat.vscode-yaml"
 vscode "ritwickdey.liveserver"
 vscode "shd101wyy.markdown-preview-enhanced"
 vscode "vue.volar"
+go "github.com/Done-0/fuck-u-code/cmd/fuck-u-code"
+go "golang.org/x/tools/cmd/goimports"
