@@ -35,12 +35,15 @@ export ZSH_AUTOSUGGEST_USE_FALLBACK=false
 # =================================
 #     4. 插件加载顺序（正确顺序）
 # =================================
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# syntax-highlighting 必须最后加载，这是官方要求
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-. "$HOME/.local/bin/env"
+if [[ $(uname -m) == "arm64" ]]; then
+    # Apple Silicon (M1/M2) - Homebrew is in /opt/homebrew
+    export ZSH_AUTOSUGGESTIONS_PATH="/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    export ZSH_SYNTAX_HIGHLIGHTING_PATH="/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+else
+    # Intel - Homebrew is in /usr/local
+    export ZSH_AUTOSUGGESTIONS_PATH="/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+    export ZSH_SYNTAX_HIGHLIGHTING_PATH="/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
 
 # 强制光标为闪烁竖线（beam）
 echo -ne '\e[5 q'
