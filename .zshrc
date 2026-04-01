@@ -48,13 +48,12 @@ source $ZSH_AUTOSUGGESTIONS_PATH
 source $ZSH_SYNTAX_HIGHLIGHTING_PATH
 
 # 强制光标为闪烁竖线（beam）
-echo -ne '\e[5 q'
+precmd() {
+  printf '\e[5 q'
+}
 
 # FZF（如已安装）
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 
 # 1. ctrl+ee 编辑长命令 2. ctrl+_ 撤销误操作 3. alias -s json="jless"
 autoload -Uz edit-command-line
@@ -65,5 +64,3 @@ bindkey '^e^e' edit-command-line
 # =================================
 # Starship 无冲突初始化
 eval "$(starship init zsh)"
-
-. "$HOME/.local/bin/env"
