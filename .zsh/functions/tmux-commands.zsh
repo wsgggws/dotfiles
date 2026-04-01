@@ -12,3 +12,13 @@ tmux_all_exec() {
     done
   done
 }
+
+tmux_kill_all_nvim() {
+    tmux list-panes -a -F "#{session_name}:#{window_index}.#{pane_index} #{pane_pid}" | \
+    while read pane pid; do
+        if pgrep -P "$pid" -f nvim >/dev/null; then
+            echo "Closing nvim in $pane"
+            tmux send-keys -t "$pane" Escape ":qa!" Enter
+        fi
+    done
+}

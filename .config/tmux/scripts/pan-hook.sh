@@ -44,7 +44,7 @@ case "$TARGET" in
     fi
   fi
   ;;
-"ssh:sql")
+"tmux:sql")
   if echo "$LAST_LINE" | grep -qE "(root@alisg-web3-app-01|@alisg-web3-app-01)"; then
     echo "Already at jumper, skipping" >>/tmp/tmux-hook.log
   else
@@ -59,7 +59,7 @@ case "$TARGET" in
     fi
   fi
   ;;
-"ssh:kub")
+"tmux:kub")
   if echo "$LAST_LINE" | grep -qE "(newweb3-k8s-01-web3|tianhaijun)"; then
     echo "Already at jumper, skipping" >>/tmp/tmux-hook.log
   else

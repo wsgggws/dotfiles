@@ -12,7 +12,7 @@ if [[ $(uname -m) == "arm64" ]]; then
           export PATH="/Users/thj/miniconda3/bin:$PATH"
       fi
   fi
-  unset __conda_setup
+  unset __conda_setup  && conda deactivate && chpwd
 # <<< conda initialize <<<
 else
   # >>> conda initialize >>>

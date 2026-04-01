@@ -44,6 +44,8 @@ else
     export ZSH_AUTOSUGGESTIONS_PATH="/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
     export ZSH_SYNTAX_HIGHLIGHTING_PATH="/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
+source $ZSH_AUTOSUGGESTIONS_PATH
+source $ZSH_SYNTAX_HIGHLIGHTING_PATH
 
 # 强制光标为闪烁竖线（beam）
 echo -ne '\e[5 q'
@@ -63,3 +65,5 @@ bindkey '^e^e' edit-command-line
 # =================================
 # Starship 无冲突初始化
 eval "$(starship init zsh)"
+
+. "$HOME/.local/bin/env"

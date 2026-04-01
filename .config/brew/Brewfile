@@ -2,193 +2,101 @@ tap "anhoder/go-musicfox"
 tap "dail8859/notepadnext"
 tap "daipeihust/tap"
 tap "farion1231/ccswitch"
-tap "homebrew/bundle"
-tap "homebrew/services"
 tap "pot-app/tap"
 tap "sjzar/tap"
 tap "tw93/tap"
 tap "universal-ctags/universal-ctags"
-# Run your GitHub Actions locally
 brew "act"
-# Asciicast to GIF converter
 brew "agg"
-# New file format for still image compression
 brew "jpeg-xl"
-# Codec library for encoding and decoding AV1 video streams
 brew "aom"
-# Standard XML representation system for technical documents
-brew "docbook"
-# Text processor and publishing toolchain for AsciiDoc
 brew "asciidoctor"
-# Record and share terminal sessions
 brew "asciinema"
-# Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
-# C library of Git core methods that is re-entrant and linkable
 brew "libgit2"
-# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# GNU binary tools for native development
 brew "binutils"
-# GNU multiple precision arithmetic library
 brew "gmp"
-# Command-line interface for Cabal and Hackage
 brew "cabal-install"
-# Create and view interactive cheat sheets for *nix commands
 brew "cheat"
-# Cross-platform make
 brew "cmake"
-# Zsh completion for conda
 brew "conda-zsh-completion"
-# GNU File, Shell, and Text utilities
 brew "coreutils"
-# Apjanke's fork of the classic cowsay project
 brew "cowsay"
-# DuckDuckGo from the terminal
 brew "ddgr"
-# Secure runtime for JavaScript and TypeScript
 brew "deno"
-# XML vocabulary to create presentation-neutral documents
+brew "docbook"
 brew "docbook-xsl"
-# Pack, ship and run any application as a lightweight container
 brew "docker"
-# Isolated development environments using Docker
 brew "docker-compose", link: false
-# Text processing system for reStructuredText
 brew "docutils"
-# Modern, maintained replacement for ls
 brew "eza"
-# Simple, fast and user-friendly alternative to find
 brew "fd"
-# Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
-# Infamous electronic fortune-cookie generator
 brew "fortune"
-# Command-line fuzzy finder written in Go
 brew "fzf"
-# C library for multiple-precision floating-point computations
 brew "mpfr"
-# C library for the arithmetic of high precision complex numbers
 brew "libmpc"
-# GNU compiler collection
 brew "gcc"
-# GNU debugger
 brew "gdb"
-# Interpreter for PostScript and PDF
 brew "ghostscript"
-# Distributed revision control system
 brew "git"
-# Quickly rewrite git repository history
 brew "git-filter-repo"
-# Render markdown on the CLI
 brew "glow"
-# Command-line option parsing utility
 brew "gnu-getopt"
-# GNU implementation of the famous stream editor
 brew "gnu-sed"
-# GNU Transport Layer Security (TLS) Library
 brew "gnutls"
-# Improved top (interactive process viewer)
 brew "htop"
-# User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
-# Configurable static site generator
 brew "hugo"
-# ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
 brew "libheif"
-# Tools and libraries to manipulate images in select formats
 brew "imagemagick"
-# Lightweight and flexible command-line JSON processor
 brew "jq"
-# Simple terminal UI for git commands
 brew "lazygit"
-# Collision detection between two convex shapes
 brew "libccd"
-# C/C++ seam carving library
 brew "liblqr"
-# Library for reading RAW files from digital photo cameras
 brew "libraw"
-# General purpose TCP-IP emulator
 brew "libslirp"
-# C library SSHv1/SSHv2 client and server protocols
 brew "libssh"
-# C library for reading, creating, and modifying zip archives
 brew "libzip"
-# LLVM Project Linker
 brew "lld"
-# Powerful, lightweight programming language
 brew "lua"
-# Package manager for the Lua programming language
 brew "luarocks"
-# Netwide Assembler (NASM) is an 80x86 assembler
 brew "nasm"
-# Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
-# Port scanning utility for large networks
 brew "nmap"
-# Manage multiple Node.js versions
+brew "node"
 brew "nvm"
-# Outputs current CPU temperature for OSX
 brew "osx-cpu-temp"
-# PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
-# Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
-# Python interface to Tcl/Tk
 brew "python-tk@3.9"
-# Generic machine emulator and virtualizer
 brew "qemu"
-# SVG rendering tool and library
 brew "resvg"
-# Search tool like grep and The Silver Searcher
 brew "ripgrep"
-# Extremely fast Python linter, written in Rust
 brew "ruff"
-# 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
-# Terminal based presentation tool
 brew "slides"
-# Log file highlighter
+brew "starship"
 brew "tailspin"
-# Tool Command Language
 brew "tcl-tk"
-# Terminal multiplexer
 brew "tmux"
-# Manage complex tmux sessions easily
 brew "tmuxinator"
-# CLI tool that moves files or folder to the trash
 brew "trash", link: true
-# Display directories as trees (with optional color/HTML output)
 brew "tree"
-# Maintained ctags implementation
 brew "universal-ctags", args: ["HEAD"]
-# Internet file retriever
 brew "wget"
-# HTTP benchmarking tool
 brew "wrk"
-# Yet Another Dotfiles Manager
 brew "yadm"
-# Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
-# Suite of barcodes-reading tools
 brew "zbar"
-# Shell extension to navigate your filesystem faster
 brew "zoxide"
-# Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
-# Additional completion definitions for zsh
 brew "zsh-completions"
-# Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
-# go-musicfox是musicfox的重写版，使用Go编写的网易云音乐命令行程序。
 brew "anhoder/go-musicfox/go-musicfox"
-# ips is a command-line tool and library that facilitates the querying, dumping, and packaging of IP geolocation databases.
-brew "sjzar/tap/ips"
-# Comprehensive macOS cleanup and application uninstall tool
 brew "tw93/tap/mole"
-# Configuration manager for Claude Code, Codex, Gemini CLI, OpenCode and OpenClaw
 cask "farion1231/ccswitch/cc-switch"
-# Terminal-based AI coding assistant
 cask "claude-code"
 cask "font-maple-mono"
 cask "font-maple-mono-cn"
@@ -199,15 +107,10 @@ cask "font-maple-mono-normal-cn"
 cask "font-maple-mono-normal-nf"
 cask "font-maple-mono-normal-nf-cn"
 cask "font-symbols-only-nerd-font"
-# Utility to hide menu bar items
 cask "hiddenbar"
-# Open-source keystroke visualiser
 cask "keycastr"
-# GPU-based terminal emulator
 cask "kitty"
-# Intercept, modify, replay, save HTTP/S traffic
 cask "mitmproxy"
-# Open-source code editor
 cask "visual-studio-code"
 vscode "batisteo.vscode-django"
 vscode "binarybytes.snippets"
@@ -223,7 +126,6 @@ vscode "ecmel.vscode-html-css"
 vscode "esbenp.prettier-vscode"
 vscode "firefox-devtools.vscode-firefox-debug"
 vscode "formulahendry.code-runner"
-vscode "github.copilot"
 vscode "github.copilot-chat"
 vscode "github.vscode-github-actions"
 vscode "golang.go"
@@ -238,6 +140,7 @@ vscode "ms-python.vscode-pylance"
 vscode "ms-python.vscode-python-envs"
 vscode "ms-vscode-remote.remote-containers"
 vscode "ms-vscode.cmake-tools"
+vscode "ms-vscode.cpp-devtools"
 vscode "ms-vscode.cpptools"
 vscode "ms-vscode.cpptools-extension-pack"
 vscode "ms-vscode.cpptools-themes"
@@ -246,5 +149,3 @@ vscode "redhat.vscode-yaml"
 vscode "ritwickdey.liveserver"
 vscode "shd101wyy.markdown-preview-enhanced"
 vscode "vue.volar"
-go "github.com/Done-0/fuck-u-code/cmd/fuck-u-code"
-go "golang.org/x/tools/cmd/goimports"
