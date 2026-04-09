@@ -1,5 +1,8 @@
 #!/bin/bash
 
+STEP1=3.5
+STEP2=1.5
+
 SESSION=$(tmux display-message -p "#S")
 WINDOW=$(tmux display-message -p "#W")
 PANE=$(tmux display-message -p "#P")
@@ -12,67 +15,129 @@ LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
 echo "LAST_LINE: $LAST_LINE" >>/tmp/tmux-hook.log
 
 case "$TARGET" in
-"web3_property:s-prop")
+"S1:s-prop")
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     echo "Already at target, skipping" >>/tmp/tmux-hook.log
   else
     # 这是我的 starship 的提示符，表示准备好接受命令, 其它情况不要发送命令，避免误操作
     if echo "$LAST_LINE" | grep -q " ❯ "; then
       tmux send-keys -t "$PANE_TARGET" 'ssh jumper' C-m
-      sleep 2
+      sleep $STEP1
       tmux send-keys -t "$PANE_TARGET" '10.11.195.241' C-m
-      sleep 1
-      tmux send-keys -t "$PANE_TARGET" 'jweb3' C-m
+      sleep $STEP2
+      tmux send-keys -t "$PANE_TARGET" 'conda_prop' C-m
     else
       echo "Prompt not ready (no ❯), skipping" >>/tmp/tmux-hook.log
     fi
   fi
   ;;
-"server_lucky_admin:s-admin")
+"S2:s-game")
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     echo "Already at target, skipping" >>/tmp/tmux-hook.log
   else
     # 这是我的 starship 的提示符，表示准备好接受命令, 其它情况不要发送命令，避免误操作
     if echo "$LAST_LINE" | grep -q " ❯ "; then
       tmux send-keys -t "$PANE_TARGET" 'ssh jumper' C-m
-      sleep 2
+      sleep $STEP1
       tmux send-keys -t "$PANE_TARGET" '10.10.93.125' C-m
-      sleep 1
-      tmux send-keys -t "$PANE_TARGET" 'cd /usr/local/vntop/server/ && conda activate server_lucky_admin' C-m
+      sleep $STEP2
+      tmux send-keys -t "$PANE_TARGET" 'conda_game' C-m
     else
       echo "Prompt not ready (no ❯), skipping" >>/tmp/tmux-hook.log
     fi
   fi
   ;;
-"tmux:sql")
+"S3:s-tg")
+  if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
+    echo "Already at target, skipping" >>/tmp/tmux-hook.log
+  else
+    # 这是我的 starship 的提示符，表示准备好接受命令, 其它情况不要发送命令，避免误操作
+    if echo "$LAST_LINE" | grep -q " ❯ "; then
+      tmux send-keys -t "$PANE_TARGET" 'ssh jumper' C-m
+      sleep $STEP1
+      tmux send-keys -t "$PANE_TARGET" '10.26.14.204' C-m
+    else
+      echo "Prompt not ready (no ❯), skipping" >>/tmp/tmux-hook.log
+    fi
+  fi
+  ;;
+"S4:s-admin")
+  if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
+    echo "Already at target, skipping" >>/tmp/tmux-hook.log
+  else
+    # 这是我的 starship 的提示符，表示准备好接受命令, 其它情况不要发送命令，避免误操作
+    if echo "$LAST_LINE" | grep -q " ❯ "; then
+      tmux send-keys -t "$PANE_TARGET" 'ssh jumper' C-m
+      sleep $STEP1
+      tmux send-keys -t "$PANE_TARGET" '10.10.93.125' C-m
+      sleep $STEP2
+      tmux send-keys -t "$PANE_TARGET" 'conda_admin' C-m
+    else
+      echo "Prompt not ready (no ❯), skipping" >>/tmp/tmux-hook.log
+    fi
+  fi
+  ;;
+"S5:s-user")
+  if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
+    echo "Already at target, skipping" >>/tmp/tmux-hook.log
+  else
+    # 这是我的 starship 的提示符，表示准备好接受命令, 其它情况不要发送命令，避免误操作
+    if echo "$LAST_LINE" | grep -q " ❯ "; then
+      tmux send-keys -t "$PANE_TARGET" 'ssh jumper' C-m
+      sleep $STEP1
+      tmux send-keys -t "$PANE_TARGET" '10.10.93.125' C-m
+      sleep $STEP2
+      tmux send-keys -t "$PANE_TARGET" 'conda_user' C-m
+    else
+      echo "Prompt not ready (no ❯), skipping" >>/tmp/tmux-hook.log
+    fi
+  fi
+  ;;
+"S6:s-cs")
+  if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
+    echo "Already at target, skipping" >>/tmp/tmux-hook.log
+  else
+    # 这是我的 starship 的提示符，表示准备好接受命令, 其它情况不要发送命令，避免误操作
+    if echo "$LAST_LINE" | grep -q " ❯ "; then
+      tmux send-keys -t "$PANE_TARGET" 'ssh jumper' C-m
+      sleep $STEP1
+      tmux send-keys -t "$PANE_TARGET" '10.10.93.125' C-m
+      sleep $STEP2
+      tmux send-keys -t "$PANE_TARGET" 'conda_cs' C-m
+    else
+      echo "Prompt not ready (no ❯), skipping" >>/tmp/tmux-hook.log
+    fi
+  fi
+  ;;
+"S0:sql")
   if echo "$LAST_LINE" | grep -qE "(root@alisg-web3-app-01|@alisg-web3-app-01)"; then
     echo "Already at jumper, skipping" >>/tmp/tmux-hook.log
   else
     if echo "$LAST_LINE" | grep -q " ❯ "; then
       tmux send-keys -t "$PANE_TARGET" 'ssh jumper' C-m
-      sleep 2
+      sleep $STEP1
       tmux send-keys -t "$PANE_TARGET" '10.10.93.125' C-m
-      sleep 1
-      tmux send-keys -t "$PANE_TARGET" 'conda activate web3_user' C-m
+      sleep $STEP2
+      tmux send-keys -t "$PANE_TARGET" 'conda_user' C-m
     else
       echo "Prompt not ready (no ❯), skipping" >>/tmp/tmux-hook.log
     fi
   fi
   ;;
-"tmux:kub")
+"S0:kub")
   if echo "$LAST_LINE" | grep -qE "(newweb3-k8s-01-web3|tianhaijun)"; then
     echo "Already at jumper, skipping" >>/tmp/tmux-hook.log
   else
     if echo "$LAST_LINE" | grep -q " ❯ "; then
       tmux send-keys -t "$PANE_TARGET" 'ssh jumper' C-m
-      sleep 2
+      sleep $STEP1
       tmux send-keys -t "$PANE_TARGET" '10.11.193.41' C-m
     else
       echo "Prompt not ready (no ❯), skipping" >>/tmp/tmux-hook.log
     fi
   fi
   ;;
-"fun:music")
+"S0:music")
   # 这是我的 starship 的提示符，表示准备好接受命令, 其它情况不要发送命令，避免误操作
   if echo "$LAST_LINE" | grep -q " ❯ "; then
     tmux send-keys -t "$PANE_TARGET" 'musicfox' C-m
