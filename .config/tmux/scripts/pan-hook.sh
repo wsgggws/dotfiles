@@ -15,7 +15,7 @@ LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
 echo "LAST_LINE: $LAST_LINE" >>/tmp/tmux-hook.log
 
 case "$TARGET" in
-"S1:s-prop")
+"web3_property:s-prop")
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     echo "Already at target, skipping" >>/tmp/tmux-hook.log
   else
@@ -31,7 +31,7 @@ case "$TARGET" in
     fi
   fi
   ;;
-"S2:s-game")
+"bitslots_game:s-game")
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     echo "Already at target, skipping" >>/tmp/tmux-hook.log
   else
@@ -47,7 +47,7 @@ case "$TARGET" in
     fi
   fi
   ;;
-"S3:s-tg")
+"server_tg_lb:s-tg")
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     echo "Already at target, skipping" >>/tmp/tmux-hook.log
   else
@@ -61,7 +61,7 @@ case "$TARGET" in
     fi
   fi
   ;;
-"S4:s-admin")
+"server_lucky_admin:s-admin")
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     echo "Already at target, skipping" >>/tmp/tmux-hook.log
   else
@@ -77,7 +77,7 @@ case "$TARGET" in
     fi
   fi
   ;;
-"S5:s-user")
+"web3_user:s-user")
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     echo "Already at target, skipping" >>/tmp/tmux-hook.log
   else
@@ -93,7 +93,7 @@ case "$TARGET" in
     fi
   fi
   ;;
-"S6:s-cs")
+"lb_cs_gateway:s-cs")
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     echo "Already at target, skipping" >>/tmp/tmux-hook.log
   else

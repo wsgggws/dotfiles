@@ -437,7 +437,7 @@ unbind-key -T prefix f
 bind-key -T prefix f choose-tree -s
 
 unbind s
-bind-key -T prefix s display-popup -E -w 75% -h 80% \
+bind-key -T prefix s display-popup -E -w 80% -h 80% \
 "current_session=\$(tmux display-message -p '#S'); \
 current_window=\$(tmux display-message -p '#I'); \
 tmux list-windows -a -F '#{window_activity}:#{session_name}:#{window_index}:#{window_name}#{?#{>:#{window_panes},1}, [#{window_panes}p],}' \
@@ -460,7 +460,7 @@ tmux list-windows -a -F '#{window_activity}:#{session_name}:#{window_index}:#{wi
     --color='header:italic,prompt:cyan,pointer:green' \
     --preview 'target=\$(echo {2} | sed \"s/\\x1b\\[[0-9;]*m//g\"); \
       tmux capture-pane -ep -t \"\$target\"' \
-    --preview-window=right:76%:border-left \
+    --preview-window=right:75%:border-left \
 | awk -F'\t' '{print \$2}' \
 | xargs -I {} tmux switch-client -t {}"
 
