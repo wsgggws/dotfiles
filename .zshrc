@@ -64,3 +64,6 @@ bindkey '^e^e' edit-command-line
 # =================================
 # Starship 无冲突初始化
 eval "$(starship init zsh)"
+
+# OpenClaw Completion
+source "/Users/thj/.openclaw/completions/openclaw.zsh"
