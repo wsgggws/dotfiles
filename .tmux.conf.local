@@ -469,7 +469,7 @@ tmux list-windows -a -F '#{window_activity}:#{session_name}:#{window_index}:#{wi
 | xargs -I {} tmux switch-client -t {}"
 
 # 快速打开 music
-bind-key -T prefix m new-session -d -A -s S0 -n music \; switch-client -t S0:music
+# bind-key -T prefix m new-session -d -A -s S0 -n music \; switch-client -t S0:music
 
 # 快速回到上一个 session 和 window
 bind-key -T prefix b switch-client -l

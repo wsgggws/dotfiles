@@ -8,6 +8,7 @@ function chpwd() {
         */web3_user)                                 env="web3_user" ;;
         */server_lucky_admin)                        env="server_lucky_admin" ;;
         */lb_cs_gateway)                             env="lb_cs_gateway" ;;
+        */lb_lark_cmdline)                           env="lb_lark_cmdline" ;;
         *) env="" ;;
     esac
 

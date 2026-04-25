@@ -137,12 +137,12 @@ case "$TARGET" in
     fi
   fi
   ;;
-"S0:music")
-  # 这是我的 starship 的提示符，表示准备好接受命令, 其它情况不要发送命令，避免误操作
-  if echo "$LAST_LINE" | grep -q " ❯ "; then
-    tmux send-keys -t "$PANE_TARGET" 'musicfox' C-m
-  else
-    echo "Prompt not ready (no ❯), skipping" >>/tmp/tmux-hook.log
-  fi
-  ;;
+# "S0:music")
+#   # 这是我的 starship 的提示符，表示准备好接受命令, 其它情况不要发送命令，避免误操作
+#   if echo "$LAST_LINE" | grep -q " ❯ "; then
+#     tmux send-keys -t "$PANE_TARGET" 'musicfox' C-m
+#   else
+#     echo "Prompt not ready (no ❯), skipping" >>/tmp/tmux-hook.log
+#   fi
+#   ;;
 esac

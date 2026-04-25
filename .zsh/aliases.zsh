@@ -8,16 +8,17 @@ alias vz="nvim ~/.zshrc"
 alias vr="nvim ./README.md"
 alias vs="nvim ~/.config/starship.toml"
 alias vt='vi "$(mktemp /tmp/vt.XXXXXX)"'
+alias vk='nvim ~/.config/kitty/kitty.conf'
 alias src="source ~/.zshrc"
 
 alias ls='eza --icons=auto'
 alias ll='eza -al --icons=auto'
 alias lt='eza --tree --level=2 --icons=auto'
 
-alias vk='nvim ~/.config/kitty/kitty.conf'
 
 alias show='kitty +kitten icat'
 alias kdiff='kitty +kitten diff'
+alias cat=bat
 
 alias brewbackup='brew bundle dump --describe --force --file="~/.config/brew/Brewfile"'
 alias brewsync='brew bundle --file="~/.config/brew/Brewfile"'
