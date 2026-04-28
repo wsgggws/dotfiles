@@ -55,15 +55,25 @@ precmd() {
 # FZF（如已安装）
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
+# OpenClaw Completion
+source "/Users/thj/.openclaw/completions/openclaw.zsh"
+
+
 # 1. ctrl+ee 编辑长命令 2. ctrl+_ 撤销误操作 3. alias -s json="jless"
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^e^e' edit-command-line
+
+typeset -U path PATH
+path=(
+  /opt/homebrew/bin
+  /opt/homebrew/sbin
+  $path
+)
+
 # =================================
 #     5. Starship 初始化
 # =================================
 # Starship 无冲突初始化
 eval "$(starship init zsh)"
 
-# OpenClaw Completion
-source "/Users/thj/.openclaw/completions/openclaw.zsh"
