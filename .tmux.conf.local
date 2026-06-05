@@ -404,6 +404,15 @@ tmux_conf_urlscan_options="--compact --dedupe"
 
 # increase history size
 set -g history-limit 20000
+
+# Claude Code: make Shift+Enter distinguishable from Enter in tmux,
+# and allow terminal notifications/progress passthrough.
+set -g allow-passthrough on
+set -s extended-keys on
+set -as terminal-features 'xterm*:RGB:extkeys'
+set -as terminal-features 'wezterm*:RGB:extkeys'
+
+
 bind -n C-l send-keys C-l
 
 # start with mouse mode enabled
@@ -469,6 +478,10 @@ tmux list-windows -a -F '#{window_activity}:#{session_name}:#{window_index}:#{wi
     --preview-window=right:72%:border-left \
 | awk -F'\t' '{print \$2}' \
 | xargs -I {} tmux switch-client -t {}"
+
+# Reset only the current pane's extended key mode.
+# Do not write this sequence to #{client_tty}, or Shift+Enter may stop working.
+bind-key K run-shell -b 'printf "\033[>4;0m" > "#{pane_tty}"' \; display-message 'pane keyboard mode reset'
 
 # 快速打开 music
 # bind-key -T prefix m new-session -d -A -s S0 -n music \; switch-client -t S0:music
