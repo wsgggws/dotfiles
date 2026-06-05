@@ -5,4 +5,4 @@
 # @raycast.mode silent
 # @raycast.icon 🐠
 
-open "https://www.yuque.com/cunyu1943/weekly"
+open "https://cunyu1943.github.io/weekly/2026/latest.html"

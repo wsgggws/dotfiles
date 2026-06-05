@@ -4,6 +4,7 @@ fix = true
 preview = true
 
 [lint]
+target-version = "py39" # 公司主要是 python3.9 项目
 fixable = ["ALL"]
 select = [
   "I",

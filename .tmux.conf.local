@@ -212,7 +212,8 @@ tmux_conf_theme_window_status_fg="$tmux_conf_theme_colour_3"
 tmux_conf_theme_window_status_bg="$tmux_conf_theme_colour_1"
 tmux_conf_theme_window_status_attr="none"
 # tmux_conf_theme_window_status_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
-tmux_conf_theme_window_status_format="#{circled_window_index} #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
+# tmux_conf_theme_window_status_format="#{circled_window_index} #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
+tmux_conf_theme_window_status_format="#W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
 # tmux_conf_theme_window_status_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,🔔,}#{?window_zoomed_flag,🔍,}"
 
 # window current status style
@@ -228,9 +229,10 @@ tmux_conf_theme_window_status_format="#{circled_window_index} #W#{?#{||:#{window
 tmux_conf_theme_window_status_current_fg="$tmux_conf_theme_colour_3"
 tmux_conf_theme_window_status_current_bg="$tmux_conf_theme_colour_1"
 tmux_conf_theme_window_status_current_attr="bold,underscore"
-tmux_conf_theme_window_status_current_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
+# tmux_conf_theme_window_status_current_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
 #tmux_conf_theme_window_status_current_format="#{circled_window_index} #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
 #tmux_conf_theme_window_status_current_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,🔔,}#{?window_zoomed_flag,🔍,}"
+tmux_conf_theme_window_status_current_format="#W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
 
 # window activity status style
 tmux_conf_theme_window_status_activity_fg="default"
@@ -441,7 +443,7 @@ unbind-key -T prefix f
 bind-key -T prefix f choose-tree -s
 
 unbind s
-bind-key -T prefix s display-popup -E -w 80% -h 80% \
+bind-key -T prefix s display-popup -E -w 82% -h 82% \
 "current_session=\$(tmux display-message -p '#S'); \
 current_window=\$(tmux display-message -p '#I'); \
 tmux list-windows -a -F '#{window_activity}:#{session_name}:#{window_index}:#{window_name}#{?#{>:#{window_panes},1}, [#{window_panes}p],}' \
@@ -464,7 +466,7 @@ tmux list-windows -a -F '#{window_activity}:#{session_name}:#{window_index}:#{wi
     --color='header:italic,prompt:cyan,pointer:green' \
     --preview 'target=\$(echo {2} | sed \"s/\\x1b\\[[0-9;]*m//g\"); \
       tmux capture-pane -ep -t \"\$target\"' \
-    --preview-window=right:75%:border-left \
+    --preview-window=right:72%:border-left \
 | awk -F'\t' '{print \$2}' \
 | xargs -I {} tmux switch-client -t {}"
 
