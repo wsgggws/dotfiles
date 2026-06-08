@@ -3,7 +3,8 @@ local act = wezterm.action
 
 local config = wezterm.config_builder()
 
-config.color_scheme = "Catppuccin Mocha"
+-- config.color_scheme = "Catppuccin Mocha"
+config.color_scheme = "Dracula (Official)"
 config.font_size = 16.0
 config.font = wezterm.font("Monaco")
 
@@ -17,7 +18,7 @@ config.scrollback_lines = 30000
 -- 关键：不要用 padding 手动补偿 tmux 底部间隙。
 -- 让终端网格贴住窗口底部，剩余像素放到顶部。
 config.window_padding = {
-	left = 12,
+	left = 15,
 	right = 3,
 	top = 0,
 	bottom = 3,
