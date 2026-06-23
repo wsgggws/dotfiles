@@ -2,9 +2,9 @@ line-length = 120
 indent-width = 4
 fix = true
 preview = true
+target-version = "py39" # 公司主要是 python3.9 项目
 
 [lint]
-target-version = "py39" # 公司主要是 python3.9 项目
 fixable = ["ALL"]
 select = [
   "I",

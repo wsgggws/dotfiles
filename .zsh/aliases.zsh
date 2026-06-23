@@ -8,6 +8,14 @@ alias vz="nvim ~/.zshrc"
 alias vr="nvim ./README.md"
 alias vs="nvim ~/.config/starship.toml"
 alias vt='vi "$(mktemp /tmp/vt.XXXXXX)"'
+unalias vp 2>/dev/null
+function vp() {
+	local tmp py
+	tmp="$(mktemp /tmp/vp.XXXXXX)"
+	py="${tmp}.py"
+	mv -- "$tmp" "$py"
+	vi "$py"
+}
 alias vc='nvim ~/.wezterm.lua'
 alias src="source ~/.zshrc"
 

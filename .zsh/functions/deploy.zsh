@@ -22,6 +22,7 @@ deploy_k8s_game() {
   cd "$HOME/peak" || return
   python py/gitlab_publish_k8s.py bitslots_game lucky-bear-gray &&
   python py/gitlab_publish_k8s.py bitslots_game lucky-bear-prod &&
-  python py/gitlab_publish_k8s.py bitslots_game lb-async-executor
+  python py/gitlab_publish_k8s.py bitslots_game lb-async-executor &&
+  python py/gitlab_publish_k8s.py bitslots_game lb-order-consumer
   cd "$prev_dir" || return
 }

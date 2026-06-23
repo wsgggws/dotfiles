@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+for cmd in rg fzf nvim; do
+	if ! command -v "$cmd" >/dev/null 2>&1; then
+		printf 'Missing dependency: %s\n' "$cmd" >&2
+		printf 'Install it first, then try again.\n' >&2
+		exit 1
+	fi
+done
+
+preview_cmd='
+file={1}
+line={2}
+if command -v bat >/dev/null 2>&1; then
+	bat --color=always --style=numbers --highlight-line "$line" -- "$file"
+else
+	start=$((line > 8 ? line - 8 : 1))
+	end=$((line + 8))
+	sed -n "${start},${end}p" -- "$file" | nl -ba -v "$start"
+fi
+'
+
+selected="$(
+	fzf \
+		--ansi \
+		--disabled \
+		--layout=reverse \
+		--height=100% \
+		--border \
+		--prompt='rg> ' \
+		--delimiter=':' \
+		--preview="$preview_cmd" \
+		--preview-window='right,60%,border-left,+{2}+3/3,~3' \
+		--bind='change:reload:rg --column --line-number --no-heading --color=always --smart-case --hidden --glob "!.git" -- {q} || true' \
+		--bind='ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down'
+)"
+
+clean="$(
+	printf '%s' "$selected" |
+		perl -pe 's/\e\[[0-9;]*m//g'
+)"
+
+file="${clean%%:*}"
+rest="${clean#*:}"
+line="${rest%%:*}"
+rest="${rest#*:}"
+column="${rest%%:*}"
+
+if [[ -z "$file" || -z "$line" || -z "$column" ]]; then
+	exit 0
+fi
+
+nvim "+call cursor($line, $column)" -- "$file"

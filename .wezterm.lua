@@ -1,11 +1,12 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
+local mux = wezterm.mux
 
 local config = wezterm.config_builder()
 
 -- config.color_scheme = "Catppuccin Mocha"
 config.color_scheme = "Dracula (Official)"
-config.font_size = 16.0
+config.font_size = 16.5
 config.font = wezterm.font("Monaco")
 
 config.window_decorations = "RESIZE"
@@ -38,5 +39,10 @@ config.keys = {
 	{ key = "H", mods = "CTRL", action = act.DisableDefaultAssignment },
 	{ key = "D", mods = "CTRL", action = act.ShowDebugOverlay },
 }
+
+wezterm.on("gui-startup", function(cmd)
+	local tab, pane, window = mux.spawn_window(cmd or {})
+	window:gui_window():maximize()
+end)
 
 return config

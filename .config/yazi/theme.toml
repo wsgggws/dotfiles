@@ -1,0 +1,7 @@
+# ~/.config/yazi/theme.toml
+# Dracula flavor must be installed at:
+# ~/.config/yazi/flavors/dracula.yazi
+
+[flavor]
+dark = "dracula"
+light = "dracula"

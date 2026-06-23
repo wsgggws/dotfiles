@@ -1,0 +1,74 @@
+# ~/.config/yazi/yazi.toml
+
+[mgr]
+ratio = [ 1, 3, 4 ]
+sort_by = "natural"
+sort_sensitive = false
+sort_reverse = false
+sort_dir_first = true
+sort_translit = true
+linemode = "size"
+show_hidden = false
+show_symlink = true
+scrolloff = 8
+mouse_events = [ "click", "scroll", "touch", "move", "drag" ]
+
+[preview]
+wrap = "yes"
+tab_size = 2
+max_width = 1600
+max_height = 1200
+image_delay = 20
+image_filter = "lanczos3"
+image_quality = 80
+
+[tasks]
+file_workers = 8
+plugin_workers = 8
+fetch_workers = 8
+preload_workers = 8
+process_workers = 8
+image_alloc = 536870912
+image_bound = [ 0, 0 ]
+
+[opener]
+edit = [
+	{ run = 'nvim "$@"', block = true, for = "unix" },
+]
+open = [
+	{ run = 'open "$@"', desc = "Open", for = "macos" },
+	{ run = 'xdg-open "$@"', desc = "Open", for = "linux" },
+]
+reveal = [
+	{ run = 'open -R "$1"', desc = "Reveal in Finder", for = "macos" },
+	{ run = 'xdg-open "$(dirname "$1")"', desc = "Reveal in file manager", for = "linux" },
+]
+play = [
+	{ run = 'mpv "$@"', orphan = true, for = "unix" },
+]
+
+[open]
+prepend_rules = [
+	{ mime = "text/*", use = "edit" },
+	{ mime = "inode/directory", use = "open" },
+	{ mime = "image/*", use = "open" },
+	{ mime = "video/*", use = "play" },
+	{ mime = "audio/*", use = "play" },
+	{ url = "*.json", use = "edit" },
+	{ url = "*.toml", use = "edit" },
+	{ url = "*.yaml", use = "edit" },
+	{ url = "*.yml", use = "edit" },
+	{ url = "*.md", use = "edit" },
+]
+
+[plugin]
+prepend_preloaders = [
+	{ mime = "image/*", run = "image" },
+	{ mime = "video/*", run = "video" },
+	{ mime = "application/pdf", run = "pdf" },
+]
+prepend_previewers = [
+	{ mime = "image/*", run = "image" },
+	{ mime = "video/*", run = "video" },
+	{ mime = "application/pdf", run = "pdf" },
+]
