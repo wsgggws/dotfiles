@@ -38,7 +38,6 @@ alias ports="lsof -iTCP -sTCP:LISTEN -n -P"
 alias g='git'
 alias ga='git add'
 alias gcb='git checkout -b'
-alias gsw='git switch'
 alias gst='git status'
 alias gd='git diff'
 alias gc='git commit'

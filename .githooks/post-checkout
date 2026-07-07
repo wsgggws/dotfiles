@@ -1,7 +1,2 @@
 #!/bin/bash
-branch=$(git rev-parse --abbrev-ref HEAD)
-
-if [ "$branch" = "master" ] || [ "$branch" = "main" ]; then
-  echo "Switched to $branch, pulling latest..."
-  git pull origin "$branch" --rebase
-fi
+exit 0
