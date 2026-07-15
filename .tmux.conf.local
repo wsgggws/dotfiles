@@ -397,7 +397,7 @@ tmux_conf_urlscan_options="--compact --dedupe"
 # this is the place to override or undo settings
 
 # increase history size
-set -g history-limit 20000
+set -g history-limit 10000
 
 # Claude Code: make Shift+Enter distinguishable from Enter in tmux,
 # and allow terminal notifications/progress passthrough.

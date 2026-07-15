@@ -1,5 +1,5 @@
 add_newline = false
-format = '$directory$git_branch$cmd_duration$time$character'
+format = '$directory$git_branch$git_metrics$git_status$cmd_duration$time$character'
 
 [time]
 disabled = false
@@ -7,3 +7,21 @@ disabled = false
 [directory]
 truncation_length = 3
 truncate_to_repo = false
+
+[git_metrics]
+disabled = false
+added_style = 'bold blue'
+deleted_style = 'bold red'
+only_nonzero_diffs = true
+format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
+
+[git_status]
+disabled = false
+style = 'bold red'
+format = '([\[$all_status$ahead_behind\]]($style) )'
+modified = '!'
+staged = '+'
+untracked = '?'
+deleted = 'x'
+
+

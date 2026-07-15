@@ -26,3 +26,12 @@ deploy_k8s_game() {
   python py/gitlab_publish_k8s.py bitslots_game lb-order-consumer
   cd "$prev_dir" || return
 }
+
+deploy_k8s_pushtg() {
+  local prev_dir=$(pwd)
+  cd "$HOME/peak" || return
+  python py/gitlab_publish_k8s.py server_tg_lb push-consumer-v2-raw &&
+  python py/gitlab_publish_k8s.py server_tg_lb push-consumer-v2-fanout &&
+  python py/gitlab_publish_k8s.py server_tg_lb tg-share-api
+  cd "$prev_dir" || return
+}

@@ -56,3 +56,5 @@
 	clean-branches = "!f() { \n  git branch | grep -v \"master\" | grep -v \"\\*\" | xargs -r git branch -D\n}; f"
 [difftool "kitty"]
 	cmd = kitty +kitten diff $LOCAL $REMOTE
+[safe]
+	directory = *
