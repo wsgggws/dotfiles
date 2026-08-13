@@ -27,7 +27,7 @@ alias lt='eza --tree --level=2 --icons=auto'
 alias show='kitty +kitten icat'
 alias kdiff='kitty +kitten diff'
 
-alias brewbackup='brew bundle dump --describe --force --file="~/.config/brew/Brewfile"'
+alias brewbackup='brew bundle dump --force --file="$HOME/.config/brew/Brewfile"'
 alias brewsync='brew bundle --file="~/.config/brew/Brewfile"'
 
 alias duh='du -sh *'

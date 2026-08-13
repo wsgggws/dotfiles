@@ -70,7 +70,9 @@ case "$TARGET" in
     if is_prompt_ready; then
       send_cmd 'ssh jumper'
       sleep "$STEP1"
-      send_cmd '10.26.14.204'
+      send_cmd '10.10.93.125'
+      sleep "$STEP2"
+      send_cmd 'conda_tg'
     else
       log "Prompt not ready (no ❯), skipping"
     fi
