@@ -483,7 +483,7 @@ bind-key K run-shell -b 'printf "\033[>4;0m" > "#{pane_tty}"' \; display-message
 # 快速回到上一个 session 和 window
 bind-key -T prefix b switch-client -l
 
-set-hook -g pane-focus-in 'run-shell "~/.config/tmux/scripts/pan-hook.sh"'
+set-hook -g pane-focus-in 'run-shell -b "~/.config/tmux/scripts/pan-hook.sh"'
 
 # -- tpm -----------------------------------------------------------------------
 

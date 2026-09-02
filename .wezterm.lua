@@ -8,6 +8,11 @@ local config = wezterm.config_builder()
 config.color_scheme = "Dracula (Official)"
 config.font_size = 16.5
 config.font = wezterm.font("Monaco")
+config.front_end = "Software"
+config.animation_fps = 2
+config.cursor_blink_rate = 800
+config.cursor_blink_ease_in = "Constant"
+config.cursor_blink_ease_out = "Constant"
 
 config.window_decorations = "RESIZE"
 config.window_close_confirmation = "NeverPrompt"
@@ -24,8 +29,7 @@ config.window_padding = {
 	top = 0,
 	bottom = 3,
 }
--- Nightly only:
--- 让终端网格贴住底部，多余像素放到顶部。
+-- Nightly only: keep the terminal grid anchored to the bottom.
 config.window_content_alignment = {
 	horizontal = "Left",
 	vertical = "Bottom",

@@ -22,13 +22,11 @@ log() {
   echo "$1" >>"$LOG"
 }
 
-# 获取 pane 最后一行（通常是 prompt）
-LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
-
-log "LAST_LINE: $LAST_LINE"
-
 case "$TARGET" in
 "web3_property:s-prop")
+  # 只有命中目标窗口时才读取 pane 内容，避免每次 focus 都做一次 capture。
+  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
+  log "LAST_LINE: $LAST_LINE"
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     log "Already at target, skipping"
   else
@@ -46,6 +44,8 @@ case "$TARGET" in
   ;;
 
 "bitslots_game:s-game")
+  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
+  log "LAST_LINE: $LAST_LINE"
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     log "Already at target, skipping"
   else
@@ -63,6 +63,8 @@ case "$TARGET" in
   ;;
 
 "server_tg_lb:s-tg")
+  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
+  log "LAST_LINE: $LAST_LINE"
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     log "Already at target, skipping"
   else
@@ -80,6 +82,8 @@ case "$TARGET" in
   ;;
 
 "server_lucky_admin:s-admin")
+  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
+  log "LAST_LINE: $LAST_LINE"
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     log "Already at target, skipping"
   else
@@ -97,6 +101,8 @@ case "$TARGET" in
   ;;
 
 "web3_user:s-user")
+  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
+  log "LAST_LINE: $LAST_LINE"
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     log "Already at target, skipping"
   else
@@ -114,6 +120,8 @@ case "$TARGET" in
   ;;
 
 "lb_cs_gateway:s-cs")
+  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
+  log "LAST_LINE: $LAST_LINE"
   if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
     log "Already at target, skipping"
   else
@@ -131,6 +139,8 @@ case "$TARGET" in
   ;;
 
 "S0:sql")
+  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
+  log "LAST_LINE: $LAST_LINE"
   if echo "$LAST_LINE" | grep -qE "(root@alisg-web3-app-01|@alisg-web3-app-01)"; then
     log "Already at jumper, skipping"
   else
@@ -147,6 +157,8 @@ case "$TARGET" in
   ;;
 
 "S0:kub")
+  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
+  log "LAST_LINE: $LAST_LINE"
   if echo "$LAST_LINE" | grep -qE "(newweb3-k8s-01-web3|tianhaijun)"; then
     log "Already at jumper, skipping"
   else
@@ -158,6 +170,10 @@ case "$TARGET" in
       log "Prompt not ready (no ❯), skipping"
     fi
   fi
+  ;;
+
+*)
+  exit 0
   ;;
 
 esac
