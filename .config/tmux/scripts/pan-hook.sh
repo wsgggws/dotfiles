@@ -1,179 +1,68 @@
 #!/bin/bash
+set -euo pipefail
 
 STEP1=3.5
 STEP2=1.5
-LOG=/tmp/tmux-hook.log
+PANE_TARGET=${1:-}
+SOCKET_PATH=${2:-}
+[[ $PANE_TARGET =~ ^%[0-9]+$ ]] || exit 0
+[[ -n $SOCKET_PATH ]] || exit 0
 
-SESSION=$(tmux display-message -p "#S")
-WINDOW=$(tmux display-message -p "#W")
-TARGET="${SESSION}:${WINDOW}"
-PANE_TARGET=$(tmux display-message -p "#{pane_id}")
+TARGET=$(tmux -S "$SOCKET_PATH" display-message -p -t "$PANE_TARGET" '#{session_name}:#{window_name}' 2>/dev/null) || exit 0
+case "$TARGET" in
+  "web3_property:s-prop") address=10.11.195.241; final=conda_prop; host_marker=@sg_nginx_web3 ;;
+  "bitslots_game:s-game") address=10.10.93.125; final=conda_game; host_marker=@sg_nginx_web3 ;;
+  "server_tg_lb:s-tg") address=10.10.93.125; final=conda_tg; host_marker=@sg_nginx_web3 ;;
+  "server_lucky_admin:s-admin") address=10.10.93.125; final=conda_admin; host_marker=@sg_nginx_web3 ;;
+  "web3_user:s-user") address=10.10.93.125; final=conda_user; host_marker=@sg_nginx_web3 ;;
+  "lb_cs_gateway:s-cs") address=10.10.93.125; final=conda_cs; host_marker=@sg_nginx_web3 ;;
+  "S0:sql") address=10.10.93.125; final=conda_user; host_marker=@alisg-web3-app-01 ;;
+  "S0:kub") address=10.11.193.41; final=; host_marker=newweb3-k8s-01-web3 ;;
+  *) exit 0 ;;
+esac
+
+# One connection attempt per pane; a second focus event must not start another sequence.
+umask 077
+lock_dir="${TMPDIR:-/tmp}/tmux-pan-hook-${UID}-${PANE_TARGET#%}.lock"
+mkdir "$lock_dir" 2>/dev/null || exit 0
+trap 'rmdir "$lock_dir" 2>/dev/null || true' EXIT
+trap 'exit 0' HUP INT TERM
+
+is_ready() {
+  local state target active viewers mode input_off command
+  state=$(tmux -S "$SOCKET_PATH" display-message -p -t "$PANE_TARGET" \
+    '#{session_name}:#{window_name}|#{pane_active}|#{window_active_clients}|#{pane_in_mode}|#{pane_input_off}|#{pane_current_command}' 2>/dev/null) || return 1
+  IFS='|' read -r target active viewers mode input_off command <<< "$state"
+  [[ $target == "$TARGET" && $active == 1 && $viewers =~ ^[1-9][0-9]*$ &&
+     $mode == 0 && $input_off == 0 && $command == "$1" ]]
+}
+
+last_line() {
+  tmux -S "$SOCKET_PATH" capture-pane -t "$PANE_TARGET" -p -J 2>/dev/null | awk 'NF { line=$0 } END { print line }'
+}
 
 send_cmd() {
-  tmux send-keys -t "$PANE_TARGET" -l "$1"
-  tmux send-keys -t "$PANE_TARGET" Enter
+  tmux -S "$SOCKET_PATH" send-keys -t "$PANE_TARGET" -l "$1"
+  tmux -S "$SOCKET_PATH" send-keys -t "$PANE_TARGET" Enter
 }
 
-is_prompt_ready() {
-  echo "$LAST_LINE" | grep -q " ❯ "
-}
+is_ready zsh || exit 0
+initial_line=$(last_line)
+[[ $initial_line == *" ❯ "* && $initial_line != *"$host_marker"* ]] || exit 0
+send_cmd 'ssh jumper'
 
-log() {
-  echo "$1" >>"$LOG"
-}
-
-case "$TARGET" in
-"web3_property:s-prop")
-  # 只有命中目标窗口时才读取 pane 内容，避免每次 focus 都做一次 capture。
-  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
-  log "LAST_LINE: $LAST_LINE"
-  if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
-    log "Already at target, skipping"
-  else
-    # 这是我的 starship 的提示符，表示准备好接受命令，其它情况不要发送命令，避免误操作
-    if is_prompt_ready; then
-      send_cmd 'ssh jumper'
-      sleep "$STEP1"
-      send_cmd '10.11.195.241'
-      sleep "$STEP2"
-      send_cmd 'conda_prop'
-    else
-      log "Prompt not ready (no ❯), skipping"
-    fi
-  fi
-  ;;
-
-"bitslots_game:s-game")
-  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
-  log "LAST_LINE: $LAST_LINE"
-  if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
-    log "Already at target, skipping"
-  else
-    # 这是我的 starship 的提示符，表示准备好接受命令，其它情况不要发送命令，避免误操作
-    if is_prompt_ready; then
-      send_cmd 'ssh jumper'
-      sleep "$STEP1"
-      send_cmd '10.10.93.125'
-      sleep "$STEP2"
-      send_cmd 'conda_game'
-    else
-      log "Prompt not ready (no ❯), skipping"
-    fi
-  fi
-  ;;
-
-"server_tg_lb:s-tg")
-  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
-  log "LAST_LINE: $LAST_LINE"
-  if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
-    log "Already at target, skipping"
-  else
-    # 这是我的 starship 的提示符，表示准备好接受命令，其它情况不要发送命令，避免误操作
-    if is_prompt_ready; then
-      send_cmd 'ssh jumper'
-      sleep "$STEP1"
-      send_cmd '10.10.93.125'
-      sleep "$STEP2"
-      send_cmd 'conda_tg'
-    else
-      log "Prompt not ready (no ❯), skipping"
-    fi
-  fi
-  ;;
-
-"server_lucky_admin:s-admin")
-  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
-  log "LAST_LINE: $LAST_LINE"
-  if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
-    log "Already at target, skipping"
-  else
-    # 这是我的 starship 的提示符，表示准备好接受命令，其它情况不要发送命令，避免误操作
-    if is_prompt_ready; then
-      send_cmd 'ssh jumper'
-      sleep "$STEP1"
-      send_cmd '10.10.93.125'
-      sleep "$STEP2"
-      send_cmd 'conda_admin'
-    else
-      log "Prompt not ready (no ❯), skipping"
-    fi
-  fi
-  ;;
-
-"web3_user:s-user")
-  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
-  log "LAST_LINE: $LAST_LINE"
-  if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
-    log "Already at target, skipping"
-  else
-    # 这是我的 starship 的提示符，表示准备好接受命令，其它情况不要发送命令，避免误操作
-    if is_prompt_ready; then
-      send_cmd 'ssh jumper'
-      sleep "$STEP1"
-      send_cmd '10.10.93.125'
-      sleep "$STEP2"
-      send_cmd 'conda_user'
-    else
-      log "Prompt not ready (no ❯), skipping"
-    fi
-  fi
-  ;;
-
-"lb_cs_gateway:s-cs")
-  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
-  log "LAST_LINE: $LAST_LINE"
-  if echo "$LAST_LINE" | grep -qE "(root@sg_nginx_web3|@sg_nginx_web3)"; then
-    log "Already at target, skipping"
-  else
-    # 这是我的 starship 的提示符，表示准备好接受命令，其它情况不要发送命令，避免误操作
-    if is_prompt_ready; then
-      send_cmd 'ssh jumper'
-      sleep "$STEP1"
-      send_cmd '10.10.93.125'
-      sleep "$STEP2"
-      send_cmd 'conda_cs'
-    else
-      log "Prompt not ready (no ❯), skipping"
-    fi
-  fi
-  ;;
-
-"S0:sql")
-  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
-  log "LAST_LINE: $LAST_LINE"
-  if echo "$LAST_LINE" | grep -qE "(root@alisg-web3-app-01|@alisg-web3-app-01)"; then
-    log "Already at jumper, skipping"
-  else
-    if is_prompt_ready; then
-      send_cmd 'ssh jumper'
-      sleep "$STEP1"
-      send_cmd '10.10.93.125'
-      sleep "$STEP2"
-      send_cmd 'conda_user'
-    else
-      log "Prompt not ready (no ❯), skipping"
-    fi
-  fi
-  ;;
-
-"S0:kub")
-  LAST_LINE=$(tmux capture-pane -t "$PANE_TARGET" -p -J | grep -v '^$' | tail -1)
-  log "LAST_LINE: $LAST_LINE"
-  if echo "$LAST_LINE" | grep -qE "(newweb3-k8s-01-web3|tianhaijun)"; then
-    log "Already at jumper, skipping"
-  else
-    if is_prompt_ready; then
-      send_cmd 'ssh jumper'
-      sleep "$STEP1"
-      send_cmd '10.11.193.41'
-    else
-      log "Prompt not ready (no ❯), skipping"
-    fi
-  fi
-  ;;
-
-*)
-  exit 0
-  ;;
-
+sleep "$STEP1"
+is_ready ssh || exit 0
+line=$(last_line)
+[[ -n $line && $line != "$initial_line" ]] || exit 0
+case "$(printf '%s' "$line" | tr '[:upper:]' '[:lower:]')" in
+  *password*|*passphrase*|*verification*|*otp*|*"are you sure you want to continue connecting"*) exit 0 ;;
 esac
+send_cmd "$address"
+
+if [[ -n $final ]]; then
+  sleep "$STEP2"
+  is_ready ssh || exit 0
+  [[ $(last_line) == *"$host_marker"* ]] || exit 0
+  send_cmd "$final"
+fi

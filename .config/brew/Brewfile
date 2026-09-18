@@ -149,6 +149,8 @@ brew "osx-cpu-temp"
 brew "poppler"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
+# Terminal slideshow tool
+brew "presenterm"
 # Python interface to Tcl/Tk
 brew "python-tk@3.9"
 # Generic machine emulator and virtualizer
@@ -227,14 +229,16 @@ cask "font-maple-mono-normal-cn"
 cask "font-maple-mono-normal-nf"
 cask "font-maple-mono-normal-nf-cn"
 cask "font-symbols-only-nerd-font"
-# Utility to hide menu bar items
-cask "hiddenbar"
 # Open-source keystroke visualiser
 cask "keycastr"
+# Archive manager
+cask "macpacker"
 # Intercept, modify, replay, save HTTP/S traffic
 cask "mitmproxy"
 # Replacement for Docker Desktop
 cask "orbstack"
+# Modern programming language in the Lisp/Scheme family
+cask "racket"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm@nightly"
 npm "clawhub"

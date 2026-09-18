@@ -383,7 +383,7 @@ tmux_conf_theme_clock_style="24"
 #   - false (default)
 #   - disabled
 # on Linux, this requires xsel, xclip or wl-copy
-tmux_conf_copy_to_os_clipboard=false
+tmux_conf_copy_to_os_clipboard=true
 
 
 # -- urlscan -------------------------------------------------------------------
@@ -403,8 +403,8 @@ set -g history-limit 10000
 # and allow terminal notifications/progress passthrough.
 set -g allow-passthrough on
 set -s extended-keys on
-set -as terminal-features 'xterm*:RGB:extkeys'
-set -as terminal-features 'wezterm*:RGB:extkeys'
+if-shell -F '#{==:#{m/r:xterm[*]:RGB:extkeys,#{E:terminal-features}},0}' "set -as terminal-features 'xterm*:RGB:extkeys'"
+if-shell -F '#{==:#{m/r:wezterm[*]:RGB:extkeys,#{E:terminal-features}},0}' "set -as terminal-features 'wezterm*:RGB:extkeys'"
 
 
 bind -n C-l send-keys C-l
@@ -483,7 +483,7 @@ bind-key K run-shell -b 'printf "\033[>4;0m" > "#{pane_tty}"' \; display-message
 # 快速回到上一个 session 和 window
 bind-key -T prefix b switch-client -l
 
-set-hook -g pane-focus-in 'run-shell -b "~/.config/tmux/scripts/pan-hook.sh"'
+set-hook -g pane-focus-in 'run-shell -b "~/.config/tmux/scripts/pan-hook.sh #{hook_pane} #{socket_path}"'
 
 # -- tpm -----------------------------------------------------------------------
 
@@ -497,12 +497,12 @@ set-hook -g pane-focus-in 'run-shell -b "~/.config/tmux/scripts/pan-hook.sh"'
 # by default, launching tmux will update tpm and all plugins
 #   - true (default)
 #   - false
-tmux_conf_update_plugins_on_launch=true
+tmux_conf_update_plugins_on_launch=false
 
 # by default, reloading the configuration will update tpm and all plugins
 #   - true (default)
 #   - false
-tmux_conf_update_plugins_on_reload=true
+tmux_conf_update_plugins_on_reload=false
 
 # by default, reloading the configuration will uninstall tpm and plugins when no
 # plugins are enabled

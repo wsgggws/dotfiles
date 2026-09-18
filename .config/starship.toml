@@ -1,8 +1,12 @@
 add_newline = false
-format = '$directory$git_branch$git_metrics$git_status$cmd_duration$time$character'
+format = '$directory$git_branch$git_metrics$git_status$cmd_duration$time$status$character'
 
 [time]
 disabled = false
+
+[status]
+disabled = false
+format = '[exit:$status]($style) '
 
 [directory]
 truncation_length = 3
@@ -23,5 +27,3 @@ modified = '!'
 staged = '+'
 untracked = '?'
 deleted = 'x'
-
-
