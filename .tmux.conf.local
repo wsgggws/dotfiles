@@ -525,7 +525,7 @@ tmux_conf_uninstall_plugins_on_reload=true
 # set -g @plugin 'tmux-plugins/tmux-yank'
 # set -g @plugin 'christoomey/vim-tmux-navigator'
 
-set -g @plugin 'tmux-plugins/tmux-sensible'
+# please do NOT enable tmux-sensible.
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @continuum-restore 'on'
@@ -540,7 +540,6 @@ set -g @floax-height '90%'
 set -g cursor-style bar
 
 # set -g status-padding -1
-
 
 # -- custom variables ----------------------------------------------------------
 
