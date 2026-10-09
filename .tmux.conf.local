@@ -532,6 +532,13 @@ set -g @continuum-restore 'on'
 set -g @resurrect-save 'S'
 set -g @resurrect-restore 'R'
 
+# Resurrect restores absolute layouts, which may be smaller than the client.
+set -g @resurrect-hook-post-restore-all 'tmux list-clients -F "#{window_id}" | sort -u | while read -r window; do tmux resize-window -A -t "$window"; tmux set-window-option -t "$window" window-size latest; done'
+set-hook -g client-attached[100] 'resize-window -A ; set-window-option window-size latest'
+set-hook -g client-session-changed[100] 'resize-window -A ; set-window-option window-size latest'
+set-hook -g client-resized[100] 'resize-window -A ; set-window-option window-size latest'
+set-hook -g after-select-window[100] 'resize-window -A ; set-window-option window-size latest'
+
 set -g @plugin 'omerxx/tmux-floax'
 set -g @floax-bind 'Space'
 set -g @floax-width '90%'

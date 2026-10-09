@@ -3,6 +3,7 @@ alias rm=trash
 
 alias vi=nvim
 alias vim=nvim
+alias cat=bat
 alias ve="nvim ~/.zsh/env.sh"
 alias vz="nvim ~/.zshrc"
 alias vr="nvim ./README.md"
@@ -22,10 +23,6 @@ alias src="source ~/.zshrc"
 alias ls='eza --icons=auto'
 alias ll='eza -al --icons=auto'
 alias lt='eza --tree --level=2 --icons=auto'
-
-
-alias show='kitty +kitten icat'
-alias kdiff='kitty +kitten diff'
 
 alias brewbackup='brew bundle dump --force --file="$HOME/.config/brew/Brewfile"'
 alias brewsync='brew bundle --file="~/.config/brew/Brewfile"'

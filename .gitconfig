@@ -2,7 +2,7 @@
         quotepath = false
         autocrlf = input
 	hooksPath = /Users/thj/.githooks
-        # excludesfile = ~/.gitignore
+        pager = delta
 [user]
         name = wsgggws
         email = wsgggws@gmail.com
@@ -17,20 +17,18 @@
         defaultBranch = main
 [diff]
         algorithm = histogram
-        colorMoved = plain
+        colorMoved = zebra
+        colorMovedWS = allow-indentation-change
         mnemonicPrefix = true
-        renames = true
-	tool = kitty
+	tool = nvimdiff
+	wsErrorHighlight = all
 [push]
-        default = simple
         autoSetupRemote = true
         followTags = true
+        useForceIfIncludes = true
 [fetch]
         prune = true
-        pruneTags = true
-        all = true
-
-# why the hell not?
+        writeCommitGraph = true
 
 [help]
         autocorrect = prompt
@@ -38,11 +36,11 @@
         verbose = true
 [rerere]
         enabled = true
-        autoupdate = true
 [rebase]
         autoSquash = true
         autoStash = true
         updateRefs = true
+        missingCommitsCheck = error
 
 [pull]
         rebase = true
@@ -53,8 +51,31 @@
         lgs = log --color --graph --pretty=format:'%C(auto)%h%C(reset) %Cgreen%ad%Creset %C(bold blue)%d%C(reset) %C(bold white)%s%C(reset) %C(dim cyan)[%an]%C(reset)' --date=short
         lol = log --graph --decorate --oneline
         hist = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
-	clean-branches = "!f() { \n  git branch | grep -v \"master\" | grep -v \"\\*\" | xargs -r git branch -D\n}; f"
-[difftool "kitty"]
-	cmd = kitty +kitten diff $LOCAL $REMOTE
-[safe]
-	directory = *
+	clean-branches = "!f() { current=$(git branch --show-current) || exit; test -n \"$current\" || { echo \"Not on a branch\" >&2; exit 1; }; git for-each-ref --merged=HEAD --format='%(refname:short)' refs/heads | while IFS= read -r branch; do case \"$branch\" in \"$current\"|main|master|develop|development) continue ;; esac; git branch -d -- \"$branch\"; done; }; f"
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    dark = true
+    side-by-side = true
+    line-numbers = true
+    syntax-theme = Dracula
+    minus-style = syntax "#3c2632"
+    minus-emph-style = syntax bold "#7a3045"
+    plus-style = syntax "#243b32"
+    plus-emph-style = syntax bold "#245f45"
+    file-style = bold "#8be9fd"
+    file-decoration-style = "#6272a4" ul
+    hunk-header-style = syntax file line-number
+    hunk-header-decoration-style = "#6272a4" box
+
+[difftool]
+    prompt = false
+
+[color "diff"]
+    whitespace = red reverse
+
+[merge]
+    conflictStyle = zdiff3
