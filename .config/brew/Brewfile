@@ -11,6 +11,8 @@ tap "universal-ctags/universal-ctags", trusted: true
 brew "act"
 # Asciicast to GIF converter
 brew "agg"
+# Universal Command-Line Interface for Alibaba Cloud
+brew "aliyun-cli"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
 # Text processor and publishing toolchain for AsciiDoc
@@ -231,16 +233,15 @@ cask "font-maple-mono-normal-nf-cn"
 cask "font-symbols-only-nerd-font"
 # Open-source keystroke visualiser
 cask "keycastr"
-# Archive manager
-cask "macpacker"
 # Intercept, modify, replay, save HTTP/S traffic
 cask "mitmproxy"
 # Replacement for Docker Desktop
 cask "orbstack"
-# Modern programming language in the Lisp/Scheme family
-cask "racket"
+# Move and resize windows using keyboard shortcuts or snap areas
+cask "rectangle"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm@nightly"
 npm "clawhub"
 npm "openclaw"
+npm "pm2"
 npm "trash"

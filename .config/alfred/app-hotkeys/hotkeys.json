@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "apps": [
+    {
+      "id": "wezterm",
+      "name": "WezTerm",
+      "hotkey": "cmd+e",
+      "bundle_id": "com.github.wez.wezterm"
+    },
+    {
+      "id": "chrome",
+      "name": "Google Chrome",
+      "hotkey": "cmd+g",
+      "bundle_id": "com.google.Chrome"
+    },
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "hotkey": "option+option",
+      "bundle_id": "com.openai.codex"
+    }
+  ]
+}

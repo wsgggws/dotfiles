@@ -1,0 +1,73 @@
+#!/bin/bash
+set -euo pipefail
+
+session=${ALFRED_TMUX_SESSION:-S0}
+window_name=${ALFRED_TMUX_WINDOW:-deploy}
+tmux=/opt/homebrew/bin/tmux
+wezterm=/opt/homebrew/bin/wezterm
+command=${1-}
+
+if ! "$tmux" has-session -t "=$session" 2>/dev/null; then
+  echo "tmux session not found: $session" >&2
+  exit 1
+fi
+
+client_ttys=$("$tmux" list-clients -t "$session" -F '#{client_tty}')
+wezterm_pane_id=$("$wezterm" cli list --format json | /usr/bin/ruby -rjson -e '
+  ttys = ARGV.fetch(0).lines.map(&:strip)
+  pane = JSON.parse(STDIN.read).find { |item| ttys.include?(item["tty_name"]) }
+  print pane["pane_id"] if pane
+' "$client_ttys")
+if [[ -z "$wezterm_pane_id" ]]; then
+  echo "No WezTerm pane is attached to tmux session: $session" >&2
+  exit 1
+fi
+
+window_id=
+while IFS=' ' read -r id name; do
+  if [[ "$name" == "$window_name" ]]; then
+    if [[ -n "$window_id" ]]; then
+      echo "Multiple tmux windows named $window_name in session $session" >&2
+      exit 1
+    fi
+    window_id=$id
+  fi
+done < <("$tmux" list-windows -t "$session" -F '#{window_id} #{window_name}')
+
+if [[ -z "$window_id" ]]; then
+  window_id=$("$tmux" new-window -d -t "$session:" -n "$window_name" -P -F '#{window_id}')
+fi
+
+pane_id=$("$tmux" display-message -p -t "$window_id" '#{pane_id}')
+pane_command=$("$tmux" display-message -p -t "$pane_id" '#{pane_current_command}')
+case "$pane_command" in
+  bash|fish|sh|zsh) ;;
+  *)
+    pane_path=$("$tmux" display-message -p -t "$pane_id" '#{pane_current_path}')
+    "$tmux" respawn-pane -k -c "$pane_path" -t "$pane_id"
+    for _ in {1..30}; do
+      pane_command=$("$tmux" display-message -p -t "$pane_id" '#{pane_current_command}')
+      case "$pane_command" in
+        bash|fish|sh|zsh) break ;;
+      esac
+      sleep 0.1
+    done
+    case "$pane_command" in
+      bash|fish|sh|zsh) ;;
+      *) echo "tmux window $window_name did not return to a shell" >&2; exit 1 ;;
+    esac
+    ;;
+esac
+
+# Interrupt a pending shell line, including text on both sides of the cursor.
+"$tmux" send-keys -t "$pane_id" C-c
+# Give the shell time to redraw its prompt before sending printable text.
+sleep 0.2
+
+"$tmux" select-window -t "$window_id"
+if [[ -n "$command" ]]; then
+  "$tmux" send-keys -t "$pane_id" -l -- "$command"
+  "$tmux" send-keys -t "$pane_id" Enter
+fi
+/usr/bin/open -a WezTerm
+"$wezterm" cli activate-pane --pane-id "$wezterm_pane_id"
