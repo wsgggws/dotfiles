@@ -58,18 +58,44 @@
 
 [delta]
     navigate = true
-    dark = true
     side-by-side = true
     line-numbers = true
-    syntax-theme = Dracula
-    minus-style = syntax "#3c2632"
-    minus-emph-style = syntax bold "#7a3045"
-    plus-style = syntax "#243b32"
-    plus-emph-style = syntax bold "#245f45"
-    file-style = bold "#8be9fd"
-    file-decoration-style = "#6272a4" ul
+
+    # Original Dracula configuration
+    # dark = true
+    # syntax-theme = Dracula
+    # minus-style = syntax "#3c2632"
+    # minus-emph-style = syntax bold "#7a3045"
+    # plus-style = syntax "#243b32"
+    # plus-emph-style = syntax bold "#245f45"
+    # file-style = bold "#8be9fd"
+    # file-decoration-style = "#6272a4" ul
+    # hunk-header-style = syntax file line-number
+    # hunk-header-decoration-style = "#6272a4" box
+
+    # Sheepskin Light (active)
+    light = true
+    syntax-theme = SheepskinLight
+    minus-style = syntax "#ddbead"
+    minus-emph-style = syntax bold "#d7a99b"
+    plus-style = syntax "#c6d3a5"
+    plus-emph-style = syntax bold "#b2c692"
+    file-style = bold "#315873"
+    file-decoration-style = "#315873" ul
     hunk-header-style = syntax file line-number
-    hunk-header-decoration-style = "#6272a4" box
+    hunk-header-decoration-style = "#b49c65" box
+
+    # Catppuccin Mocha (inactive)
+    # dark = true
+    # syntax-theme = Catppuccin Mocha
+    # minus-style = syntax "#3a2730"
+    # minus-emph-style = syntax bold "#6d354a"
+    # plus-style = syntax "#293b35"
+    # plus-emph-style = syntax bold "#2d5c4a"
+    # file-style = bold "#89b4fa"
+    # file-decoration-style = "#585b70" ul
+    # hunk-header-style = syntax file line-number
+    # hunk-header-decoration-style = "#585b70" box
 
 [difftool]
     prompt = false

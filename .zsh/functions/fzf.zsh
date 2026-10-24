@@ -1,8 +1,25 @@
 # ******* start fzf config
-export FZF_DEFAULT_OPTS='--height 95% --layout=reverse --border --preview "bat --style=numbers {}"'
+
+# zsh 补全和 tmux 窗口选择器共用同一套 fzf 主题。
+source "$HOME/.config/fzf/theme.sh"
+
+# Shared fzf layout; select a theme in ~/.config/fzf/theme.sh.
+export FZF_DEFAULT_OPTS="
+  --height=95%
+  --layout=reverse
+  --border=rounded
+  --border-label=' $FZF_THEME_NAME · Files '
+  --preview-label=' Preview · Ctrl-/ toggle '
+  --preview-window='right:62%:wrap:border-left'
+  --highlight-line
+  --pointer='▶'
+  --info=inline-right
+  --preview '$FZF_THEME_PREVIEW_CMD {}'
+  --color='$FZF_THEME_COLOR'
+"
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 export FZF_CTRL_T_OPTS="
-  --preview 'bat -n {}'
+  --preview '$FZF_THEME_PREVIEW_CMD {}'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
 export FZF_CTRL_R_OPTS="
@@ -30,7 +47,7 @@ _fzf_comprun() {
   cd) fzf --preview 'tree -C {} | head -200' "$@" ;;
   export | unset) fzf --preview "eval 'echo \$'{}" "$@" ;;
   ssh) fzf --preview 'dig {}' "$@" ;;
-  *) fzf --preview 'bat {}' "$@" ;;
+  *) fzf --preview "$FZF_THEME_PREVIEW_CMD {}" "$@" ;;
   esac
 }
 alias f='fzf --bind "enter:become(nvim {})"'

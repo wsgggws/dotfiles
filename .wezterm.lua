@@ -5,7 +5,65 @@ local mux = wezterm.mux
 local config = wezterm.config_builder()
 
 -- config.color_scheme = "Catppuccin Mocha"
-config.color_scheme = "Dracula (Official)"
+-- config.color_scheme = "Dracula (Official)"
+-- config.color_scheme = "Gruvbox light, soft (base16)"
+
+-- Keep WezTerm in sync with sheepskin.nvim's light palette.
+config.colors = {
+	foreground = "#3c3829",
+	background = "#e2cc94",
+	cursor_bg = "#79491c",
+	cursor_border = "#79491c",
+	cursor_fg = "#e2cc94",
+	selection_bg = "#c6a961",
+	selection_fg = "#2c291f",
+	compose_cursor = "#8f352f",
+	split = "#b49c65",
+	scrollbar_thumb = "#b49c65",
+	ansi = {
+		"#e2cc94",
+		"#8f352f",
+		"#405d2b",
+		"#684d12",
+		"#315873",
+		"#704368",
+		"#285d4c",
+		"#3c3829",
+	},
+	brights = {
+		"#807553",
+		"#8f352f",
+		"#405d2b",
+		"#684d12",
+		"#315873",
+		"#704368",
+		"#285d4c",
+		"#2c291f",
+	},
+	tab_bar = {
+		background = "#d7bd7e",
+		active_tab = {
+			bg_color = "#c6a961",
+			fg_color = "#2c291f",
+		},
+		inactive_tab = {
+			bg_color = "#dac381",
+			fg_color = "#5a5441",
+		},
+		inactive_tab_hover = {
+			bg_color = "#d3ba75",
+			fg_color = "#3c3829",
+		},
+		new_tab = {
+			bg_color = "#dac381",
+			fg_color = "#5a5441",
+		},
+		new_tab_hover = {
+			bg_color = "#d3ba75",
+			fg_color = "#3c3829",
+		},
+	},
+}
 config.font_size = 16.5
 config.font = wezterm.font("Monaco")
 config.front_end = "Software"

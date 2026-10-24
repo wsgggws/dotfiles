@@ -1,7 +1,13 @@
 --color=always
 
-# Set the theme to "Dracula"
---theme="Dracula"
+# Original Dracula configuration
+# --theme="Dracula"
+
+# Catppuccin Mocha (inactive)
+# --theme="Catppuccin Mocha"
+
+# Sheepskin Light (active)
+--theme="SheepskinLight"
 # --theme="base16"
 
 # Show line numbers, Git modifications and file header (but no grid)

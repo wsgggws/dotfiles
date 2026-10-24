@@ -231,6 +231,8 @@ cask "font-maple-mono-normal-cn"
 cask "font-maple-mono-normal-nf"
 cask "font-maple-mono-normal-nf-cn"
 cask "font-symbols-only-nerd-font"
+# File archiver
+cask "keka"
 # Open-source keystroke visualiser
 cask "keycastr"
 # Intercept, modify, replay, save HTTP/S traffic
