@@ -3,7 +3,7 @@
 
 # Sheepskin Light (active)
 FZF_THEME_NAME='Sheepskin'
-FZF_THEME_COLOR='fg:#3c3829,bg:#e2cc94,hl:#8f352f,fg+:#2c291f,bg+:#c6a961,hl+:#8f352f,info:#5a5441,prompt:#405d2b,pointer:#8f352f,marker:#704368,spinner:#684d12,header:#684d12,border:#b49c65,label:#315873,preview-label:#315873,query:#2c291f,disabled:#807553,preview-bg:#e8d19d,preview-border:#b49c65'
+FZF_THEME_COLOR='fg:#342f23,bg:#d9bd7a,hl:#7d2925,fg+:#252219,bg+:#bd9851,hl+:#7d2925,info:#504a37,prompt:#315023,pointer:#7d2925,marker:#613457,spinner:#563e0a,header:#563e0a,border:#a88d58,label:#244b66,preview-label:#244b66,query:#252219,disabled:#766b4b,preview-bg:#dfc486,preview-border:#a88d58'
 FZF_THEME_PREVIEW_CMD='bat --color=always --style=numbers,changes --theme=SheepskinLight --paging=never'
 
 # Catppuccin Mocha (inactive)

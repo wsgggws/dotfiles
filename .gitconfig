@@ -76,14 +76,14 @@
     # Sheepskin Light (active)
     light = true
     syntax-theme = SheepskinLight
-    minus-style = syntax "#ddbead"
-    minus-emph-style = syntax bold "#d7a99b"
-    plus-style = syntax "#c6d3a5"
-    plus-emph-style = syntax bold "#b2c692"
-    file-style = bold "#315873"
-    file-decoration-style = "#315873" ul
+    minus-style = syntax "#d0a899"
+    minus-emph-style = syntax bold "#c99788"
+    plus-style = syntax "#b8c68f"
+    plus-emph-style = syntax bold "#a2ba82"
+    file-style = bold "#244b66"
+    file-decoration-style = "#244b66" ul
     hunk-header-style = syntax file line-number
-    hunk-header-decoration-style = "#b49c65" box
+    hunk-header-decoration-style = "#a88d58" box
 
     # Catppuccin Mocha (inactive)
     # dark = true
