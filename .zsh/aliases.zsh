@@ -3,7 +3,6 @@ alias rm=trash
 
 alias vi=nvim
 alias vim=nvim
-alias cat=bat
 alias ve="nvim ~/.zsh/env.sh"
 alias vz="nvim ~/.zshrc"
 alias vr="nvim ./README.md"

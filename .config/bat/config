@@ -13,6 +13,9 @@
 # Show line numbers, Git modifications and file header (but no grid)
 --style="numbers,changes,header"
 
+# Keep source lines intact in narrow previews.
+--wrap=never
+
 # Use italic text on the terminal (not supported on all terminals)
 --italic-text=always
 

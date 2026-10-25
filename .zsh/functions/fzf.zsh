@@ -10,7 +10,8 @@ export FZF_DEFAULT_OPTS="
   --border=rounded
   --border-label=' $FZF_THEME_NAME · Files '
   --preview-label=' Preview · Ctrl-/ toggle '
-  --preview-window='right:62%:wrap:border-left'
+  --preview-window='right:62%:nowrap:border-left'
+  --bind 'ctrl-/:toggle-preview'
   --highlight-line
   --pointer='▶'
   --info=inline-right
@@ -19,8 +20,7 @@ export FZF_DEFAULT_OPTS="
 "
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 export FZF_CTRL_T_OPTS="
-  --preview '$FZF_THEME_PREVIEW_CMD {}'
-  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+  --preview '$FZF_THEME_PREVIEW_CMD {}'"
 
 export FZF_CTRL_R_OPTS="
   --preview 'echo {}' --preview-window up:3:hidden:wrap
@@ -51,4 +51,4 @@ _fzf_comprun() {
   esac
 }
 alias f='fzf --bind "enter:become(nvim {})"'
-# ******* start fzf config
+# ******* end fzf config

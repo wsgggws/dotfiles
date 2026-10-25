@@ -33,7 +33,7 @@
       "thickness" : 2
     },
     "search" : {
-      "background" : "#E5CC92D9",
+      "background" : "#DFC486FF",
       "backgroundSelected" : "#BD9851FF",
       "paddingHorizontal" : 7,
       "paddingVertical" : 5,
@@ -55,7 +55,7 @@
       "blur" : 0,
       "borderColor" : "#A88D58CC",
       "borderPadding" : 0,
-      "color" : "#D9BD7AF2",
+      "color" : "#D9BD7AFF",
       "paddingHorizontal" : 9,
       "paddingVertical" : 9,
       "roundness" : 15,

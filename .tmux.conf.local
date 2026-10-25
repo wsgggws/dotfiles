@@ -102,6 +102,8 @@ tmux_conf_theme_colour_14="$status_line_theme"
 tmux_conf_theme_colour_15="$status_line_theme"
 tmux_conf_theme_colour_16="#7d2925"   # red
 tmux_conf_theme_colour_17="#252219"   # strong text
+tmux_conf_theme_mode_fg="#252219"
+tmux_conf_theme_mode_bg="#b8c68f"
 
 # Catppuccin Mocha palette (inactive)
 # status_line_theme="#1e1e2e" # catppuccin mocha
@@ -120,6 +122,8 @@ tmux_conf_theme_colour_17="#252219"   # strong text
 # tmux_conf_theme_colour_15="$status_line_theme"
 # tmux_conf_theme_colour_16="#f38ba8"   # red
 # tmux_conf_theme_colour_17="#cdd6f4"   # text
+# tmux_conf_theme_mode_fg="#1e1e2e"
+# tmux_conf_theme_mode_bg="#89b4fa"
 
 # Dracula palette (inactive)
 # status_line_theme="#282A36" # dracula
@@ -138,6 +142,8 @@ tmux_conf_theme_colour_17="#252219"   # strong text
 # tmux_conf_theme_colour_15="$status_line_theme"
 # tmux_conf_theme_colour_16="#d70000"   # red
 # tmux_conf_theme_colour_17="#e4e4e4"   # white
+# tmux_conf_theme_mode_fg="#282A36"
+# tmux_conf_theme_mode_bg="#ffff00"
 
 # default theme (ansi)
 #tmux_conf_theme_colour_1="colour0"
@@ -197,14 +203,16 @@ tmux_conf_theme_message_command_attr="bold"
 # tmux_conf_theme_mode_fg="$tmux_conf_theme_colour_1"
 # tmux_conf_theme_mode_bg="$tmux_conf_theme_colour_5"
 # tmux_conf_theme_mode_attr="bold"
-tmux_conf_theme_mode_fg="#252219"
-tmux_conf_theme_mode_bg="#b8c68f"
+# Mode colors are selected in the palette block above.
 tmux_conf_theme_mode_attr="bold"
 
 # Keep native popups consistent with the status-line palette.
 # Sheepskin Light (active)
-set -g popup-style 'fg=#342f23,bg=#dfc486'
-set -g popup-border-style 'fg=#a88d58,bg=#dfc486'
+# Previous popup surface:
+# set -g popup-style 'fg=#342f23,bg=#dfc486'
+# set -g popup-border-style 'fg=#a88d58,bg=#dfc486'
+set -g popup-style 'fg=#342f23,bg=#d9bd7a'
+set -g popup-border-style 'fg=#a88d58,bg=#d9bd7a'
 
 # Catppuccin Mocha (inactive)
 # set -g popup-style 'fg=#cdd6f4,bg=#1e1e2e'

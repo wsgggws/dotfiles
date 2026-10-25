@@ -1,33 +1,33 @@
 #!/bin/zsh
 
+set -uo pipefail
+
 source "$HOME/.config/fzf/theme.sh"
 
-current_session=$(tmux display-message -p '#S')
-current_window=$(tmux display-message -p '#I')
+current_window=$(tmux display-message -p '#{session_id}:#{window_id}') || exit 1
 
-tmux list-windows -a -F '#{window_activity}:#{session_name}:#{window_index}:#{window_name}#{?#{>:#{window_panes},1}, [#{window_panes}p],}:#{pane_id}' \
+# Tabs separate metadata; colons/spaces in window names stay in the label.
+# Stable IDs also keep the selection valid if tmux renumbers a window.
+selection=$(tmux list-windows -a -F $'#{window_activity}\t#{session_id}:#{window_id}\t#{session_name}:#{window_name}#{?#{>:#{window_panes},1}, [#{window_panes}p],}' \
 	| sort -rn \
-	| cut -d: -f2- \
-	| awk -v cs="$current_session" -v cw="$current_window" -F: '
+	| awk -v current="$current_window" -F'\t' '
 	{
-	  display = $1":"$3;
-	  value = $1":"$2;
-	  pane = $4;
-	  if ($1 == cs && $2 == cw)
-	    print "\033[1;32m" display "\033[0m\t" value "\t" pane;
-	  else
-	    print display "\t" value "\t" pane;
+	  marker = ($2 == current) ? "● " : "  ";
+	  print marker $3 "\t" $2;
 	}' \
-	| FZF_DEFAULT_OPTS= fzf --ansi --reverse --with-nth=1 --delimiter=$'\t' \
+	| FZF_DEFAULT_OPTS= FZF_DEFAULT_OPTS_FILE=/dev/null fzf --reverse --with-nth=1 --delimiter=$'\t' \
 		--border=none \
 		--no-scrollbar \
 		--prompt='Select window > ' \
 		--pointer='▶' \
 		--bind 'ctrl-/:toggle-preview' \
 		--color="$FZF_THEME_COLOR" \
-		--preview "$HOME/.config/tmux/scripts/pane-preview.zsh {3}" \
-		--preview-window=right:68%:border-left \
-		--preview-label=' Window preview · Ctrl-/ toggle ' \
-	| awk -F'\t' '{print $2}' \
-	| xargs -I {} tmux switch-client -t {}
+		--preview '"$HOME/.config/tmux/scripts/pane-preview.zsh" {2}' \
+		--preview-window=right:68%:nowrap:border-left \
+		--preview-label=' Window preview · Ctrl-/ toggle ')
+picker_status=$?
+(( picker_status == 0 )) || exit 0
+[[ -n "$selection" ]] || exit 0
+target=${selection##*$'\t'}
+tmux switch-client -t "$target"
 
