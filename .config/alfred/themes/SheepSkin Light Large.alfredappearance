@@ -3,7 +3,7 @@
     "credit" : "wsgggws",
     "name" : "SheepSkin Light Large",
     "result" : {
-      "backgroundSelected" : "#BD9851FF",
+      "backgroundSelected" : "#B08B47FF",
       "iconPaddingHorizontal" : 7,
       "iconSize" : 40,
       "paddingVertical" : 4,
@@ -29,12 +29,12 @@
       "textSpacing" : 5
     },
     "scrollbar" : {
-      "color" : "#A88D58FF",
+      "color" : "#987D48FF",
       "thickness" : 2
     },
     "search" : {
-      "background" : "#DFC486FF",
-      "backgroundSelected" : "#BD9851FF",
+      "background" : "#D4B976FF",
+      "backgroundSelected" : "#B08B47FF",
       "paddingHorizontal" : 7,
       "paddingVertical" : 5,
       "roundness" : 8,
@@ -47,15 +47,15 @@
       }
     },
     "separator" : {
-      "color" : "#A88D58B8",
+      "color" : "#987D48B8",
       "thickness" : 1
     },
     "visualEffectMode" : 1,
     "window" : {
       "blur" : 0,
-      "borderColor" : "#A88D58CC",
+      "borderColor" : "#987D48CC",
       "borderPadding" : 0,
-      "color" : "#D9BD7AFF",
+      "color" : "#CDB06AFF",
       "paddingHorizontal" : 9,
       "paddingVertical" : 9,
       "roundness" : 15,

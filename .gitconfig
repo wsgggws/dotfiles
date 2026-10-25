@@ -84,20 +84,20 @@
     # Sheepskin Light (active)
     light = true
     syntax-theme = SheepskinLight
-    minus-style = syntax "#d0a899"
-    minus-emph-style = syntax bold "#c99788"
-    plus-style = syntax "#b8c68f"
-    plus-emph-style = syntax bold "#a2ba82"
-    file-style = bold "#244b66"
-    file-decoration-style = "#244b66" ul
+    minus-style = syntax "#c39c87"
+    minus-emph-style = "#252219" bold "#b88973"
+    plus-style = syntax "#adb87f"
+    plus-emph-style = "#252219" bold "#94aa70"
+    file-style = bold "#234861"
+    file-decoration-style = "#234861" ul
     hunk-header-style = syntax file line-number
-    hunk-header-decoration-style = "#a88d58" box
-    zero-style = syntax "#d9bd7a"
-    line-numbers-left-style = "#a88d58" "#d9bd7a"
-    line-numbers-right-style = "#a88d58" "#d9bd7a"
-    line-numbers-zero-style = "#615a43" "#d9bd7a"
-    line-numbers-minus-style = "#7d2925" "#d0a899"
-    line-numbers-plus-style = "#315023" "#b8c68f"
+    hunk-header-decoration-style = "#987d48" box
+    zero-style = syntax "#cdb06a"
+    line-numbers-left-style = "#987d48" "#cdb06a"
+    line-numbers-right-style = "#987d48" "#cdb06a"
+    line-numbers-zero-style = "#615a43" "#cdb06a"
+    line-numbers-minus-style = "#7d2925" "#c39c87"
+    line-numbers-plus-style = "#2d4824" "#adb87f"
 
     # Catppuccin Mocha (inactive)
     # dark = true
