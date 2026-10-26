@@ -85,25 +85,47 @@ tmux_conf_24b_colour=auto
 #   - tmux_conf_theme_synchronized
 tmux_conf_theme=enabled
 
-# Sheepskin Light palette (active)
-status_line_theme="#cdb06a" # sheepskin light
-tmux_conf_theme_colour_1="$status_line_theme"
-tmux_conf_theme_colour_2="#987d48"    # border
-tmux_conf_theme_colour_3="#342f23"    # text
-tmux_conf_theme_colour_4="#234861"    # accent blue
-tmux_conf_theme_colour_5="#563e0a"    # yellow
-tmux_conf_theme_colour_6="$status_line_theme"
-tmux_conf_theme_colour_7="#252219"    # strong text
-tmux_conf_theme_colour_8="$status_line_theme"
-tmux_conf_theme_colour_9="#563e0a"    # yellow
-tmux_conf_theme_colour_12="#504a37"   # muted text
-tmux_conf_theme_colour_13="#342f23"   # text
-tmux_conf_theme_colour_14="$status_line_theme"
-tmux_conf_theme_colour_15="$status_line_theme"
-tmux_conf_theme_colour_16="#7d2925"   # red
-tmux_conf_theme_colour_17="#252219"   # strong text
-tmux_conf_theme_mode_fg="#252219"
-tmux_conf_theme_mode_bg="#adb87f"
+# QingShan palette (active)
+status_line_theme="#263832"
+tmux_conf_theme_colour_1="#202F2B"
+tmux_conf_theme_colour_2="#536B5A"
+tmux_conf_theme_colour_3="#A8B8AA"
+tmux_conf_theme_colour_4="#A5C7B7"
+tmux_conf_theme_colour_5="#C5AD78"
+tmux_conf_theme_colour_6="#263832"
+tmux_conf_theme_colour_7="#D9E2D1"
+tmux_conf_theme_colour_8="#263832"
+tmux_conf_theme_colour_9="#C5AD78"
+tmux_conf_theme_colour_10="#CDBF9D"
+tmux_conf_theme_colour_11="#AAC39A"
+tmux_conf_theme_colour_12="#ABA396"
+tmux_conf_theme_colour_13="#A8B8AA"
+tmux_conf_theme_colour_14="#1B2824"
+tmux_conf_theme_colour_15="#263832"
+tmux_conf_theme_colour_16="#D29580"
+tmux_conf_theme_colour_17="#A5C7B7"
+tmux_conf_theme_mode_fg="#1B2824"
+tmux_conf_theme_mode_bg="#A5C7B7"
+
+# HuangPao palette (inactive)
+# status_line_theme="#cdb06a" # huangpao light
+# tmux_conf_theme_colour_1="$status_line_theme"
+# tmux_conf_theme_colour_2="#987d48"    # border
+# tmux_conf_theme_colour_3="#342f23"    # text
+# tmux_conf_theme_colour_4="#234861"    # accent blue
+# tmux_conf_theme_colour_5="#563e0a"    # yellow
+# tmux_conf_theme_colour_6="$status_line_theme"
+# tmux_conf_theme_colour_7="#252219"    # strong text
+# tmux_conf_theme_colour_8="$status_line_theme"
+# tmux_conf_theme_colour_9="#563e0a"    # yellow
+# tmux_conf_theme_colour_12="#504a37"   # muted text
+# tmux_conf_theme_colour_13="#342f23"   # text
+# tmux_conf_theme_colour_14="$status_line_theme"
+# tmux_conf_theme_colour_15="$status_line_theme"
+# tmux_conf_theme_colour_16="#7d2925"   # red
+# tmux_conf_theme_colour_17="#252219"   # strong text
+# tmux_conf_theme_mode_fg="#d4b976"
+# tmux_conf_theme_mode_bg="#252219"
 
 # Catppuccin Mocha palette (inactive)
 # status_line_theme="#1e1e2e" # catppuccin mocha
@@ -211,9 +233,13 @@ tmux_conf_theme_mode_attr="bold"
 # set -g popup-style 'fg=#342f23,bg=#dfc486'
 # set -g popup-border-style 'fg=#a88d58,bg=#dfc486'
 
-# Sheepskin Light (active)
-set -g popup-style 'fg=#342f23,bg=#cdb06a'
-set -g popup-border-style 'fg=#987d48,bg=#cdb06a'
+# QingShan (active)
+set -g popup-style 'fg=#D9E2D1,bg=#263832'
+set -g popup-border-style 'fg=#536B5A,bg=#263832'
+
+# HuangPao (inactive)
+# set -g popup-style 'fg=#342f23,bg=#cdb06a'
+# set -g popup-border-style 'fg=#987d48,bg=#cdb06a'
 
 # Catppuccin Mocha (inactive)
 # set -g popup-style 'fg=#cdd6f4,bg=#1e1e2e'

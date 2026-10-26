@@ -1,68 +1,102 @@
 #!/bin/zsh
-
 set -euo pipefail
 
 theme_dir=${0:A:h}
+check_only=false
+if [[ "${1:-}" == --check ]]; then
+  check_only=true
+  shift
+fi
+theme_choice=${1:-}
+case "${theme_choice:l}" in
+  qinshan|qingshan|"qingshan dark large")
+    theme_file="QingShan Dark Large.alfredappearance"
+    prefs_file="qingshan.plist"
+    ;;
+  huangpao|"huangpao light large")
+    theme_file="HuangPao Light Large.alfredappearance"
+    prefs_file="huangpao-light-large.plist"
+    ;;
+  alfred|dracula|catppuccin|"alfred modern dark large")
+    theme_file="Alfred Modern Dark Large.alfredappearance"
+    prefs_file="alfred-modern-dark-large.plist"
+    ;;
+  *) print -u2 "Usage: $0 [--check] qinshan|qingshan|huangpao|dracula|catppuccin|alfred"; exit 2 ;;
+esac
+
 alfred_preferences=${ALFRED_PREFERENCES:-}
 if [[ -z "$alfred_preferences" ]]; then
   sync_folder=$(/usr/bin/defaults read com.runningwithcrayons.Alfred-Preferences syncfolder 2>/dev/null) || sync_folder=''
   alfred_preferences="${sync_folder:-$HOME/Library/Application Support/Alfred}/Alfred.alfredpreferences"
 fi
-
 appearance_prefs=${ALFRED_APPEARANCE_PREFS:-}
 if [[ -z "$appearance_prefs" ]]; then
   appearance_files=("$alfred_preferences"/preferences/local/*/appearance/prefs.plist(N))
   if (( ${#appearance_files} != 1 )); then
-    print -u2 'Cannot uniquely locate appearance/prefs.plist; set ALFRED_APPEARANCE_PREFS to the current device file.'
+    print -u2 'Cannot uniquely locate appearance/prefs.plist; set ALFRED_APPEARANCE_PREFS.'
     exit 1
   fi
   appearance_prefs=$appearance_files[1]
 fi
 
-case "${1:-}" in
-  sheepskin|"SheepSkin Light Large")
-    theme_id="theme.custom.1718079A-1C3F-44DA-A83C-BC93AA51C9FA"
-    theme_file="SheepSkin Light Large.alfredappearance"
-    prefs_file="sheepskin-light-large.plist"
-    ;;
-  alfred|"Alfred Modern Dark Large")
-    theme_id="theme.custom.F96B87FC-EEDF-4B05-8478-01DDD5AEE210"
-    theme_file="Alfred Modern Dark Large.alfredappearance"
-    prefs_file="alfred-modern-dark-large.plist"
-    ;;
-  *)
-    print -u2 "Usage: $0 sheepskin|alfred"
-    exit 2
-    ;;
-esac
+plist_value() {
+  local output
+  output=$(/usr/bin/plutil "$@" 2>&1) || { print -ru2 -- "$output"; return 1; }
+  print -r -- "$output"
+}
 
-# Validate everything before stopping Alfred or changing live preferences.
-/usr/bin/plutil -extract alfredtheme json -o /dev/null "$theme_dir/$theme_file"
-/usr/bin/plutil -lint "$theme_dir/$prefs_file" "$appearance_prefs" >/dev/null
-for appearance_key in lightthemeuid darkthemeuid; do
-  profile_id=$(/usr/bin/plutil -extract "$appearance_key" raw -o - "$theme_dir/$prefs_file")
-  [[ "$profile_id" == "$theme_id" ]] || { print -u2 'Theme profile UID mismatch'; exit 1; }
-done
+plist_value -extract alfredtheme json -o /dev/null "$theme_dir/$theme_file" >/dev/null
+theme_name=$(plist_value -extract alfredtheme.name raw -o - "$theme_dir/$theme_file")
+plist_value -lint "$theme_dir/$prefs_file" "$appearance_prefs" >/dev/null
+theme_id=$(plist_value -extract lightthemeuid raw -o - "$theme_dir/$prefs_file")
+dark_id=$(plist_value -extract darkthemeuid raw -o - "$theme_dir/$prefs_file")
+[[ "$theme_id" == theme.custom.* && "$dark_id" == "$theme_id" ]] || { print -u2 'Theme profile UID mismatch'; exit 1; }
+$check_only && exit 0
 
-# Quit first so Alfred cannot save its cached appearance over the update.
-/usr/bin/osascript -e 'tell application id "com.runningwithcrayons.Alfred" to quit'
-for attempt in {1..30}; do
-  /usr/bin/pgrep -x Alfred >/dev/null || break
-  sleep 0.1
-done
-if /usr/bin/pgrep -x Alfred >/dev/null; then
-  print -u2 'Alfred did not quit; preferences were not changed.'
-  exit 1
+apply_live_theme() {
+  command osascript - "$theme_name" >/dev/null <<'APPLESCRIPT'
+on run argv
+  tell application id "com.runningwithcrayons.Alfred" to set theme (item 1 of argv)
+end run
+APPLESCRIPT
+}
+registered_theme="$alfred_preferences/themes/$theme_id/theme.json"
+current_light=$(/usr/bin/plutil -extract lightthemeuid raw -o - "$appearance_prefs" 2>/dev/null) || current_light=''
+current_dark=$(/usr/bin/plutil -extract darkthemeuid raw -o - "$appearance_prefs" 2>/dev/null) || current_dark=''
+if [[ "$current_light" == "$theme_id" && "$current_dark" == "$theme_id" ]] \
+  && cmp -s "$theme_dir/$theme_file" "$registered_theme"; then
+  if command pgrep -x Alfred >/dev/null; then
+    apply_live_theme
+  fi
+  exit 0
 fi
 
-mkdir -p "$theme_dir/backups" "$alfred_preferences/themes/$theme_id"
-cp -p "$appearance_prefs" "$theme_dir/backups/appearance-before-switch.plist"
-cp "$theme_dir/$theme_file" "$alfred_preferences/themes/$theme_id/theme.json"
-# Preserve all unrelated appearance preferences.
+# Alfred caches its preferences. Quit normally before updating only theme UIDs.
+was_running=false
+if /usr/bin/pgrep -x Alfred >/dev/null; then
+  was_running=true
+  /usr/bin/osascript -e 'tell application id "com.runningwithcrayons.Alfred" to quit' >/dev/null
+  for attempt in {1..30}; do
+    /usr/bin/pgrep -x Alfred >/dev/null || break
+    sleep 0.1
+  done
+  if /usr/bin/pgrep -x Alfred >/dev/null; then
+    print -u2 'Alfred did not quit; preferences were not changed.'
+    exit 1
+  fi
+fi
+
+umask 077
+mkdir -p "$theme_dir/backups" "${registered_theme:h}"
+backup="$theme_dir/backups/appearance-$(date -u +%Y%m%dT%H%M%SZ)-$$.plist"
+cp -p "$appearance_prefs" "$backup"
+cp "$theme_dir/$theme_file" "$registered_theme"
 for appearance_key in lightthemeuid darkthemeuid; do
   /usr/libexec/PlistBuddy -c "Set :$appearance_key $theme_id" "$appearance_prefs" 2>/dev/null \
     || /usr/libexec/PlistBuddy -c "Add :$appearance_key string $theme_id" "$appearance_prefs"
 done
-/usr/bin/open -b com.runningwithcrayons.Alfred
-
-print "Activated: ${theme_file%.alfredappearance}"
+if $was_running; then
+  /usr/bin/open -b com.runningwithcrayons.Alfred
+  apply_live_theme
+fi
+exit 0

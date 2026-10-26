@@ -4,3 +4,19 @@
 .raycast/scripts/Aliyun-*.sh
 .raycast/scripts/Gitlab-*.sh
 .raycast/scripts/Nacos-*.sh
+
+# Python bytecode and tool caches
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# macOS metadata
+.DS_Store
+
+# Editor temporary files
+*.swp
+*.swo
+*~

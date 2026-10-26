@@ -1,0 +1,65 @@
+{
+  "alfredtheme" : {
+    "result" : {
+      "textSpacing" : 5,
+      "subtext" : {
+        "size" : 14,
+        "colorSelected" : "#D9E2D1FF",
+        "font" : "System",
+        "color" : "#A8B8AAFF"
+      },
+      "shortcut" : {
+        "size" : 18,
+        "colorSelected" : "#D9E2D1FF",
+        "font" : "System",
+        "color" : "#C5AD78FF"
+      },
+      "backgroundSelected" : "#3B5747FF",
+      "text" : {
+        "size" : 18,
+        "colorSelected" : "#D9E2D1FF",
+        "font" : "System",
+        "color" : "#D9E2D1FF"
+      },
+      "iconPaddingHorizontal" : 7,
+      "roundness" : 8,
+      "paddingVertical" : 4,
+      "iconSize" : 40
+    },
+    "search" : {
+      "backgroundSelected" : "#3B5747FF",
+      "paddingHorizontal" : 7,
+      "spacing" : 9,
+      "text" : {
+        "size" : 36,
+        "colorSelected" : "#D9E2D1FF",
+        "font" : "System Light",
+        "color" : "#D9E2D1FF"
+      },
+      "background" : "#263832FF",
+      "roundness" : 8,
+      "paddingVertical" : 5
+    },
+    "window" : {
+      "color" : "#202F2BFF",
+      "paddingHorizontal" : 9,
+      "width" : 760,
+      "borderPadding" : 0,
+      "borderColor" : "#536B5AFF",
+      "blur" : 0,
+      "roundness" : 15,
+      "paddingVertical" : 9
+    },
+    "credit" : "wsgggws",
+    "visualEffectMode" : 1,
+    "separator" : {
+      "color" : "#536B5AFF",
+      "thickness" : 1
+    },
+    "scrollbar" : {
+      "color" : "#536B5AFF",
+      "thickness" : 2
+    },
+    "name" : "QingShan Dark Large"
+  }
+}

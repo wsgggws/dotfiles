@@ -7,8 +7,8 @@ local config = wezterm.config_builder()
 config.color_scheme_dirs = { wezterm.home_dir .. "/.config/wezterm/colors" }
 -- config.color_scheme = "Catppuccin Mocha"
 -- config.color_scheme = "Dracula (Official)"
--- config.color_scheme = "Gruvbox light, soft (base16)"
-config.color_scheme = "Sheepskin"
+-- config.color_scheme = "HuangPao"
+config.color_scheme = "QingShan"
 
 config.font_size = 17
 -- config.font_size = 22
