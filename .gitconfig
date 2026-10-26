@@ -63,7 +63,7 @@
     true-color = always
     wrap-max-lines = 0
 
-    # Original Dracula configuration
+    # Original Dracula configuration (inactive)
     # dark = true
     # syntax-theme = Dracula
     # minus-style = syntax "#3c2632"
