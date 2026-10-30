@@ -1,0 +1,42 @@
+# Lazygit 0.66.2 — commit review and a GitLab feature-branch workflow.
+# Lazygit and Delta use the active terminal palette.
+gui:
+  colorScheme: auto
+  sidePanelWidth: 0.32
+  expandFocusedSidePanel: true
+  expandedSidePanelWeight: 3
+  mouseEvents: true
+  showFileTree: true
+  showNumstatInFilesView: true
+  showDivergenceFromBaseBranch: arrowAndNumber
+  showRandomTip: false
+  # Keep the command log available via @, while giving diffs more space.
+  showCommandLog: false
+
+git:
+  mainBranches:
+    - master
+    - main
+  autoFetch: true
+  # Fetch updates remote refs; update local branches explicitly when ready.
+  autoForwardBranches: none
+  diffContextSize: 5
+  log:
+    order: topo-order
+    showGraph: always
+    showWholeGraph: false
+  diffRenderers:
+    - name: Delta unified
+      colorArg: always
+      # Wrapping prevents long lines from being truncated by Delta.
+      # Use terminal palette colors and a unified layout inside lazygit.
+      command: delta --config "$HOME/.config/lazygit/delta.gitconfig" --paging=never --line-numbers --wrap-max-lines=unlimited --width={{width}}
+    # Press | if you temporarily want a side-by-side view in lazygit.
+    - name: Delta side-by-side
+      colorArg: always
+      command: delta --config "$HOME/.config/lazygit/delta.gitconfig" --paging=never --side-by-side --line-numbers --wrap-max-lines=unlimited --width={{width}}
+    - name: Git unified
+      type: rawGit
+
+refresher:
+  fetchInterval: 300

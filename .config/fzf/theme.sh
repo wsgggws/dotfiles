@@ -16,8 +16,13 @@
 # FZF_THEME_COLOR='fg:#f8f8f2,bg:#282a36,hl:#ff79c6,fg+:#f8f8f2,bg+:#44475a,hl+:#ff79c6,info:#a6adc8,prompt:#50fa7b,pointer:#ff79c6,marker:#bd93f9,spinner:#f1fa8c,header:#ffb86c,border:#6272a4,label:#8be9fd,preview-label:#8be9fd,query:#f8f8f2,disabled:#6272a4,preview-bg:#282a36,preview-border:#6272a4'
 # FZF_THEME_PREVIEW_CMD='COLORTERM=truecolor bat --color=always --style=numbers,changes --theme="Dracula" --paging=never --wrap=never --terminal-width="${FZF_PREVIEW_COLUMNS:-80}" --'
 
-# QingShan (active)
-FZF_THEME_NAME='QingShan'
-FZF_THEME_COLOR='fg:#D9E2D1,bg:#263832,hl:#C5AD78,fg+:#D9E2D1,bg+:#3B5747,hl+:#D1B77F,info:#A8B8AA,prompt:#A5C7B7,pointer:#C5AD78,marker:#AAC39A,spinner:#A5C7B7,header:#ABA396,border:#536B5A,label:#A5C7B7,preview-label:#A5C7B7,query:#D9E2D1,disabled:#ABA396,preview-fg:#D9E2D1,preview-bg:#202F2B,preview-border:#536B5A'
-FZF_THEME_PREVIEW_CMD='COLORTERM=truecolor bat --color=always --style=numbers,changes --theme=QingShan --paging=never --wrap=never --terminal-width="${FZF_PREVIEW_COLUMNS:-80}" --'
+# QingShan (inactive)
+# FZF_THEME_NAME='QingShan'
+# FZF_THEME_COLOR='fg:#DEE7DF,bg:#26383E,hl:#CCB17E,fg+:#DEE7DF,bg+:#3C5962,hl+:#D1B77F,info:#AFBFBA,prompt:#94C9CF,pointer:#CCB17E,marker:#AAC39A,spinner:#94C9CF,header:#A7A6A3,border:#56767C,label:#94C9CF,preview-label:#94C9CF,query:#DEE7DF,disabled:#A7A6A3,preview-fg:#DEE7DF,preview-bg:#203237,preview-border:#56767C'
+# FZF_THEME_PREVIEW_CMD='COLORTERM=truecolor bat --color=always --style=numbers,changes --theme=QingShan --paging=never --wrap=never --terminal-width="${FZF_PREVIEW_COLUMNS:-80}" --'
+
+# LuZhu (active)
+FZF_THEME_NAME='LuZhu'
+FZF_THEME_COLOR='fg:#DCE8D5,bg:#243B2E,hl:#C5AD78,fg+:#DCE8D5,bg+:#41634A,hl+:#D1B77F,info:#AEC0AB,prompt:#99CEBE,pointer:#C5AD78,marker:#A8C38B,spinner:#99CEBE,header:#A6A5A2,border:#56785D,label:#99CEBE,preview-label:#99CEBE,query:#DCE8D5,disabled:#A6A5A2,preview-fg:#DCE8D5,preview-bg:#1D3229,preview-border:#56785D'
+FZF_THEME_PREVIEW_CMD='COLORTERM=truecolor bat --color=always --style=numbers,changes --theme=LuZhu --paging=never --wrap=never --terminal-width="${FZF_PREVIEW_COLUMNS:-80}" --'
 

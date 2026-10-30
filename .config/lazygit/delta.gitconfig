@@ -1,0 +1,25 @@
+# Use WezTerm's active ANSI palette instead of fixed RGB theme colors.
+# Deliberately independent of the terminal git diff Delta configuration.
+[delta]
+    side-by-side = false
+    syntax-theme = ansi
+    true-color = never
+    minus-style = syntax normal
+    minus-emph-style = red bold reverse
+    minus-non-emph-style = syntax normal
+    plus-style = syntax normal
+    plus-emph-style = green bold reverse
+    plus-non-emph-style = syntax normal
+    zero-style = syntax normal
+    keep-plus-minus-markers = true
+    commit-style = yellow bold
+    file-style = cyan bold
+    file-decoration-style = cyan ul
+    hunk-header-style = file line-number syntax
+    hunk-header-decoration-style = blue box
+    line-numbers-left-style = blue
+    line-numbers-right-style = blue
+    line-numbers-zero-style = brightblack
+    line-numbers-minus-style = red
+    line-numbers-plus-style = green
+    whitespace-error-style = red reverse

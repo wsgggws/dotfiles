@@ -1,0 +1,7 @@
+# Used only by `lazygit log` through ~/.zsh/functions/lazygit.zsh.
+# One full-height tab group; all standard views remain available with [ and ].
+gui:
+  sidePanelWidth: 0.32
+  portraitMode: never
+  sidePanels:
+    - [commits, files, branches, status, worktrees, submodules, remotes, tags, reflog, stash]

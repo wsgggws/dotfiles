@@ -3,12 +3,19 @@ local act = wezterm.action
 local mux = wezterm.mux
 
 local config = wezterm.config_builder()
+-- BEGIN LuZhu watch
+wezterm.add_to_config_reload_watch_list(wezterm.home_dir .. "/.config/wezterm/colors/LuZhu.toml")
+-- END LuZhu watch
 
 config.color_scheme_dirs = { wezterm.home_dir .. "/.config/wezterm/colors" }
+for _, name in ipairs({ "QingShan", "HuangPao" }) do
+	wezterm.add_to_config_reload_watch_list(config.color_scheme_dirs[1] .. "/" .. name .. ".toml")
+end
 -- config.color_scheme = "Catppuccin Mocha"
 -- config.color_scheme = "Dracula (Official)"
 -- config.color_scheme = "HuangPao"
-config.color_scheme = "QingShan"
+-- config.color_scheme = "QingShan"
+config.color_scheme = "LuZhu"
 
 config.font_size = 17
 -- config.font_size = 22

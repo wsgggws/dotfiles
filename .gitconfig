@@ -3,9 +3,10 @@
         autocrlf = input
 	hooksPath = /Users/thj/.githooks
         pager = delta
+	excludesfile = /Users/thj/.gitignore_global
 [user]
-        name = wsgggws
-        email = wsgggws@gmail.com
+	name = wsgggws
+	email = wsgggws@gmail.com
 
 [column]
         ui = auto
@@ -34,6 +35,7 @@
         autocorrect = prompt
 [commit]
         verbose = true
+	template = /Users/thj/.stCommitMsg
 [rerere]
         enabled = true
 [rebase]
@@ -117,24 +119,43 @@
     # line-numbers-minus-style = "#f38ba8" "#3a2730"
     # line-numbers-plus-style = "#a6e3a1" "#293b35"
 
-    # QingShan (active)
+    # QingShan (inactive)
+    # dark = true
+    # light = false
+    # syntax-theme = QingShan
+    # minus-style = syntax "#432F2B"
+    # minus-emph-style = "#1A292D" bold "#D29580"
+    # plus-style = syntax "#2C4031"
+    # plus-emph-style = "#DEE7DF" bold "#3C5962"
+    # file-style = bold "#94C9CF"
+    # file-decoration-style = "#56767C" ul
+    # hunk-header-style = syntax file line-number
+    # hunk-header-decoration-style = "#56767C" box
+    # zero-style = syntax "#203237"
+    # line-numbers-left-style = "#A7A6A3" "#203237"
+    # line-numbers-right-style = "#A7A6A3" "#203237"
+    # line-numbers-zero-style = "#A7A6A3" "#203237"
+    # line-numbers-minus-style = "#D29580" "#432F2B"
+    # line-numbers-plus-style = "#AAC39A" "#2C4031"
+
+    # LuZhu (active)
     dark = true
     light = false
-    syntax-theme = QingShan
+    syntax-theme = LuZhu
     minus-style = syntax "#432F2B"
-    minus-emph-style = "#1B2824" bold "#D29580"
-    plus-style = syntax "#2C4031"
-    plus-emph-style = "#D9E2D1" bold "#3B5747"
-    file-style = bold "#A5C7B7"
-    file-decoration-style = "#536B5A" ul
+    minus-emph-style = "#182A22" bold "#D29580"
+    plus-style = syntax "#294630"
+    plus-emph-style = "#DCE8D5" bold "#41634A"
+    file-style = bold "#99CEBE"
+    file-decoration-style = "#56785D" ul
     hunk-header-style = syntax file line-number
-    hunk-header-decoration-style = "#536B5A" box
-    zero-style = syntax "#202F2B"
-    line-numbers-left-style = "#ABA396" "#202F2B"
-    line-numbers-right-style = "#ABA396" "#202F2B"
-    line-numbers-zero-style = "#ABA396" "#202F2B"
+    hunk-header-decoration-style = "#56785D" box
+    zero-style = syntax "#1D3229"
+    line-numbers-left-style = "#A6A5A2" "#1D3229"
+    line-numbers-right-style = "#A6A5A2" "#1D3229"
+    line-numbers-zero-style = "#A6A5A2" "#1D3229"
     line-numbers-minus-style = "#D29580" "#432F2B"
-    line-numbers-plus-style = "#AAC39A" "#2C4031"
+    line-numbers-plus-style = "#A8C38B" "#294630"
 
 [difftool]
     prompt = false
@@ -144,3 +165,9 @@
 
 [merge]
     conflictStyle = zdiff3
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

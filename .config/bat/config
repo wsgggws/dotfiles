@@ -19,6 +19,9 @@
 # Use italic text on the terminal (not supported on all terminals)
 --italic-text=always
 
-# QingShan (active)
---theme="QingShan"
+# QingShan (inactive)
+# --theme="QingShan"
+
+# LuZhu (active)
+--theme="LuZhu"
 

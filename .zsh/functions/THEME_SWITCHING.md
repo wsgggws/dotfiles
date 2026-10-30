@@ -1,12 +1,15 @@
 # 一键切换主题
 
-当前终端首次使用时加载函数，之后直接运行 `switch_all_theme`。四套主题保留安装，切换只调整配色选择：
+当前终端首次使用时加载函数，之后直接运行 `switch_all_theme`。五套主题保留安装，切换只调整配色选择：
 
 ```zsh
 source ~/.zsh/functions/switch_all_theme.zsh
 switch_all_theme             # 显示帮助
-switch_all_theme qinshan     # 青山入墨：黛青深色
+switch_all_theme luzhu       # 绿珠：古代美人之名，绿意如珍宝
+switch_all_theme luzhu --refresh  # 更新同名文件后刷新缓存与应用
+switch_all_theme qinshan     # 青山入墨：黛青偏蓝，暖灰注释与纸白变量
 switch_all_theme qingshan    # 青山的同义参数
+switch_all_theme qingshan --refresh  # 更新同名主题文件后刷新缓存与应用
 switch_all_theme huangpao    # 黄袍：古绢暖黄、玄墨文字
 switch_all_theme dracula
 switch_all_theme catppuccin  # Mocha
@@ -16,17 +19,18 @@ switch_all_theme catppuccin  # Mocha
 
 正常切换不输出内容并返回 `0`；重复选择同一主题也保持静默。出错时向 stderr 输出原因并返回非零状态。查看用法可运行 `switch_all_theme --help`。
 
-仓库目录分别为 `~/github/QingShan.nvim` 与 `~/github/HuangPao.nvim`，保留大小写。仓库只维护主题与同色板原生文件，独立导入方法见各自的 `extras/README.md`。切换脚本、选择器和账户安装工具由下面的本机目录维护。
+仓库目录为 `~/github/LuZhu.nvim`、`~/github/QingShan.nvim` 与 `~/github/HuangPao.nvim`，保留大小写。仓库只维护主题与同色板原生文件，独立导入方法见各自的 `extras/README.md`。切换脚本、选择器和账户安装工具由下面的本机目录维护。
 
 ## 代码归属
 
 | 功能 | 唯一维护位置 | 验证位置 |
 | --- | --- | --- |
 | `switch_all_theme` 与补全 | `~/.zsh/functions/switch_all_theme.zsh` | `~/.zsh/tests/test_themes.py` |
+| 本机绿珠文件安装与配色块更新 | `~/.zsh/scripts/install_luzhu.py` | `~/.zsh/tests/test_luzhu.py` |
 | 本机青山文件安装与配色块更新 | `~/.zsh/scripts/install_qingshan.py` | `~/.zsh/tests/test_themes.py` |
 | Alfred 自动切换 | `~/.config/alfred/themes/switch-theme.sh` | `~/.config/alfred/themes/tests/` |
 | tmux 窗口选择器与预览 | `~/.config/tmux/scripts/` | `~/.config/tmux/tests/` |
-| Neovim 主题、原生配色导出 | `~/github/QingShan.nvim`、`~/github/HuangPao.nvim` | 各仓库的 `tests/` |
+| Neovim 主题、原生配色导出 | `~/github/LuZhu.nvim`、`~/github/QingShan.nvim`、`~/github/HuangPao.nvim` | 各仓库的 `tests/` |
 
 主题仓库不再分发个人配置脚本，运行切换命令不再从仓库加载 shell 代码。Neovim 仍通过插件配置加载主题，安装器更新原生主题时才读取主题仓库。
 
@@ -36,21 +40,22 @@ switch_all_theme catppuccin  # Mocha
 | --- | --- | --- |
 | Neovim / nvimdiff | `~/.config/nvim/lua/plugins/colorschema.lua` | 只切换 `colorscheme` 名称 |
 | WezTerm | `~/.wezterm.lua` | 只切换 `config.color_scheme` 名称 |
-| tmux 状态栏、选区和弹窗 | `~/.tmux.conf.local` | 启用目标配色，注释其余三套 |
+| tmux 状态栏、选区和弹窗 | `~/.tmux.conf.local` | 启用目标配色，注释其余四套 |
 | fzf 和文件预览 | `~/.config/fzf/theme.sh` | 切换共享配色和 bat 预览主题 |
 | bat | `~/.config/bat/config` | 切换 `--theme` |
 | Git diff / delta | `~/.gitconfig` | 切换 `[delta]` 中的配色和明暗模式 |
-| Alfred | `~/.config/alfred/themes/` | 青山、黄袍选择各自外观，其他主题选择 Alfred Modern Dark Large |
+| Alfred | `~/.config/alfred/themes/` | 绿珠、青山、黄袍选择各自外观，其他主题选择 Alfred Modern Dark Large |
 | slides / Markdown PPT | `~/github/slides-md-ppt/*_theme.json` | 文稿指定 JSON，命令保留文稿内容 |
 
 ## Neovim
 
-QingShan、HuangPao、Catppuccin 和 Dracula 的插件配置始终保留，四者均可按需加载。
+LuZhu、QingShan、HuangPao、Catppuccin 和 Dracula 的插件配置始终保留，五者均可按需加载。
 `lazy = true` 表示按需加载，不影响安装，也不会因为切换主题而被列入 clean。
 `switch_all_theme` 只切换 `LazyVim/LazyVim` 的 `opts.colorscheme`，不再注释插件块。
 
 | 命令参数 | Neovim | WezTerm | bat / delta | Alfred |
 | --- | --- | --- | --- | --- |
+| `luzhu` | `luzhu` | `LuZhu` | `LuZhu` | `LuZhu Dark Large` |
 | `qinshan` / `qingshan` | `qingshan` | `QingShan` | `QingShan` | `QingShan Dark Large` |
 | `huangpao` | `huangpao` | `HuangPao` | `HuangPao` | `HuangPao Light Large` |
 | `dracula` | `dracula` | `Dracula (Official)` | `Dracula` | `Alfred Modern Dark Large` |
@@ -65,7 +70,7 @@ QingShan、HuangPao、Catppuccin 和 Dracula 的插件配置始终保留，四�
 运行 `switch_all_theme <主题>` 时：
 
 1. macOS 上执行 `~/.config/alfred/themes/switch-theme.sh --check <外观>`，先预检 Alfred 文件。
-2. 更新六份终端配置，`source ~/.zsh/functions/fzf.zsh` 刷新当前 shell 的 fzf 配色；tmux 配色变化且服务存在时执行 `tmux source-file ~/.tmux.conf`。
+2. 指定 `--refresh` 时先重建 bat/delta 共用缓存，失败即返回；更新六份终端配置，`source ~/.zsh/functions/fzf.zsh` 刷新当前 shell 的 fzf 配色；tmux 配色变化或指定 `--refresh` 且服务存在时执行 `tmux source-file ~/.tmux.conf`。
 3. macOS 上执行 `~/.config/alfred/themes/switch-theme.sh <外观>`，同步 Alfred 的实际主题。
 
 Alfred 脚本作为独立进程执行。tmux 窗口选择器由 `Prefix + s` 调用 `~/.config/tmux/scripts/window-picker.zsh`，再读取当前 `~/.config/fzf/theme.sh`。主题切换不启动选择器；已开的弹窗关闭重开后使用新配色。
@@ -74,7 +79,7 @@ Alfred 脚本作为独立进程执行。tmux 窗口选择器由 `Prefix + s` 调
 
 - 当前终端的 fzf 自动重新加载；其他已打开的 zsh 终端可再运行同一 `switch_all_theme` 命令，或执行 `source ~/.zsh/functions/fzf.zsh`。
 - tmux 配色有变化且服务正在运行时，自动重新加载状态栏和 popup。
-- WezTerm 自动读取配置变化；青山、黄袍配色独立存放于 `~/.config/wezterm/colors/`。
+- WezTerm 自动读取配置变化，并监听 `~/.config/wezterm/colors/` 中的绿珠、青山、黄袍 TOML；`--refresh` 额外触发配置重载。
 - bat、delta 下次运行时读取新配置；仅切换主题不需要重建 bat 缓存。
 - `Prefix + s` 的窗口选择器读取共享 fzf 主题文件，关闭重开后读取新色板。
 
@@ -82,7 +87,7 @@ Alfred 脚本作为独立进程执行。tmux 窗口选择器由 `Prefix + s` 调
 
 ## 终端选区与窗口预览
 
-青山终端拖选为浅玉底、深墨字；黄袍为玄墨底、暖绢字。WezTerm 原生选区与 tmux copy mode 都配置了明显反差。tmux 开启鼠标后，普通拖选由其 copy mode 接管；按住 Shift 可使用 WezTerm 原生选区。
+青山终端拖选为浅玉青底、深墨字；黄袍为玄墨底、暖绢字。WezTerm 原生选区与 tmux copy mode 都配置了明显反差。tmux 开启鼠标后，普通拖选由其 copy mode 接管；按住 Shift 可使用 WezTerm 原生选区。
 
 窗口选择器左侧使用各主题的侧栏色，右侧使用正文底色，并保留源窗口 ANSI 前景、背景和文字样式。预览直接显示内容，完整高度用于浏览。
 
@@ -90,24 +95,35 @@ Alfred 脚本作为独立进程执行。tmux 窗口选择器由 `Prefix + s` 调
 
 ## 速度与维护
 
-- 六份终端配置由同一个 Perl 进程处理，只写入发生变化的文件；重复切换相同主题不会触发 WezTerm 配置重载或 tmux 重载。Alfred 偏好文件相同时仍通过原生 `set theme` 校准运行中的应用，通常无需重启。
+- 六份终端配置由同一个 Perl 进程处理，只写入发生变化的文件；普通重复切换相同主题不会触发 WezTerm 配置重载或 tmux 重载；`--refresh` 主动重载两者并重建 bat/delta 缓存。Alfred 偏好文件相同时仍通过原生 `set theme` 校准运行中的应用，通常无需重启。
 - 每次都刷新当前终端的 fzf，保证其他终端切换过主题后，本终端也能同步。
-- 不运行插件安装、清理或 bat 缓存构建。切换速度主要取决于 tmux 主配置重载。
-- 修改配色时保留四套主题的标题、空行分隔和注释选项；脚本按标题识别配色块，空行结束该块。
+- 普通切换不运行插件安装、清理或 bat 缓存构建；`--refresh` 仅刷新已安装数据，不读取主题仓库。切换速度主要取决于 tmux 主配置重载。
+- 修改配色时保留五套主题的标题、空行分隔和注释选项；脚本按标题识别配色块，空行结束该块。
 - 如果 tmux 重载失败，可执行 `tmux source-file ~/.tmux.conf` 重试。
 
 ## 更新本机配色文件
 
-主题仓库中的导出工具只生成配色。更新青山文件时，从任意目录运行本机安装器（Python 3.10+）：
+主题仓库中的导出工具只生成配色。绿珠安装器与青山独立，安装后保留其他主题及当前选择：
+
+```sh
+python3 ~/.zsh/scripts/install_luzhu.py ~/github/LuZhu.nvim --integrate --dry-run
+python3 ~/.zsh/scripts/install_luzhu.py ~/github/LuZhu.nvim --integrate
+switch_all_theme luzhu --refresh
+```
+
+绿珠备份位于 `~/.config/luzhu/backups/<批次>/`，恢复方式与下文青山相同。
+
+更新青山文件时，从任意目录运行本机安装器（Python 3.10+）：
 
 ```sh
 python3.14 ~/.zsh/scripts/install_qingshan.py ~/github/QingShan.nvim --integrate --dry-run
 python3.14 ~/.zsh/scripts/install_qingshan.py ~/github/QingShan.nvim --integrate
+switch_all_theme qingshan --refresh
 ```
 
 `--integrate` 同步本账户已有的六份终端配置中的青山配色块，保留活动主题。该工具只安装配色数据与更新选择项；切换函数、Alfred 自动化和 tmux 选择器在各自目录直接维护。
 
-已有文件备份在 `~/.config/qingshan/backups/<批次>/`，`manifest.json` 记录原路径。失败时回滚已写文件，保留符号链接。恢复时按清单将备份写回原路径，多批次按时间逆序恢复。更新当前主题的 tmux 配色后执行 `tmux source-file ~/.tmux.conf`。
+已有文件备份在 `~/.config/qingshan/backups/<批次>/`，`manifest.json` 记录原路径。失败时回滚已写文件，保留符号链接。恢复时按清单将备份写回原路径，多批次按时间逆序恢复。安装完成后运行 `switch_all_theme qingshan --refresh`，同步当前 shell、WezTerm、tmux、bat/delta 和 Alfred；已打开的选择器关闭重开。
 
 黄袍主题文件由 `HuangPao.nvim/scripts/export.lua` 导出。复制后同步本机配置中的黄袍配色块，导入方法见该仓库 `extras/README.md`。两套主题仓库中的脚本均不管理 shell 切换或窗口选择器。
 
@@ -129,17 +145,20 @@ zsh -n ~/.zsh/functions/switch_all_theme.zsh ~/.config/alfred/themes/switch-them
 zsh -n ~/.config/tmux/scripts/*.zsh
 ```
 
-shell 测试使用青山仓库的主题文件构建安装夹具；仓库位于其他路径时设置 `QINGSHAN_SOURCE=/path/to/QingShan.nvim`。Alfred 和 tmux 测试直接验证各自目录的脚本。
+shell 测试分别使用青山与绿珠仓库的主题文件构建安装夹具；绿珠源目录可用 `LUZHU_SOURCE=/path/to/LuZhu.nvim` 指定。仓库位于其他路径时设置 `QINGSHAN_SOURCE=/path/to/QingShan.nvim`。Alfred 和 tmux 测试直接验证各自目录的脚本。
 
 ## Alfred 与 Markdown PPT
 
 所有 `switch_all_theme` 选择都会调用 Alfred 切换脚本，映射见上表。切换前校验相应外观与 `.plist` 文件，缺失时明确报错并保留终端配置。若只想独立切换 Alfred，可运行：
 
 ```sh
+~/.config/alfred/themes/switch-theme.sh luzhu
 ~/.config/alfred/themes/switch-theme.sh qingshan
 ~/.config/alfred/themes/switch-theme.sh huangpao
 ~/.config/alfred/themes/switch-theme.sh alfred
 ```
+
+绿珠外观为 `LuZhu Dark Large.alfredappearance`，选择配置为 `luzhu.plist`。绿珠使用独有的固定 UUID，与青山分别注册；切换时两套主题均保留。旧版共用身份的安装可重新安装绿珠配置并分别切换两者，完成迁移。
 
 原生外观和选择配置均位于 `~/.config/alfred/themes/`，青山文件名为 `QingShan Dark Large.alfredappearance`，显示名与文件名一致，仍使用黛青深色配色及原有 UUID。脚本只改主题选择；需要更新文件或选择时正常退出并重启 Alfred，并通过原生接口同步应用缓存。外观备份在该目录 `backups/appearance-<时间>-<进程号>.plist`。详细说明见同目录 `README.md`。
 
@@ -158,6 +177,6 @@ theme: ./qingshan_theme.json  # 黄袍改为 ./huangpao_theme.json
 - 命令不识别青山：重新加载 `~/.zsh/functions/switch_all_theme.zsh`，检查其中的函数定义。
 - tmux 配色仍旧：`tmux source-file ~/.tmux.conf`，再重开 `Prefix + s`。
 - 预览颜色消失：检查源窗口是否带颜色、是否启用了 `NO_COLOR`，以及共享 fzf 配色块是否正确。
-- bat / delta 找不到主题：`bat --list-themes` 检查 `QingShan` / `HuangPao`，必要时重建缓存。
+- bat / delta 找不到主题：`bat --list-themes` 检查 `LuZhu` / `QingShan` / `HuangPao`，必要时重建缓存。
 - Alfred 未变化：检查本机切换脚本和命令报错；可运行 `switch-theme.sh --check <主题>` 预检本机文件。磁盘 UID 相同不代表应用缓存相同，脚本会调用原生接口校准。
 - PPT 未变化：修改文稿的 `theme:`，再重新启动演示。

@@ -1,0 +1,65 @@
+{
+  "alfredtheme": {
+    "credit": "LuZhu contributors",
+    "name": "LuZhu Dark Large",
+    "result": {
+      "backgroundSelected": "#41634AFF",
+      "iconPaddingHorizontal": 7,
+      "iconSize": 40,
+      "paddingVertical": 4,
+      "roundness": 8,
+      "shortcut": {
+        "color": "#C5AD78FF",
+        "colorSelected": "#DCE8D5FF",
+        "font": "System",
+        "size": 18
+      },
+      "subtext": {
+        "color": "#AEC0ABFF",
+        "colorSelected": "#DCE8D5FF",
+        "font": "System",
+        "size": 14
+      },
+      "text": {
+        "color": "#DCE8D5FF",
+        "colorSelected": "#DCE8D5FF",
+        "font": "System",
+        "size": 18
+      },
+      "textSpacing": 5
+    },
+    "scrollbar": {
+      "color": "#56785DFF",
+      "thickness": 2
+    },
+    "search": {
+      "background": "#243B2EFF",
+      "backgroundSelected": "#41634AFF",
+      "paddingHorizontal": 7,
+      "paddingVertical": 5,
+      "roundness": 8,
+      "spacing": 9,
+      "text": {
+        "color": "#DCE8D5FF",
+        "colorSelected": "#DCE8D5FF",
+        "font": "System Light",
+        "size": 36
+      }
+    },
+    "separator": {
+      "color": "#56785DFF",
+      "thickness": 1
+    },
+    "visualEffectMode": 1,
+    "window": {
+      "blur": 0,
+      "borderColor": "#56785DFF",
+      "borderPadding": 0,
+      "color": "#1D3229FF",
+      "paddingHorizontal": 9,
+      "paddingVertical": 9,
+      "roundness": 15,
+      "width": 760
+    }
+  }
+}

@@ -9,6 +9,10 @@ if [[ "${1:-}" == --check ]]; then
 fi
 theme_choice=${1:-}
 case "${theme_choice:l}" in
+  luzhu|"luzhu dark large")
+    theme_file="LuZhu Dark Large.alfredappearance"
+    prefs_file="luzhu.plist"
+    ;;
   qinshan|qingshan|"qingshan dark large")
     theme_file="QingShan Dark Large.alfredappearance"
     prefs_file="qingshan.plist"
@@ -21,7 +25,7 @@ case "${theme_choice:l}" in
     theme_file="Alfred Modern Dark Large.alfredappearance"
     prefs_file="alfred-modern-dark-large.plist"
     ;;
-  *) print -u2 "Usage: $0 [--check] qinshan|qingshan|huangpao|dracula|catppuccin|alfred"; exit 2 ;;
+  *) print -u2 "Usage: $0 [--check] luzhu|qinshan|qingshan|huangpao|dracula|catppuccin|alfred"; exit 2 ;;
 esac
 
 alfred_preferences=${ALFRED_PREFERENCES:-}
@@ -51,6 +55,14 @@ plist_value -lint "$theme_dir/$prefs_file" "$appearance_prefs" >/dev/null
 theme_id=$(plist_value -extract lightthemeuid raw -o - "$theme_dir/$prefs_file")
 dark_id=$(plist_value -extract darkthemeuid raw -o - "$theme_dir/$prefs_file")
 [[ "$theme_id" == theme.custom.* && "$dark_id" == "$theme_id" ]] || { print -u2 'Theme profile UID mismatch'; exit 1; }
+if [[ "$prefs_file" == qingshan.plist || "$prefs_file" == luzhu.plist ]]; then
+  other_profile=qingshan.plist
+  [[ "$prefs_file" == qingshan.plist ]] && other_profile=luzhu.plist
+  if [[ -f "$theme_dir/$other_profile" ]]; then
+    other_id=$(plist_value -extract lightthemeuid raw -o - "$theme_dir/$other_profile")
+    [[ "$theme_id" != "$other_id" ]] || { print -u2 'QingShan and LuZhu must have distinct Alfred theme IDs; reinstall their theme profiles.'; exit 1; }
+  fi
+fi
 $check_only && exit 0
 
 apply_live_theme() {
@@ -73,14 +85,14 @@ fi
 
 # Alfred caches its preferences. Quit normally before updating only theme UIDs.
 was_running=false
-if /usr/bin/pgrep -x Alfred >/dev/null; then
+if command pgrep -x Alfred >/dev/null; then
   was_running=true
-  /usr/bin/osascript -e 'tell application id "com.runningwithcrayons.Alfred" to quit' >/dev/null
+  command osascript -e 'tell application id "com.runningwithcrayons.Alfred" to quit' >/dev/null
   for attempt in {1..30}; do
-    /usr/bin/pgrep -x Alfred >/dev/null || break
+    command pgrep -x Alfred >/dev/null || break
     sleep 0.1
   done
-  if /usr/bin/pgrep -x Alfred >/dev/null; then
+  if command pgrep -x Alfred >/dev/null; then
     print -u2 'Alfred did not quit; preferences were not changed.'
     exit 1
   fi
@@ -96,7 +108,7 @@ for appearance_key in lightthemeuid darkthemeuid; do
     || /usr/libexec/PlistBuddy -c "Add :$appearance_key string $theme_id" "$appearance_prefs"
 done
 if $was_running; then
-  /usr/bin/open -b com.runningwithcrayons.Alfred
+  command open -b com.runningwithcrayons.Alfred
   apply_live_theme
 fi
 exit 0

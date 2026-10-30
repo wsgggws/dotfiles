@@ -41,3 +41,5 @@ alias gp='git push'
 alias gl='git pull'
 alias gbD='git branch --delete --force'
 alias glg='git log --oneline --graph --decorate'
+
+alias review='lazygit log'
