@@ -1,0 +1,14 @@
+# Private local environment and historical snapshots.
+/secret.env
+/backups/
+
+# Local-only verification tools, tests, and audit notes.
+/fzf/
+/tests/
+/README.md
+
+# Generated Python/tool state.
+__pycache__/
+*.py[cod]
+.ruff_cache/
+.pytest_cache/

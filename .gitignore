@@ -13,6 +13,18 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 
+# Local zsh history; configuration is tracked separately.
+.zsh_history
+.zsh_history.*
+
+# Local login configuration and externally managed tmux entry point.
+/.zprofile
+/.tmux.conf
+
+# Local deployment tools: never track or force-add these files.
+/.zsh/functions/deploy.zsh
+/.zsh/scripts/gitlab_publish_k8s.py
+
 # macOS metadata
 .DS_Store
 

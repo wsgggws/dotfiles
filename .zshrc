@@ -19,6 +19,8 @@ fi
 [[ -f ~/.zsh/secret.env ]]        && source ~/.zsh/secret.env
 
 # 从 ~/.zsh/functions 批量载入函数
+# 先选择 Emacs 键位，避免覆盖后面 fzf 注册的 Tab / Ctrl+R。
+bindkey -e
 for func_file in ~/.zsh/functions/*.zsh; do
   [[ -f "$func_file" ]] && source "$func_file"
 done
@@ -26,9 +28,6 @@ done
 # =================================
 #     3. ESC 相关行为修复 (关键)
 # =================================
-# 强制使用 Emacs 模式，阻止 zsh 自动进入 vicmd
-bindkey -e
-
 # 禁用 autosuggestions 的 ESC fallback
 export ZSH_AUTOSUGGEST_USE_FALLBACK=false
 
@@ -52,12 +51,6 @@ precmd() {
   printf '\e[5 q'
 }
 
-# FZF（如已安装）
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-
-# OpenClaw Completion
-source "/Users/thj/.openclaw/completions/openclaw.zsh"
-
 
 # 1. ctrl+ee 编辑长命令 2. ctrl+_ 撤销误操作 3. alias -s json="jless"
 autoload -Uz edit-command-line
@@ -76,4 +69,3 @@ path=(
 # =================================
 # Starship 无冲突初始化
 eval "$(starship init zsh)"
-
