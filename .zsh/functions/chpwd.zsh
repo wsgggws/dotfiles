@@ -1,25 +1,32 @@
-function chpwd() {
-    local env=""
+source "$HOME/.config/terminal/projects.sh"
 
-    case "$PWD" in
-        */web3_property|*/peak|*/platform)           env="web3_property" ;;
-        */bitslots_game)                             env="bitslots_game" ;;
-        */server_tg_lb)                              env="server_tg_lb" ;;
-        */web3_user)                                 env="web3_user" ;;
-        */server_lucky_admin)                        env="server_lucky_admin" ;;
-        */lb_cs_gateway)                             env="lb_cs_gateway" ;;
-        */lb_lark_cmdline)                           env="lb_lark_cmdline" ;;
-        *) env="" ;;
-    esac
+_project_conda_chpwd() {
+  local environment=""
+  if terminal_project_for_dir "$PWD"; then
+    environment=$TERMINAL_PROJECT_CONDA
+  fi
 
-    # 如果应激活的 env 为空 → deactivate
-    if [[ -z "$env" ]]; then
-        [[ -n "$CONDA_DEFAULT_ENV" ]] && conda deactivate
-        return
+  if [[ -n "$environment" ]]; then
+    if [[ "${CONDA_DEFAULT_ENV-}" != "$environment" ]]; then
+      conda activate "$environment" || return
     fi
-
-    # 避免重复激活同一个 env
-    if [[ "$CONDA_DEFAULT_ENV" != "$env" ]]; then
-        conda activate "$env"
+    typeset -g _PROJECT_CONDA_ENV=$environment
+  else
+    # Leave manually selected environments alone; only undo our own activation.
+    if [[ -n "${_PROJECT_CONDA_ENV-}" && "${CONDA_DEFAULT_ENV-}" == "$_PROJECT_CONDA_ENV" ]]; then
+      conda deactivate || return
     fi
+    unset _PROJECT_CONDA_ENV
+  fi
+  return 0
 }
+
+# Remove the former single chpwd handler when this file is reloaded in an old shell.
+if [[ ${functions[chpwd]-} == *web3_property* &&
+      ${functions[chpwd]-} == *bitslots_game* &&
+      ${functions[chpwd]-} == *'conda deactivate'* ]]; then
+  unfunction chpwd
+fi
+autoload -Uz add-zsh-hook
+add-zsh-hook -d chpwd _project_conda_chpwd
+add-zsh-hook chpwd _project_conda_chpwd

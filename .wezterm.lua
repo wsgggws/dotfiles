@@ -17,7 +17,7 @@ end
 -- config.color_scheme = "QingShan"
 config.color_scheme = "LuZhu"
 
-config.font_size = 17
+config.font_size = 16.5
 -- config.font_size = 22
 config.font = wezterm.font("Monaco")
 config.front_end = "Software"

@@ -1,9 +1,8 @@
 [core]
         quotepath = false
         autocrlf = input
-	hooksPath = /Users/thj/.githooks
         pager = delta
-	excludesfile = /Users/thj/.gitignore_global
+        excludesfile = ~/.gitignore_global
 [user]
 	name = wsgggws
 	email = wsgggws@gmail.com
@@ -35,7 +34,7 @@
         autocorrect = prompt
 [commit]
         verbose = true
-	template = /Users/thj/.stCommitMsg
+	template = ~/.stCommitMsg
 [rerere]
         enabled = true
 [rebase]

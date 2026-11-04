@@ -44,7 +44,8 @@ reveal = [
 	{ run = 'xdg-open "$(dirname "$1")"', desc = "Reveal in file manager", for = "linux" },
 ]
 play = [
-	{ run = 'mpv "$@"', orphan = true, for = "unix" },
+	{ run = 'open "$@"', orphan = true, for = "macos" },
+	{ run = 'xdg-open "$@"', orphan = true, for = "linux" },
 ]
 
 [open]

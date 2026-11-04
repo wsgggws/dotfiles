@@ -40,34 +40,23 @@ fi
 
 pane_id=$("$tmux" display-message -p -t "$window_id" '#{pane_id}')
 pane_command=$("$tmux" display-message -p -t "$pane_id" '#{pane_current_command}')
-case "$pane_command" in
-  bash|fish|sh|zsh) ;;
-  *)
-    pane_path=$("$tmux" display-message -p -t "$pane_id" '#{pane_current_path}')
-    "$tmux" respawn-pane -k -c "$pane_path" -t "$pane_id"
-    for _ in {1..30}; do
-      pane_command=$("$tmux" display-message -p -t "$pane_id" '#{pane_current_command}')
-      case "$pane_command" in
-        bash|fish|sh|zsh) break ;;
-      esac
-      sleep 0.1
-    done
-    case "$pane_command" in
-      bash|fish|sh|zsh) ;;
-      *) echo "tmux window $window_name did not return to a shell" >&2; exit 1 ;;
-    esac
-    ;;
-esac
-
-# Interrupt a pending shell line, including text on both sides of the cursor.
-"$tmux" send-keys -t "$pane_id" C-c
-# Give the shell time to redraw its prompt before sending printable text.
-sleep 0.2
-
 "$tmux" select-window -t "$window_id"
+/usr/bin/open -a WezTerm
+"$wezterm" cli activate-pane --pane-id "$wezterm_pane_id"
+
 if [[ -n "$command" ]]; then
+  # Reuse the existing window without replacing its foreground program.
+  case "$pane_command" in
+    bash|-bash|fish|-fish|sh|-sh|zsh|-zsh) ;;
+    *) echo "Window $window_name is running $pane_command; focused it without sending a command" >&2; exit 1 ;;
+  esac
+  if [[ $("$tmux" display-message -p -t "$pane_id" '#{pane_in_mode}') != 0 ]]; then
+    echo "Window $window_name is in copy mode; focused it without sending a command" >&2
+    exit 1
+  fi
+  # Clear a pending shell line before inserting the requested command.
+  "$tmux" send-keys -t "$pane_id" C-c
+  sleep 0.2
   "$tmux" send-keys -t "$pane_id" -l -- "$command"
   "$tmux" send-keys -t "$pane_id" Enter
 fi
-/usr/bin/open -a WezTerm
-"$wezterm" cli activate-pane --pane-id "$wezterm_pane_id"

@@ -1,33 +1,28 @@
+# Initialize Conda only when requested or when entering a registered project.
+_conda_load() {
+  [[ ${_CONDA_LAZY_LOADED-} == 1 ]] && return 0
+  local prefix=${CONDA_HOME:-$HOME/miniconda3} setup
+  if [[ -r "$prefix/etc/profile.d/conda.sh" ]]; then
+    source "$prefix/etc/profile.d/conda.sh" || return
+  elif [[ -x "$prefix/bin/conda" ]]; then
+    setup=$(CONDA_AUTO_ACTIVATE_BASE=false "$prefix/bin/conda" shell.zsh hook) || return
+    eval "$setup" || return
+  else
+    print -u2 -- "Conda not found: $prefix (set CONDA_HOME to its installation directory)"
+    return 127
+  fi
+  if [[ ${functions[conda]-} == *'_conda_load'* || -z ${functions[conda]-} ]]; then
+    print -u2 -- 'Conda initialization did not define its shell function'
+    return 1
+  fi
+  typeset -g _CONDA_LAZY_LOADED=1
+}
 
-if [[ $(uname -m) == "arm64" ]]; then
-  # >>> conda initialize >>>
-  # !! Contents within this block are managed by 'conda init' !!
-  __conda_setup="$('/Users/thj/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-  if [ $? -eq 0 ]; then
-      eval "$__conda_setup"
-  else
-      if [ -f "/Users/thj/miniconda3/etc/profile.d/conda.sh" ]; then
-          . "/Users/thj/miniconda3/etc/profile.d/conda.sh"
-      else
-          export PATH="/Users/thj/miniconda3/bin:$PATH"
-      fi
-  fi
-  unset __conda_setup  && conda deactivate && chpwd
-# <<< conda initialize <<<
-else
-  # >>> conda initialize >>>
-  # !! Contents within this block are managed by 'conda init' !!
-  __conda_setup="$('/Users/navy/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-  if [ $? -eq 0 ]; then
-      eval "$__conda_setup"
-  else
-      if [ -f "/Users/navy/miniconda3/etc/profile.d/conda.sh" ]; then
-          . "/Users/navy/miniconda3/etc/profile.d/conda.sh"
-      else
-          export PATH="/Users/navy/miniconda3/bin:$PATH"
-      fi
-  fi
-  # export CONDA_AUTO_ACTIVATE_BASE=false
-  unset __conda_setup  && conda deactivate && chpwd
-  # <<< conda initialize <<<
+if [[ ${_CONDA_LAZY_LOADED-} != 1 ]]; then
+  conda() {
+    _conda_load || return
+    conda "$@"
+  }
 fi
+
+_project_conda_chpwd

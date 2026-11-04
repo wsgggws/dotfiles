@@ -25,6 +25,11 @@ __pycache__/
 /.zsh/functions/deploy.zsh
 /.zsh/scripts/gitlab_publish_k8s.py
 
+# Local verification tools and generated Kitty theme selection.
+/.config/alfred/themes/tests/
+/.config/tmux/tests/
+/.config/kitty/current-theme.conf
+
 # macOS metadata
 .DS_Store
 

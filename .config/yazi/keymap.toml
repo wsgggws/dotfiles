@@ -25,7 +25,7 @@ prepend_keymap = [
 	{ on = [ "g", "z" ], run = "cd ~/.zsh", desc = "Go ~/.zsh" },
 	{ on = [ "g", "c" ], run = "cd ~/.config", desc = "Go ~/.config" },
 	{ on = [ "g", "s" ], run = "cd ~/.raycast/scripts", desc = "Go ~/.raycast/scripts/" },
-	{ on = [ "g", "n" ], run = "cd ~/.config/.nvim", desc = "Go ~/config/.nvim" },
+		{ on = [ "g", "n" ], run = "cd ~/.config/nvim", desc = "Go ~/.config/nvim" },
 	{ on = [ "g", "r" ], run = "cd /", desc = "Go filesystem root" },
 
 	# Copy useful path variants.

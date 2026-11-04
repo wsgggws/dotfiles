@@ -2,6 +2,8 @@
 
 `~/.config/tmux/scripts/` 是窗口选择器和预览程序的维护位置。配色数据位于 `themes/`，当前选择由 `~/.config/fzf/theme.sh` 提供。
 
+项目路由与 Conda 环境共用 `~/.config/terminal/projects.tsv`，由 `projects.sh` 读取。`scripts/pan-hook.sh` 只处理连接流程，不重复维护项目、远端命令和会话映射。
+
 ## 窗口选择器
 
 `Prefix + s` 通过 `~/.tmux.conf.local` 启动 `scripts/window-picker.zsh`，该脚本调用同目录的 `pane-preview.zsh` 与 `pane-preview.py`。Python 辅助程序使用 3.9+ 标准库。

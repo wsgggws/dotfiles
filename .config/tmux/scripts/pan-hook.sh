@@ -10,17 +10,12 @@ SOCKET_PATH=${2:-}
 [[ -n $SOCKET_PATH ]] || exit 0
 
 TARGET=$(tmux -S "$SOCKET_PATH" display-message -p -t "$PANE_TARGET" '#{session_name}:#{window_name}' 2>/dev/null) || exit 0
-case "$TARGET" in
-  "web3_property:s-prop") address=10.11.195.241; final=conda_prop; host_marker=@sg_nginx_web3 ;;
-  "bitslots_game:s-game") address=10.10.93.125; final=conda_game; host_marker=@alisg-web3-app-01 ;;
-  "server_tg_lb:s-tg") address=10.10.93.125; final=conda_tg; host_marker=@alisg-web3-app-01 ;;
-  "server_lucky_admin:s-admin") address=10.10.93.125; final=conda_admin; host_marker=@alisg-web3-app-01 ;;
-  "web3_user:s-user") address=10.10.93.125; final=conda_user; host_marker=@alisg-web3-app-01 ;;
-  "lb_cs_gateway:s-cs") address=10.10.93.125; final=conda_cs; host_marker=@alisg-web3-app-01 ;;
-  "S0:sql") address=10.10.93.125; final=conda_user; host_marker=@alisg-web3-app-01 ;;
-  "S0:kub") address=10.11.193.41; final=; host_marker=newweb3-k8s-01-web3 ;;
-  *) exit 0 ;;
-esac
+source "$HOME/.config/terminal/projects.sh"
+terminal_project_for_tmux "$TARGET" || exit 0
+address=$TERMINAL_PROJECT_ADDRESS
+final=$TERMINAL_PROJECT_COMMAND
+host_marker=$TERMINAL_PROJECT_MARKER
+[[ -n $address && -n $host_marker ]] || exit 0
 
 # One connection attempt per pane; a second focus event must not start another sequence.
 umask 077

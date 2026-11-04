@@ -1,6 +1,54 @@
 # Source this file to load switch_all_theme and its completion.
 # Switch the themes already installed in this account.
 # --refresh reloads installed theme data without installing from a repository.
+_alltheme_reload_shell() {
+  source "${ALLTHEME_HOME:-$HOME}/.zsh/functions/fzf.zsh"
+}
+
+_alltheme_sync_tmux_shells() {
+  local panes pid registered
+  panes=$(command tmux list-panes -a -F '#{pane_pid} #{@alltheme_shell_pid}') || return
+  while read -r pid registered; do
+    # Only notify a pane's original shell after it has installed our handler.
+    # Matching both PIDs also excludes stale options left by respawn-pane.
+    [[ "$pid" == <-> && "$registered" == "$pid" && "$pid" != "$$" ]] || continue
+    builtin kill -USR1 "$pid" 2>/dev/null || {
+      # A pane may close between list-panes and kill.
+      builtin kill -0 "$pid" 2>/dev/null || continue
+      printf '无法通知 tmux shell %s 重载主题\n' "$pid" >&2
+      return 1
+    }
+  done <<< "$panes"
+  return 0
+}
+
+_alltheme_register_tmux_shell() {
+  [[ -o interactive && -n "$TMUX" && -n "$TMUX_PANE" ]] || return 0
+  [[ "$(command tmux display-message -p -t "$TMUX_PANE" '#{pane_pid}')" == "$$" ]] || return 0
+  local existing_traps
+  # $(trap) resets string traps in its subshell. Capture in this shell instead;
+  # zsh removes the =(...) temporary file when the anonymous function returns.
+  () {
+    trap > "$1"
+    existing_traps=$(<"$1")
+  } =(:)
+  # Leave existing function and string SIGUSR1 traps alone. A re-source after
+  # installing a custom trap also withdraws our previous registration.
+  if [[ -n "${functions[TRAPUSR1]-}" && "${functions[TRAPUSR1]}" != *'_alltheme_reload_shell'* ]] ||
+     [[ "$existing_traps" == *' USR1'* ]]; then
+    command tmux set-option -pu -t "$TMUX_PANE" @alltheme_shell_pid
+    return
+  fi
+  # No text/Enter is sent into terminals. zsh handles the signal at its prompt,
+  # or after its foreground child exits, preserving the current edit buffer.
+  TRAPUSR1() {
+    _alltheme_reload_shell
+    return 0
+  }
+  command tmux set-option -p -t "$TMUX_PANE" @alltheme_shell_pid "$$"
+}
+_alltheme_register_tmux_shell
+
 switch_all_theme() {
   local choice="${1:l}" file changed refresh=0
   local theme_home="${ALLTHEME_HOME:-$HOME}"
@@ -90,15 +138,18 @@ switch_all_theme() {
   ' "$choice" "${files[@]}") || return
 
   # Refresh this shell even when another terminal has already switched the files.
-  source "$theme_home/.zsh/functions/fzf.zsh" || return
+  _alltheme_reload_shell || return
   if (( refresh )); then
     command touch "$theme_home/.wezterm.lua" || return
   fi
-  if { (( refresh )) || [[ "$changed" == *"$theme_home/.tmux.conf.local"* ]]; } && command tmux list-sessions >/dev/null 2>&1; then
-    command tmux source-file "$theme_home/.tmux.conf" || {
-      printf '配置已更新，但 tmux 重载失败；请运行 tmux source-file ~/.tmux.conf\n' >&2
-      return 1
-    }
+  if { (( refresh )) || [[ -n "$changed" ]]; } && command tmux list-sessions >/dev/null 2>&1; then
+    if (( refresh )) || [[ "$changed" == *"$theme_home/.tmux.conf.local"* ]]; then
+      command tmux source-file "$theme_home/.tmux.conf" || {
+        printf '配置已更新，但 tmux 重载失败；请运行 tmux source-file ~/.tmux.conf\n' >&2
+        return 1
+      }
+    fi
+    _alltheme_sync_tmux_shells || return
   fi
 
   if [[ "$OSTYPE" == darwin* ]]; then

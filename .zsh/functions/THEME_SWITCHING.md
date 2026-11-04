@@ -26,13 +26,13 @@ switch_all_theme catppuccin  # Mocha
 | 功能 | 唯一维护位置 | 验证位置 |
 | --- | --- | --- |
 | `switch_all_theme` 与补全 | `~/.zsh/functions/switch_all_theme.zsh` | `~/.zsh/tests/test_themes.py` |
-| 本机绿珠文件安装与配色块更新 | `~/.zsh/scripts/install_luzhu.py` | `~/.zsh/tests/test_luzhu.py` |
-| 本机青山文件安装与配色块更新 | `~/.zsh/scripts/install_qingshan.py` | `~/.zsh/tests/test_themes.py` |
+| 本机绿珠文件安装与配色块更新 | `~/.zsh/scripts/install_luzhu.py` → `theme_installer.py` | `~/.zsh/tests/test_luzhu.py` |
+| 本机青山文件安装与配色块更新 | `~/.zsh/scripts/install_qingshan.py` → `theme_installer.py` | `~/.zsh/tests/test_themes.py` |
 | Alfred 自动切换 | `~/.config/alfred/themes/switch-theme.sh` | `~/.config/alfred/themes/tests/` |
 | tmux 窗口选择器与预览 | `~/.config/tmux/scripts/` | `~/.config/tmux/tests/` |
 | Neovim 主题、原生配色导出 | `~/github/LuZhu.nvim`、`~/github/QingShan.nvim`、`~/github/HuangPao.nvim` | 各仓库的 `tests/` |
 
-主题仓库不再分发个人配置脚本，运行切换命令不再从仓库加载 shell 代码。Neovim 仍通过插件配置加载主题，安装器更新原生主题时才读取主题仓库。
+主题仓库不再分发个人配置脚本，运行切换命令不再从仓库加载 shell 代码。Neovim 仍通过插件配置加载主题，安装器更新原生主题时才读取主题仓库。两套安装器保留独立命令入口，共用 `~/.zsh/scripts/theme_installer.py` 中的计划生成、配置更新、备份和回滚实现。
 
 ## 切换范围
 
@@ -70,20 +70,32 @@ LuZhu、QingShan、HuangPao、Catppuccin 和 Dracula 的插件配置始终保留
 运行 `switch_all_theme <主题>` 时：
 
 1. macOS 上执行 `~/.config/alfred/themes/switch-theme.sh --check <外观>`，先预检 Alfred 文件。
-2. 指定 `--refresh` 时先重建 bat/delta 共用缓存，失败即返回；更新六份终端配置，`source ~/.zsh/functions/fzf.zsh` 刷新当前 shell 的 fzf 配色；tmux 配色变化或指定 `--refresh` 且服务存在时执行 `tmux source-file ~/.tmux.conf`。
+2. 指定 `--refresh` 时先重建 bat/delta 共用缓存，失败即返回；更新六份终端配置，`source ~/.zsh/functions/fzf.zsh` 刷新当前 shell 的 fzf 配色；tmux 配色变化或指定 `--refresh` 且服务存在时执行 `tmux source-file ~/.tmux.conf`，再通知同一 tmux 服务下各 session、window 和分屏中的已注册 zsh 重载 fzf。
 3. macOS 上执行 `~/.config/alfred/themes/switch-theme.sh <外观>`，同步 Alfred 的实际主题。
 
 Alfred 脚本作为独立进程执行。tmux 窗口选择器由 `Prefix + s` 调用 `~/.config/tmux/scripts/window-picker.zsh`，再读取当前 `~/.config/fzf/theme.sh`。主题切换不启动选择器；已开的弹窗关闭重开后使用新配色。
 
 ## 生效方式
 
-- 当前终端的 fzf 自动重新加载；其他已打开的 zsh 终端可再运行同一 `switch_all_theme` 命令，或执行 `source ~/.zsh/functions/fzf.zsh`。
+- 当前终端的 fzf 自动重新加载；同一 tmux 服务下其他 session、window 和分屏的 zsh 自动同步。停在提示符时立即重载，正在运行命令时在命令结束后重载；不会向 pane 输入 `src` 或回车，也不会清除正在编辑的命令。已打开的 fzf、Neovim 等程序仍需关闭重开。
+- 更新本函数后，已有 zsh 需先执行一次 `source ~/.zsh/functions/switch_all_theme.zsh`（或重新打开 shell）注册通知，此后切换无需再执行 `tmux_exec_all_win src`。tmux 外的独立终端仍需运行同一切换命令或重载 fzf 配置。
+- 自动同步使用 zsh 的 `SIGUSR1` 处理器和 pane 选项 `@alltheme_shell_pid`；只通知已注册、PID 与 pane 原始进程一致的 shell。已有自定义 `SIGUSR1` 处理器的 shell 保留原处理器，不参与自动同步；嵌套启动的 zsh 不覆盖 pane 原始 shell 的注册。
 - tmux 配色有变化且服务正在运行时，自动重新加载状态栏和 popup。
 - WezTerm 自动读取配置变化，并监听 `~/.config/wezterm/colors/` 中的绿珠、青山、黄袍 TOML；`--refresh` 额外触发配置重载。
 - bat、delta 下次运行时读取新配置；仅切换主题不需要重建 bat 缓存。
 - `Prefix + s` 的窗口选择器读取共享 fzf 主题文件，关闭重开后读取新色板。
 
 首次安装或修改 `~/.config/bat/themes/*.tmTheme` 后才需要执行 `bat cache --build`。
+
+需要手动重载完整 zsh 配置时，可以运行 `tmux_exec_all_win src`。该函数在
+`~/.zsh/functions/tmux-commands.zsh` 中维护；更新后当前 shell 先执行一次
+`source ~/.zsh/functions/tmux-commands.zsh` 加载新版函数。广播遍历同一 tmux 服务的所有
+session、window 和分屏，同一个 pane 只处理一次，只向前台为 zsh、bash 等 shell 且未进入
+复制模式的 pane 发送命令。Neovim、SSH 以及其他前台程序所在的 pane 直接跳过，不排队补发。
+
+`src` 是 `source ~/.zshrc` 的别名，必须由原 shell 执行，另起后台进程无法更新原 shell 的
+环境。主题切换使用上面的通知机制：Neovim 或 SSH 继续运行，本地 zsh 在前台程序退出后
+同步 fzf；它不会重载远程机器的配置，也不会给这些程序发送 `src`。
 
 ## 终端选区与窗口预览
 
@@ -96,14 +108,14 @@ Alfred 脚本作为独立进程执行。tmux 窗口选择器由 `Prefix + s` 调
 ## 速度与维护
 
 - 六份终端配置由同一个 Perl 进程处理，只写入发生变化的文件；普通重复切换相同主题不会触发 WezTerm 配置重载或 tmux 重载；`--refresh` 主动重载两者并重建 bat/delta 缓存。Alfred 偏好文件相同时仍通过原生 `set theme` 校准运行中的应用，通常无需重启。
-- 每次都刷新当前终端的 fzf，保证其他终端切换过主题后，本终端也能同步。
+- 每次都刷新当前终端的 fzf；配置发生变化或指定 `--refresh` 时，向同一 tmux 服务下已注册的其他 zsh 发送重载通知。普通重复切换不遍历其他 pane。
 - 普通切换不运行插件安装、清理或 bat 缓存构建；`--refresh` 仅刷新已安装数据，不读取主题仓库。切换速度主要取决于 tmux 主配置重载。
 - 修改配色时保留五套主题的标题、空行分隔和注释选项；脚本按标题识别配色块，空行结束该块。
 - 如果 tmux 重载失败，可执行 `tmux source-file ~/.tmux.conf` 重试。
 
 ## 更新本机配色文件
 
-主题仓库中的导出工具只生成配色。绿珠安装器与青山独立，安装后保留其他主题及当前选择：
+主题仓库中的导出工具只生成配色。绿珠与青山安装器共用内部实现，各自安装后保留其他主题及当前选择：
 
 ```sh
 python3 ~/.zsh/scripts/install_luzhu.py ~/github/LuZhu.nvim --integrate --dry-run

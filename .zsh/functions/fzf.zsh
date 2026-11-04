@@ -1,11 +1,11 @@
 # ******* start fzf config
 
-# 所有本机 zsh / tmux pane 共用历史；内存留余量，优先淘汰重复项。
+# 每个 shell 独立维护当前历史，不实时导入其他窗口的命令。
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=60000
 SAVEHIST=30000
-unsetopt INC_APPEND_HISTORY INC_APPEND_HISTORY_TIME
-setopt APPEND_HISTORY SHARE_HISTORY EXTENDED_HISTORY
+unsetopt SHARE_HISTORY INC_APPEND_HISTORY INC_APPEND_HISTORY_TIME
+setopt APPEND_HISTORY EXTENDED_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_SAVE_NO_DUPS
 
 # zsh 补全和 tmux 窗口选择器共用同一套 fzf 主题。
@@ -58,15 +58,4 @@ alias f='fzf --bind "enter:become(nvim {})"'
 
 [[ -f "$HOME/.fzf.zsh" ]] && source "$HOME/.fzf.zsh"
 
-# 停在提示符的窗口也能通过 Ctrl+R 搜到其他窗口刚执行的命令。
-if (( $+functions[fzf-history-widget] )); then
-  fzf-shared-history-widget() {
-    [[ -r "$HISTFILE" ]] && builtin fc -RI "$HISTFILE"
-    fzf-history-widget "$@"
-  }
-  zle -N fzf-shared-history-widget
-  bindkey -M emacs '^R' fzf-shared-history-widget
-  bindkey -M viins '^R' fzf-shared-history-widget
-  bindkey -M vicmd '^R' fzf-shared-history-widget
-fi
 # ******* end fzf config

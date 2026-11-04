@@ -1,0 +1,11 @@
+# id	directories (comma separated)	conda	tmux session	window	address	remote command	prompt marker
+# Use - for an unused field. Keep credentials in local secret files.
+web3_property	web3_property,peak,platform	web3_property	web3_property	s-prop	10.11.195.241	conda_prop	@sg_nginx_web3
+bitslots_game	bitslots_game	bitslots_game	bitslots_game	s-game	10.10.93.125	conda_game	@alisg-web3-app-01
+server_tg_lb	server_tg_lb	server_tg_lb	server_tg_lb	s-tg	10.10.93.125	conda_tg	@alisg-web3-app-01
+web3_user	web3_user	web3_user	web3_user	s-user	10.10.93.125	conda_user	@alisg-web3-app-01
+server_lucky_admin	server_lucky_admin	server_lucky_admin	server_lucky_admin	s-admin	10.10.93.125	conda_admin	@alisg-web3-app-01
+lb_cs_gateway	lb_cs_gateway	lb_cs_gateway	lb_cs_gateway	s-cs	10.10.93.125	conda_cs	@alisg-web3-app-01
+lb_lark_cmdline	lb_lark_cmdline	lb_lark_cmdline	-	-	-	-	-
+sql	-	-	S0	sql	10.10.93.125	conda_user	@alisg-web3-app-01
+kub	-	-	S0	kub	10.11.193.41	-	newweb3-k8s-01-web3
