@@ -1,0 +1,13 @@
+# 本机编译产物、学习词库和同步数据。
+/build/
+/sync/
+/*.userdb/
+/*.userdb.*
+/installation.yaml
+/user.yaml
+/*.log
+/.DS_Store
+
+# 本地保留的上游许可证。
+/licenses/rime-pinyin-simp-LICENSE
+/licenses/rime-wubi-LICENSE

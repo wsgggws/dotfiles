@@ -37,3 +37,7 @@ __pycache__/
 *.swp
 *.swo
 *~
+
+# Rime links and migration backups are created locally by install.sh.
+/Library/Rime
+/Library/Rime.backup.*/

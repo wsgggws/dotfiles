@@ -1,0 +1,110 @@
+# 鼠须管：五笔 86
+
+只启用五笔 86。中文使用鼠须管，英文使用 macOS 自带 ABC，通过系统 Fn 切换；Shift 不切换中英文。
+
+## 目录与 yadm
+
+配置实际存放在 `~/.config/Rime`，鼠须管通过符号链接读取：
+
+```text
+~/Library/Rime → ../.config/Rime
+```
+
+yadm 只跟踪 `~/.config/Rime` 下的配置、原始码表和脚本。`~/Library/Rime` 链接由 `install.sh` 在本机创建，不纳入 yadm；`~/.gitignore` 排除该链接及迁移备份目录。链接使用相对路径，支持不同用户名的新电脑。
+
+`.gitignore` 也放在 `~/.config/Rime`。`build/`、`sync/`、`*.userdb/`、`*.userdb.*`、`user.yaml`、`installation.yaml` 和日志为本机生成数据，不纳入 yadm。现有学习词库随本次目录迁移保留；新电脑不会自动恢复个人学习词库。
+
+## 新电脑安装
+
+要求 macOS 13 或更新版本，并能访问 GitHub。脚本使用系统自带工具，无需 Homebrew、Xcode 或管理员密码。
+
+1. 安装 yadm，并从自己的 dotfiles 仓库恢复配置：
+
+   ```bash
+   brew install yadm
+   yadm clone <你的-dotfiles-仓库地址>
+   ```
+
+   此处使用 Homebrew 安装 yadm；已经安装 yadm 时跳过第一条命令。鼠须管安装本身不依赖 Homebrew。
+
+2. 执行：
+
+   ```bash
+   ~/.config/Rime/install.sh
+   ```
+
+3. 首次安装后注销并重新登录，在输入法菜单选择“鼠须管”。如菜单未出现，在“系统设置 → 键盘 → 文本输入 → 编辑 → ＋ → 简体中文”添加鼠须管。保留 ABC，将系统 Fn 键设置为“更改输入法”，即可继续用 Fn 切换。
+
+`install.sh` 会完成：
+
+- 优先复用当前用户或系统已经安装的鼠须管，不覆盖或降级已有版本。
+- 未安装时下载官方 **1.1.2** 安装包，校验固定 SHA-256、安装包签名和程序签名，安装到 `~/Library/Input Methods/Squirrel.app`。
+- 创建 `~/Library/Rime` 相对链接。若该路径已有其他目录、文件或链接，先停止鼠须管，将原内容保存到 `~/Library/Rime.backup.XXXXXX/Rime`，再创建链接；不会删除旧配置或词库。
+- 注册并启用简体鼠须管，编译五笔配置，启动程序并通知它加载配置。
+
+脚本可重复运行，已有正确链接时不再备份，也不会修改 Fn 设置或禁用其他系统输入法。通过本脚本安装的鼠须管不登记为 Homebrew cask；可从鼠须管菜单检查程序更新。修改脚本中的下载版本时需同时更新对应 SHA-256。
+
+## 更新与维护
+
+| 操作 | 方法 |
+|---|---|
+| 新电脑安装、创建或修复链接 | `~/.config/Rime/install.sh` |
+| 更新鼠须管程序 | 输入法菜单 → “检查更新…” |
+| 修改配置后使其生效 | `~/.config/Rime/deploy.sh` 或菜单“重新部署” |
+| 同步自己保存的配置 | `yadm pull`，然后执行 `deploy.sh` |
+
+`install.sh` **不会升级已有的鼠须管**：发现程序后直接复用，仅在未安装时下载脚本锁定的 1.1.2。即使程序已经更新到更高版本，再运行脚本也不会降级。更换新电脑默认安装版本，需要同时修改脚本中的版本号和 SHA-256。
+
+鼠须管内置自动检查更新功能，也可主动在菜单中检查；是否自动检查可受本机更新偏好设置影响。发布没有固定周期，例如 1.0.3 发布于 2025-01-23，1.1.0 和 1.1.1 发布于 2026-01-11，1.1.2 发布于 2026-01-13。一般按程序提示更新，或在 macOS 升级、出现兼容性问题时检查即可，无需频繁运行安装脚本。发布记录见 https://github.com/rime/squirrel/releases 。
+
+程序更新与五笔码表更新分开处理：应用更新会保留本目录中的个人配置；此处随 yadm 保存的五笔码表不会自动跟随应用更新。`deploy.sh` 只编译本地配置，不下载程序或新码表。应用升级后如需重新加载配置，可再运行 `deploy.sh`。
+
+## 简洁使用说明
+
+候选横排显示，每页 5 项。
+
+| 操作 | 按键 |
+|---|---|
+| 五笔 / ABC 切换 | Fn |
+| 上一个 / 下一个候选 | ↑ / ↓ |
+| 上一页 | ← 或 `-` |
+| 下一页 | → 或 `=` |
+| 确认当前候选 | 空格或回车 |
+| 直接选择当前页候选 | 数字 `1`～`5` |
+| 取消当前输入 | Esc |
+| 忘记五笔编码时拼音反查 | `z` + 拼音 |
+
+候选只有一项时自动上屏，例如 `imya` → “测试”。存在重码时等待选字。尚未确认的编码，按 Fn 切换至 ABC 时输出原始字母；已自动上屏或确认的汉字不会还原成字母。
+
+## 修改与重新部署
+
+| 文件 | 用途 |
+|---|---|
+| `default.custom.yaml` | 默认五笔 86、关闭 Shift 中英文切换 |
+| `wubi86.custom.yaml` | 唯一候选自动上屏、回车选字和方向键操作 |
+| `squirrel.custom.yaml` | 横排显示、终端和编辑器默认中文 |
+| `wubi86.*.yaml` | 官方五笔 86 方案和码表 |
+| `pinyin_simp.*.yaml` | `z` 键拼音反查依赖，不作为可切换方案出现 |
+
+修改配置后执行：
+
+```bash
+~/.config/Rime/deploy.sh
+```
+
+也可在鼠须管菜单选择“重新部署”。原始码表和方案保持上游内容，个人调整写在 `*.custom.yaml` 中。
+
+保存到 yadm：
+
+```bash
+yadm add ~/.config/Rime
+yadm commit -m "feat: configure Rime Wubi86"
+yadm push
+```
+
+## 上游来源
+
+- 鼠须管：https://github.com/rime/squirrel/releases/tag/1.1.2
+- 五笔方案和码表：https://github.com/rime/rime-wubi ，提交 `152a0d3f3efe40cae216d1e3b338242446848d07`。
+- 拼音反查依赖：https://github.com/rime/rime-pinyin-simp ，提交 `0c6861ef7420ee780270ca6d993d18d4101049d0`。
+- 本机上游许可证保存在 `licenses/`，这两个许可证文件由 `.gitignore` 排除，不随 yadm 恢复；通用配置、符号和笔画反查依赖使用鼠须管应用自带的 `Contents/SharedSupport`。

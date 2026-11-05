@@ -1,0 +1,7 @@
+# 仅启用五笔 86；使用 macOS 的 Fn 在鼠须管与 ABC 之间切换。
+# 不使用 Shift 在鼠须管内部切换中英文。
+patch:
+  schema_list:
+    - schema: wubi86
+  ascii_composer/switch_key/Shift_L: noop
+  ascii_composer/switch_key/Shift_R: noop

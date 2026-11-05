@@ -1,0 +1,12 @@
+# 五笔 86 的个人习惯；保留上游码表与方案文件。
+patch:
+  # 候选确实仅有一项时立即上屏；有多个候选时继续等待选择。
+  speller/auto_select: true
+  # 默认 Return 输出原始编码，这里改为确认当前高亮候选。
+  editor/bindings/Return: confirm
+  editor/bindings/KP_Enter: confirm
+  # 保持横排显示；上下选字，左右翻页。
+  selector/linear/bindings/Up: previous_candidate
+  selector/linear/bindings/Down: next_candidate
+  selector/linear/bindings/Left: previous_page
+  selector/linear/bindings/Right: next_page

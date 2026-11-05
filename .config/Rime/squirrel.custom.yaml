@@ -1,0 +1,20 @@
+# 在终端、编辑器等应用中也默认使用中文；英文交给系统 ABC。
+patch:
+  style/candidate_list_layout: linear
+  style/text_orientation: horizontal
+  "app_options/com.apple.Spotlight/ascii_mode": false
+  "app_options/com.alfredapp.Alfred/ascii_mode": false
+  "app_options/com.runningwithcrayons.Alfred-2/ascii_mode": false
+  "app_options/com.blacktree.Quicksilver/ascii_mode": false
+  "app_options/com.apple.Terminal/ascii_mode": false
+  "app_options/com.googlecode.iterm2/ascii_mode": false
+  "app_options/org.vim.MacVim/ascii_mode": false
+  "app_options/com.apple.dt.Xcode/ascii_mode": false
+  "app_options/com.barebones.textwrangler/ascii_mode": false
+  "app_options/com.macromates.TextMate.preview/ascii_mode": false
+  "app_options/com.github.atom/ascii_mode": false
+  "app_options/com.microsoft.VSCode/ascii_mode": false
+  "app_options/com.sublimetext.2/ascii_mode": false
+  "app_options/org.gnu.Aquamacs/ascii_mode": false
+  "app_options/org.gnu.Emacs/ascii_mode": false
+  "app_options/co.zeit.hyper/ascii_mode": false
