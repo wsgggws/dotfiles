@@ -10,3 +10,18 @@ patch:
   selector/linear/bindings/Down: next_candidate
   selector/linear/bindings/Left: previous_page
   selector/linear/bindings/Right: next_page
+  # 聊天中直接输入半角 @，不打开符号候选。
+  "punctuator/half_shape/@": "@"
+  # 同一方案直接输入全拼；五笔候选优先，保留 z 拼音反查。
+  engine/translators/+:
+    - script_translator@pinyin
+  pinyin:
+    dictionary: pinyin_simp
+    prism: pinyin_simp
+    initial_quality: -1
+    enable_completion: false
+    enable_user_dict: false
+    preedit_format:
+      - xform/([nl])v/$1ü/
+      - xform/([nl])ue/$1üe/
+      - xform/([jqxy])v/$1u/
