@@ -2,26 +2,35 @@
 patch:
   # 候选确实仅有一项时立即上屏；有多个候选时继续等待选择。
   speller/auto_select: true
+  # 仅合法的一至四码五笔唯一候选可自动上屏；不回退提交前一段。
+  speller/auto_select_pattern: '^[a-y]{1,4}$'
+  # 超过正常码长且无完整匹配时保留原始字母，不拆码自动造句。
+  translator/enable_sentence: false
   # 默认 Return 输出原始编码，这里改为确认当前高亮候选。
   editor/bindings/Return: confirm
   editor/bindings/KP_Enter: confirm
-  # 保持横排显示；上下选字，左右翻页。
-  selector/linear/bindings/Up: previous_candidate
-  selector/linear/bindings/Down: next_candidate
-  selector/linear/bindings/Left: previous_page
-  selector/linear/bindings/Right: next_page
-  # 聊天中直接输入半角 @，不打开符号候选。
-  "punctuator/half_shape/@": "@"
-  # 同一方案直接输入全拼；五笔候选优先，保留 z 拼音反查。
-  engine/translators/+:
-    - script_translator@pinyin
-  pinyin:
-    dictionary: pinyin_simp
-    prism: pinyin_simp
-    initial_quality: -1
-    enable_completion: false
-    enable_user_dict: false
-    preedit_format:
-      - xform/([nl])v/$1ü/
-      - xform/([nl])ue/$1üe/
-      - xform/([jqxy])v/$1u/
+  # Shift + Enter 提交原始字母，不带入输入法自动拆分的空格。
+  editor/bindings/Shift+Return: commit_raw_input
+  editor/bindings/Shift+KP_Enter: commit_raw_input
+  # 保持横排显示；左右选字，上下翻页。
+  selector/linear/bindings/Up: previous_page
+  selector/linear/bindings/Down: next_page
+  selector/linear/bindings/Left: previous_candidate
+  selector/linear/bindings/Right: next_candidate
+  # 默认半角字符、中文标点；每次进入方案时恢复默认。
+  switches/@1/reset: 0
+  switches/@3/reset: 0
+  # 功能符号直接上屏；候选菜单中的 -、= 仍用于翻页。
+  punctuator/half_shape:
+    "@": "@"
+    "#": "#"
+    "*": "*"
+    "/": "/"
+    "\\": "\\"
+    "_": "_"
+    "=": "="
+    "+": "+"
+    "-": "-"
+    "<": "《"
+    ">": "》"
+  # 普通输入仅匹配五笔；z + 拼音沿用上游反查，并显示五笔编码。

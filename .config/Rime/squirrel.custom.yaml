@@ -2,6 +2,7 @@
 patch:
   style/candidate_list_layout: linear
   style/text_orientation: horizontal
+  style/show_paging: true
   "app_options/com.apple.Spotlight/ascii_mode": false
   "app_options/com.alfredapp.Alfred/ascii_mode": false
   "app_options/com.runningwithcrayons.Alfred-2/ascii_mode": false

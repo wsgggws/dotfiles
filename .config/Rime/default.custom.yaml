@@ -5,3 +5,12 @@ patch:
     - schema: wubi86
   ascii_composer/switch_key/Shift_L: noop
   ascii_composer/switch_key/Shift_R: noop
+  # 系统 Fn 负责切换 ABC；关闭内部模式切换及方案菜单快捷键。
+  ascii_composer/switch_key/Caps_Lock: noop
+  ascii_composer/switch_key/Eisu_toggle: noop
+  switcher/hotkeys: []
+  # 保留编辑快捷键和 -/= 翻页，不加载逗号句号翻页、数字模式切换。
+  key_binder/bindings:
+    __patch:
+      - key_bindings:/emacs_editing
+      - key_bindings:/paging_with_minus_equal
