@@ -20,8 +20,8 @@
         colorMoved = zebra
         colorMovedWS = allow-indentation-change
         mnemonicPrefix = true
-	tool = nvimdiff
-	wsErrorHighlight = all
+        tool = nvimdiff
+	      wsErrorHighlight = all
 [push]
         autoSetupRemote = true
         followTags = true
@@ -62,7 +62,7 @@
     side-by-side = true
     line-numbers = true
     true-color = always
-    wrap-max-lines = 0
+	  wrap-max-lines = unlimited
 
     # Original Dracula configuration (inactive)
     # dark = true
