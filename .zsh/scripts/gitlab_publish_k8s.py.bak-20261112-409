@@ -1,0 +1,316 @@
+import os
+import random
+import string
+import sys
+import time
+
+import requests
+
+private_token = os.getenv("GITLAB_PRIVATE_TOKEN", "")  # 从环境变量获取私有令牌
+invoke_token = os.getenv("GITLAB_INVOKE_TOKEN", "")  # 从环境变量获取调用令牌
+
+if not private_token:
+    print("请设置环境变量 GITLAB_PRIVATE_TOKEN")
+    sys.exit(1)
+if not invoke_token:
+    print("请设置环境变量 GITLAB_INVOKE_TOKEN")
+    sys.exit(1)
+
+
+def res_check(url, response):
+    if response.status_code not in range(200, 300):
+        print(f"request {url} err\n" + f"{response.status_code}, {response.text}")
+        return False, response
+    print(response.status_code, response.text)
+    return True, response
+
+
+def get_random_str(str_length):
+    str_list = [random.choice(string.digits + string.ascii_letters) for _ in range(str_length)]
+    random_str = "".join(str_list)
+    return random_str
+
+
+class GitLabAPI:
+    def __init__(self, private_token=""):
+        self.api_url = "https://coding.xbonline.net/api/v4/projects"
+        self.headers = {"PRIVATE-TOKEN": private_token}
+
+    def get_id(self, web_url):
+        prj_name = web_url.split("/")[-1]
+
+        response = requests.get(f"{self.api_url}?search={prj_name}", headers=self.headers)
+        if response.json():
+            for i in response.json():
+                if i.get("web_url") == web_url:
+                    prj_id = i.get("id")
+                    return True, {"name": prj_name, "id": prj_id}
+
+        print("找不到该项目, 请确认web_url是否正确")
+        return False, None
+
+    def get_pub_file(self, prj_id, file_name, ref):
+        data = {"ref": ref}
+        url = f"{self.api_url}/{prj_id}/repository/files/{file_name}"
+        response = requests.get(url, headers=self.headers, data=data)
+        return res_check(url, response)
+
+    def create_pub_file(self, prj_id, file_name, content, branch, commit_message):
+        data = {"branch": branch, "content": content, "commit_message": commit_message}
+        url = f"{self.api_url}/{prj_id}/repository/files/{file_name}"
+        response = requests.post(url, headers=self.headers, data=data)
+        return res_check(url, response)
+
+    def update_pub_file(self, prj_id, file_name, content, branch, commit_message):
+        data = {"branch": branch, "content": content, "commit_message": commit_message}
+        url = f"{self.api_url}/{prj_id}/repository/files/{file_name}"
+        response = requests.put(url, headers=self.headers, data=data)
+        return res_check(url, response)
+
+    def get_hooks(self, prj_id):
+        url = f"{self.api_url}/{prj_id}/hooks"
+        response = requests.get(url, headers=self.headers)
+        return res_check(url, response)
+
+    def create_hook(self, prj_id, hook_url):
+        url = f"{self.api_url}/{prj_id}/hooks"
+        data = {
+            "id": prj_id,
+            "url": hook_url,
+            "merge_requests_events": True,
+            "push_events": False,
+        }
+        response = requests.post(url, headers=self.headers, data=data)
+        return res_check(url, response)
+
+    def get_labels(self, prj_id):
+        url = f"{self.api_url}/{prj_id}/labels"
+        response = requests.get(url, headers=self.headers)
+        return res_check(url, response)
+
+    def create_labels(self, prj_id, label_name, color):
+        url = f"{self.api_url}/{prj_id}/labels"
+        data = {"name": label_name, "color": color}
+        response = requests.post(url, headers=self.headers, data=data)
+        return res_check(url, response)
+
+    def get_branches(self, prj_id, branch_name):
+        url = f"{self.api_url}/{prj_id}/repository/branches/{branch_name}"
+        response = requests.get(url, headers=self.headers)
+        return res_check(url, response)
+
+    def create_branch(self, prj_id, branch, ref):
+        url = f"{self.api_url}/{prj_id}/repository/branches"
+        data = {"branch": branch, "ref": ref}
+        response = requests.post(url, headers=self.headers, data=data)
+        return res_check(url, response)
+
+    def create_merge(self, prj_name, prj_id, description, labels, title, source_branch, target_branch):
+        url = f"{self.api_url}/{prj_id}/merge_requests"
+        if not description:
+            description = f"#{prj_name}#"
+        data = {
+            "title": title,
+            "description": description,
+            "source_branch": source_branch,
+            "target_branch": target_branch,
+        }
+        if labels:
+            data["labels"] = labels
+
+        response = requests.post(url, headers=self.headers, data=data)
+        return res_check(url, response)
+
+    def accept_merge(self, prj_id, iid):
+        url = f"{self.api_url}/{prj_id}/merge_requests/{iid}/merge"
+        response = requests.put(url, headers=self.headers)
+        return res_check(url, response)
+
+
+class HulGitlab(GitLabAPI):
+    def __init__(self):
+        GitLabAPI.__init__(self, private_token)
+
+    def url_get_labels(self, web_url):
+        result, data_dict = self.get_id(web_url)
+        if result:
+            prj_id = data_dict["id"]
+            return self.get_labels(prj_id)
+
+    def url_create_label(self, web_url, label, color):
+        result, data_dict = self.get_id(web_url)
+        if result:
+            prj_id = data_dict["id"]
+            return self.create_labels(prj_id, label, color)
+
+    def __url_get_branches(self, web_url, branch_name="k8s"):
+        result, data_dict = self.get_id(web_url)
+        if result:
+            prj_id = data_dict["id"]
+            return self.get_branches(prj_id, branch_name)
+
+    def __url_create_branch(self, web_url, branch_name="k8s", ref="master"):
+        result, data_dict = self.get_id(web_url)
+        if result:
+            prj_id = data_dict["id"]
+            return self.create_branch(prj_id, branch_name, ref)
+
+    def __url_get_hooks(self, web_url):
+        result, data_dict = self.get_id(web_url)
+        if result:
+            prj_id = data_dict["id"]
+            return self.get_hooks(prj_id)
+
+    def __url_create_hooks(
+        self,
+        web_url,
+        hook_url="http://152.32.185.25/generic-webhook-trigger/invoke?token=" + invoke_token,
+    ):
+        result, data_dict = self.get_id(web_url)
+        if result:
+            prj_id = data_dict["id"]
+            return self.create_hook(prj_id, hook_url)
+
+    def __url_get_pub_file(self, web_url, ref="master"):
+        result, data_dict = self.get_id(web_url)
+        if result:
+            prj_id = data_dict["id"]
+            return self.get_pub_file(prj_id, "xbcicd_auto_fill.txt", ref)
+
+    def __url_create_pub_file(self, web_url, branch="master", commit_message="auto k8s fill"):
+        result, data_dict = self.get_id(web_url)
+        if result:
+            prj_id = data_dict["id"]
+            content = f"本文件用于python自动merge请求, 防止master, k8s完全相同, 自动生成的区别文件\n随机码: {get_random_str(32)}"
+            return self.create_pub_file(prj_id, "xbcicd_auto_fill.txt", content, branch, commit_message)
+
+    def __url_update_pub_file(self, web_url, branch="master", commit_message="auto k8s fill"):
+        result, data_dict = self.get_id(web_url)
+        if result:
+            prj_id = data_dict["id"]
+            content = f"本文件用于python自动merge请求, 防止master, k8s完全相同, 自动生成的区别文件\n随机码: {get_random_str(32)}"
+            return self.update_pub_file(prj_id, "xbcicd_auto_fill.txt", content, branch, commit_message)
+
+    def __url_merge_request(
+        self,
+        web_url,
+        description,
+        labels,
+        title,
+        source_branch="master",
+        target_branch="k8s",
+    ):
+        result, prj_dict = self.get_id(web_url)
+        if result:
+            prj_name = prj_dict.get("name")
+            prj_id = prj_dict.get("id")
+            status, result2 = self.create_merge(
+                prj_name,
+                prj_id,
+                description,
+                labels,
+                title,
+                source_branch,
+                target_branch,
+            )
+            if status:
+                iid = result2.json().get("iid")
+                time.sleep(3)
+                return self.accept_merge(prj_id, iid)
+
+    # 检测k8s分支是否存在 不存在即创建
+    def check_branch(self, web_url):
+        _, response = self.__url_get_branches(web_url)
+        if response.status_code == 404 and response.text == '{"message":"404 Branch Not Found"}':
+            self.__url_create_branch(web_url)
+
+    # 检测发布hook是否存在 不存在即创建
+    def check_hook(self, web_url):
+        _, response = self.__url_get_hooks(web_url)
+        if response.status_code == 200:
+            if not response.json():
+                self.__url_create_hooks(web_url)
+            else:
+                url_list = [item.get("url") for item in response.json()]
+                if "http://152.32.185.25/generic-webhook-trigger/invoke?token=" + invoke_token not in url_list:
+                    self.__url_create_hooks(web_url)
+                # if "http://152.32.185.25/generic-webhook-trigger/invoke?token=promote-canary-project" not in url_list:
+                #    self.__url_create_hooks(web_url)
+
+    # 检测发布检测文件是否存在 不存在即创建 存在即更新
+    def check_file(self, web_url):
+        _, response = self.__url_get_pub_file(web_url)
+        if response.status_code == 404 and response.text == '{"message":"404 File Not Found"}':
+            self.__url_create_pub_file(web_url)
+        if response.status_code == 200 and response.json().get("file_name") == "xbcicd_auto_fill.txt":
+            self.__url_update_pub_file(web_url)
+
+    def static_auto_configure(self, web_url):
+        self.check_branch(web_url)
+        self.check_hook(web_url)
+
+    def auto_publish(self, web_url, description=None, labels=None, title=None):
+        self.check_branch(web_url)
+        self.check_hook(web_url)
+        self.check_file(web_url)
+        self.__url_merge_request(web_url, description, labels, title)
+
+
+def git_demo():
+    demo = HulGitlab()
+    # eg: 获取labels
+    demo.url_get_labels("https://coding.xbonline.net/xbops/xbcd")
+    # eg: 创建labels color  使用css颜色名称
+    demo.url_create_label("https://coding.xbonline.net/xbops/xbcd", "test_label", "#c0c0c0")
+
+    # 检测publish分支是否存在 不存在即创建
+    demo.check_branch("https://coding.xbonline.net/xbops/xbcd")
+    # 检测发布hook是否存在 不存在即创建
+    demo.check_hook("https://coding.xbonline.net/xbops/xbcd")
+    # 检测发布检测文件是否存在 不存在即创建 存在即更新
+    demo.check_file("https://coding.xbonline.net/xbops/xbcd")
+
+    # 自动发布 简单发布 (分组名=项目名)
+    demo.auto_publish("https://coding.xbonline.net/commercial/advert_activity")
+
+    # 自动发布(分组名 != 项目名)  ex 带标签 发布不是adfly-ssp的模块
+    demo.auto_publish(
+        "https://coding.xbonline.net/commercial/adfly-ssp",
+        description="#adfly-forward#",
+        labels="sg",
+    )
+
+    demo.auto_publish(
+        "https://coding.xbonline.net/commercial/predict-server",
+        description=f"#{i}#",
+        labels="vn",
+        title="deploy to k8s",
+    )
+
+
+if __name__ == "__main__":
+    obj = HulGitlab()
+
+    # 测试 发布
+    # title 可选 rollback promote
+
+    if len(sys.argv) < 3:
+        print(f"Usage: {sys.argv[0]} project_path project_name")
+        print("For example:")
+        print("python ~/.zsh/scripts/gitlab_publish_k8s.py web3_property web3-property")
+        print("python ~/.zsh/scripts/gitlab_publish_k8s.py web3_property web3-property-lb")
+        print("python ~/.zsh/scripts/gitlab_publish_k8s.py web3_property web3-property-script")
+        sys.exit(1)
+
+    proj_path = sys.argv[1]
+    proj_name = sys.argv[2]
+    labels = sys.argv[3] if len(sys.argv) > 3 else "alisg"
+
+    obj.auto_publish(
+        f"https://coding.xbonline.net/xbnet_web3/{proj_path}",
+        # f"https://coding.xbonline.net/lb_server/{proj_path}",
+        description=f"#{proj_name}#",
+        labels=labels,
+        title="deploy to k8s",
+    )
+    time.sleep(10)

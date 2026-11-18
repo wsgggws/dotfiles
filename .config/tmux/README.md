@@ -2,7 +2,7 @@
 
 `~/.config/tmux/scripts/` 是窗口选择器和预览程序的维护位置。配色数据位于 `themes/`，当前选择由 `~/.config/fzf/theme.sh` 提供。
 
-项目路由与 Conda 环境共用 `~/.config/terminal/projects.tsv`，由 `projects.sh` 读取。`scripts/pan-hook.sh` 只处理连接流程，不重复维护项目、远端命令和会话映射。
+项目路由与 Conda 环境共用 `~/.zsh/scripts/projects.sh` 中的登记数据及查找函数；`~/.config/terminal/projects.sh` 是兼容符号链接。`scripts/pan-hook.sh` 只处理连接流程，不重复维护项目、远端命令和会话映射。
 
 ## 窗口选择器
 

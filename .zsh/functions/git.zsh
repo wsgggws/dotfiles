@@ -1,3 +1,16 @@
+# Git shortcuts and branch-switch behavior live together.
+alias g=git
+alias ga='git add'
+alias gcb='git checkout -b'
+alias gst='git status'
+alias gd='git diff'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git pull'
+alias gbD='git branch --delete --force'
+alias glg='git log --oneline --graph --decorate'
+alias gv='lazygit log'
+
 # gsw: git switch 增强版。
 # 好处：不依赖 post-checkout hook，避免被项目里的 .husky/core.hooksPath 覆盖。
 # 行为：切换成功后，如果当前分支是 master/main，则自动 pull --rebase。

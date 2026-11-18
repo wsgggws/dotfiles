@@ -14,10 +14,9 @@ fi
 # =================================
 #     2. 载入用户自己的配置
 # =================================
-[[ -f ~/.zsh/aliases.zsh ]]       && source ~/.zsh/aliases.zsh
-[[ -f ~/.zsh/env.sh ]]            && source ~/.zsh/env.sh
 [[ -f ~/.zsh/secret.env ]]        && source ~/.zsh/secret.env
 
+# 功能的配置、别名与函数统一在各自模块；aliases.zsh/env.sh 仅作兼容入口
 # 从 ~/.zsh/functions 批量载入函数
 # 先选择 Emacs 键位，避免覆盖后面 fzf 注册的 Tab / Ctrl+R。
 bindkey -e

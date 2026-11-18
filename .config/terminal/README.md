@@ -1,8 +1,12 @@
 # 终端共用入口
 
-`projects.tsv` 统一维护目录别名、Conda 环境和 tmux 远端路由。每列以 Tab 分隔；目录别名以逗号分隔；未使用的字段写 `-`。不存放密码或令牌。
+项目登记及查找的唯一源码是 `~/.zsh/scripts/projects.sh`，本目录的 `projects.sh` 是指向它的相对符号链接，供 bash/tmux 兼容调用。
 
-`projects.sh` 供 zsh 和 bash 共用。目录查找包含项目全部子目录，嵌套项目优先使用最近的匹配祖先。添加项目时只修改登记表。
+每个项目使用一个带字段名的 shell 配置块，名称、目录别名、Conda 环境、tmux 路由在同一块维护。项目改名只修改 `name=...`；默认 Conda 环境名、tmux 会话名及部署目标随之更新。目录别名通过 `directory=...` 添加，可重复填写；带空格的值使用 shell 引号。
+
+Conda 与会话可用 `conda=...`、`session=...` 单独指定；空字符串表示停用。`directory_matching=false` 停用目录匹配。其余字段及示例见 `~/.zsh/README.md`。配置使用普通 shell 语法，所有项目直接在脚本内维护，不读取外部登记表。不存放密码或令牌。
+
+当前 `web3` 对应 `web3_property_lb`，`user` 对应 `lb_user_svr`；服务名称在 `~/.zsh/functions/deploy.zsh` 维护。
 
 Conda 在首次运行 `conda` 或进入登记项目时初始化，默认安装位置为 `$HOME/miniconda3`，可通过 `CONDA_HOME` 覆盖。离开项目时只退出自动激活的环境，手动选择的环境保留。
 

@@ -1,44 +1,7 @@
-# need npm install trash
-alias rm=trash
-
-alias vi=nvim
-alias vim=nvim
-alias ve="nvim ~/.zsh/env.sh"
-alias vz="nvim ~/.zshrc"
-alias vr="nvim ./README.md"
-alias vs="nvim ~/.config/starship.toml"
-alias vt='vi "$(mktemp /tmp/vt.XXXXXX)"'
-unalias vp 2>/dev/null
-function vp() {
-	local tmp py
-	tmp="$(mktemp /tmp/vp.XXXXXX)"
-	py="${tmp}.py"
-	mv -- "$tmp" "$py"
-	vi "$py"
+# Compatibility entry point; new shells load functions/*.zsh directly.
+() {
+  local root="${${(%):-%x}:A:h}/functions" module
+  for module in brew editor files git process reload; do
+    source "$root/$module.zsh" || return
+  done
 }
-alias vc='nvim ~/.wezterm.lua'
-alias src="source ~/.zshrc"
-
-alias ls='eza --icons=auto'
-alias ll='eza -al --icons=auto'
-alias lt='eza --tree --level=2 --icons=auto'
-
-alias brewbackup='brew bundle dump --force --file="$HOME/.config/brew/Brewfile"'
-alias brewsync='brew bundle --file="~/.config/brew/Brewfile"'
-
-alias duh='du -sh *'
-alias psa="ps aux | grep"
-alias k9="kill -9"
-alias ports="lsof -iTCP -sTCP:LISTEN -n -P"
-
-alias g='git'
-alias ga='git add'
-alias gcb='git checkout -b'
-alias gst='git status'
-alias gd='git diff'
-alias gc='git commit'
-alias gp='git push'
-alias gl='git pull'
-alias gbD='git branch --delete --force'
-alias glg='git log --oneline --graph --decorate'
-alias gv='lazygit log'

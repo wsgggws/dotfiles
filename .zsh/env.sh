@@ -1,8 +1,7 @@
-export EDITOR=nvim
-
-export DOCKER_DEFAULT_PLATFORM=linux/amd64
-
-# Better man with colors + bat (only if bat is available)
-if command -v bat >/dev/null 2>&1; then
-  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-fi
+# Compatibility entry point; defaults live next to their corresponding feature.
+() {
+  local root="${${(%):-%x}:A:h}/functions" module
+  for module in docker editor man; do
+    source "$root/$module.zsh" || return
+  done
+}
