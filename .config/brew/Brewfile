@@ -1,24 +1,23 @@
 tap "antoniorodr/memo", trusted: true
 tap "dail8859/notepadnext", trusted: true
 tap "daipeihust/tap", trusted: true
+tap "dufu1991/tap", trusted: { casks: ["foldgit"] }
 tap "farion1231/ccswitch", trusted: true
 tap "pot-app/tap", trusted: true
 tap "retlehs/tap", trusted: true
+tap "roversx/tap", "https://github.com/RoversX/homebrew-tap"
 tap "sjzar/tap", trusted: true
 tap "tw93/tap", trusted: true
 tap "universal-ctags/universal-ctags", trusted: true
+tap "wsgggws/restflow", "https://github.com/wsgggws/RestFlow.git"
 # Run your GitHub Actions locally
 brew "act"
-# Asciicast to GIF converter
-brew "agg"
 # Universal Command-Line Interface for Alibaba Cloud
 brew "aliyun-cli"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
 # Text processor and publishing toolchain for AsciiDoc
 brew "asciidoctor"
-# Record and share terminal sessions
-brew "asciinema"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # C library of Git core methods that is re-entrant and linkable
@@ -31,20 +30,12 @@ brew "binutils"
 brew "gmp"
 # Command-line interface for Cabal and Hackage
 brew "cabal-install"
-# Create and view interactive cheat sheets for *nix commands
-brew "cheat"
 # Cross-platform make
 brew "cmake"
 # Zsh completion for conda
 brew "conda-zsh-completion"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
-# Apjanke's fork of the classic cowsay project
-brew "cowsay"
-# DuckDuckGo from the terminal
-brew "ddgr"
-# Secure runtime for JavaScript and TypeScript
-brew "deno"
 # Standard XML representation system for technical documents
 brew "docbook"
 # XML vocabulary to create presentation-neutral documents
@@ -61,8 +52,6 @@ brew "eza"
 brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
-# Infamous electronic fortune-cookie generator
-brew "fortune"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # C library for multiple-precision floating-point computations
@@ -83,10 +72,6 @@ brew "git"
 brew "git-delta"
 # Quickly rewrite git repository history
 brew "git-filter-repo"
-# Cinematic Git commit replay tool
-brew "gitlogue"
-# Render markdown on the CLI
-brew "glow"
 # Command-line option parsing utility
 brew "gnu-getopt"
 # GNU implementation of the famous stream editor
@@ -95,16 +80,12 @@ brew "gnu-sed"
 brew "gnutls"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
-# Agent multiplexer that lives in your terminal
-brew "herdr"
+# Log analyzer and interactive viewer for the Apache Webserver
+brew "goaccess"
 # Improved top (interactive process viewer)
 brew "htop"
-# User-friendly cURL replacement (command-line HTTP client)
-brew "httpie"
 # Configurable static site generator
 brew "hugo"
-# Command-line benchmarking tool
-brew "hyperfine"
 # ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
 brew "libheif"
 # Tools and libraries to manipulate images in select formats
@@ -135,8 +116,6 @@ brew "lua"
 brew "luarocks"
 # Deep clean and optimize your Mac
 brew "mole"
-# Netwide Assembler (NASM) is an 80x86 assembler
-brew "nasm"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 # Port scanning utility for large networks
@@ -145,14 +124,10 @@ brew "nmap"
 brew "node"
 # Manage multiple Node.js versions
 brew "nvm"
-# Outputs current CPU temperature for OSX
-brew "osx-cpu-temp"
 # PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
-# Terminal slideshow tool
-brew "presenterm"
 # Python interface to Tcl/Tk
 brew "python-tk@3.9"
 # Generic machine emulator and virtualizer
@@ -171,20 +146,20 @@ brew "rust"
 brew "rustup"
 # 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
 # Prints a steam locomotive if you type sl instead of ls
 brew "sl"
 # Terminal based presentation tool
 brew "slides"
 # Cross-shell prompt for astronauts
 brew "starship"
-# Log file highlighter
-brew "tailspin"
+# Opinionated Lua code formatter
+brew "stylua"
 # Tool Command Language
 brew "tcl-tk"
 # Terminal multiplexer
 brew "tmux"
-# Manage complex tmux sessions easily
-brew "tmuxinator"
 # CLI tool that moves files or folder to the trash
 brew "trash", link: true
 # Display directories as trees (with optional color/HTML output)
@@ -195,10 +170,6 @@ brew "universal-ctags", args: ["HEAD"]
 brew "uv"
 # Internet file retriever
 brew "wget"
-# Why is this running?
-brew "witr"
-# HTTP benchmarking tool
-brew "wrk"
 # Yet Another Dotfiles Manager
 brew "yadm"
 # Blazing fast terminal file manager written in Rust, based on async I/O
@@ -221,29 +192,19 @@ cask "farion1231/ccswitch/cc-switch"
 cask "claude-code"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
-cask "font-fira-code"
-cask "font-maple-mono"
-cask "font-maple-mono-cn"
-cask "font-maple-mono-nf"
-cask "font-maple-mono-nf-cn"
-cask "font-maple-mono-normal"
-cask "font-maple-mono-normal-cn"
-cask "font-maple-mono-normal-nf"
-cask "font-maple-mono-normal-nf-cn"
-cask "font-symbols-only-nerd-font"
 # File archiver
 cask "keka"
 # Open-source keystroke visualiser
 cask "keycastr"
-# Intercept, modify, replay, save HTTP/S traffic
-cask "mitmproxy"
+# macOS Launchpad replacement for macOS Tahoe and later
+cask "roversx/tap/launchnext", trusted: true
 # Replacement for Docker Desktop
 cask "orbstack"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
+# Menu bar break timer with synchronized breaks across displays
+cask "wsgggws/restflow/restflow"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm@nightly"
-npm "clawhub"
-npm "openclaw"
 npm "pm2"
 npm "trash"
