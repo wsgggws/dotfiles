@@ -192,6 +192,7 @@ cask "farion1231/ccswitch/cc-switch"
 cask "claude-code"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
+cask "font-maple-mono-nf-cn"
 # File archiver
 cask "keka"
 # Open-source keystroke visualiser
