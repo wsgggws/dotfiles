@@ -14,7 +14,7 @@
 
 ## 后台启动
 
-已安装的 LaunchAgent 在登录 macOS 后自动运行。控制器离线时每 5 秒重试连接，FlClash 上线后开始检测节点。每轮检测结束后等待 120 秒。终端可以关闭。
+已安装的 LaunchAgent 在登录 macOS 后自动运行。控制器离线时每 5 秒重试连接，日志在进入等待时记录一次。FlClash 上线后每 120 秒开始一轮检测，每轮结果都会写入日志。检测超过 120 秒时，下一轮等当前轮完成。终端可以关闭。
 
 首次安装时，在终端运行以下命令。已安装的电脑可跳过。
 
@@ -46,7 +46,7 @@ launchctl kickstart -k "gui/$(id -u)/local.flclash-failover"
 
 ## 前台使用
 
-在终端启动监控。每轮检测完成后等待 120 秒再检查。按 `Ctrl+C` 停止监控。运行期间保持 FlClash 和终端开启。
+在终端启动监控。每隔约 120 秒开始一轮检测。按 `Ctrl+C` 停止监控。运行期间保持 FlClash 和终端开启。
 
 ```sh
 /usr/bin/ruby "$HOME/.config/flclash-failover/flclash-failover.rb" --watch

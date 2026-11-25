@@ -92,11 +92,13 @@ end
 def run_monitor(mode)
   watch = !mode.nil?
   background = mode == "--background"
-  last_message = nil
+  was_waiting = false
   $stdout.sync = true
 
   loop do
+    started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     delay = INTERVAL
+    waiting = false
     output = $stdout
     begin
       config = YAML.safe_load(File.read(CONFIG), aliases: true)
@@ -105,6 +107,7 @@ def run_monitor(mode)
       if background && (error.is_a?(Errno::ENOENT) || error.is_a?(Errno::ECONNREFUSED))
         message = "等待 FlClash 启动"
         delay = FLCLASH_START_RETRY
+        waiting = true
       else
         message = "暂时无法读取 FlClash 配置或连接控制器（#{error.class}）"
         output = $stderr
@@ -119,13 +122,14 @@ def run_monitor(mode)
       exit 1
     end
 
-    if !background || message != last_message
+    unless waiting && was_waiting
       output.puts "[#{Time.now.strftime('%F %T')}] #{message}"
-      last_message = message
     end
+    was_waiting = waiting
 
     break unless watch
-    sleep delay
+    elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - started_at
+    sleep [delay - elapsed, 0].max
   end
 end
 
