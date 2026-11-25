@@ -46,6 +46,8 @@ launchctl kickstart -k "gui/$(id -u)/local.flclash-failover"
 
 ## 前台使用
 
+如需立即测速并更新主组节点，可在 Alfred 输入 `sys refresh` 并回车，或运行脚本的 `--refresh`。结果写入后台使用的同一份日志。
+
 在终端启动监控。每隔约 120 秒开始一轮检测。按 `Ctrl+C` 停止监控。运行期间保持 FlClash 和终端开启。
 
 ```sh

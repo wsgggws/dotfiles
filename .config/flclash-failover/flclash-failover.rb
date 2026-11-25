@@ -4,6 +4,7 @@ require "uri"
 require "yaml"
 
 CONFIG = File.expand_path("~/Library/Application Support/com.follow.clash/config.yaml")
+LOG = File.expand_path("~/Library/Logs/flclash-failover.log")
 GROUP = "节点选择"
 INTERVAL = 120
 FLCLASH_START_RETRY = 5
@@ -97,7 +98,7 @@ def delay_label(delay)
   delay ? "#{delay} ms" : "超时"
 end
 
-def check(config, apply)
+def check(config, apply, refresh: false)
   binding = config.fetch("external-controller", "")
   host, port = binding.split(":", 2)
   unless host == "127.0.0.1" && port.to_s.match?(/\A\d+\z/) && (1..65535).cover?(port.to_i)
@@ -111,7 +112,14 @@ def check(config, apply)
   group = read_group(http, secret, path)
   concrete_nodes = config.fetch("proxies", []).map { |proxy| proxy.fetch("name") }
   nodes = group.fetch("all") & concrete_nodes
+  nodes.reject! { |node| node.match?(/\A(?:剩余流量|套餐到期|到期时间)[：:]/) }
   current = group.fetch("now")
+  if refresh
+    replacement, delay = select_candidate(candidate_delays(http, secret, nodes), nil)
+    return "本轮未找到可用节点" unless replacement
+    return "当前节点可用，继续使用 #{current}（#{delay_label(delay)}）" if replacement == current
+    return apply_selection(http, secret, path, current, replacement, "（测速 → #{delay_label(delay)}）")
+  end
   return "请在「节点选择」中选一个具体节点作为起点" unless nodes.include?(current)
 
   current_delay = measure_delay(http, secret, current)
@@ -130,6 +138,10 @@ def check(config, apply)
   latency_change = "（#{delay_label(current_delay)} → #{delay_label(replacement_delay)}）"
   return "预览结果，建议切到 #{replacement}#{latency_change}" unless apply
 
+  apply_selection(http, secret, path, current, replacement, latency_change)
+end
+
+def apply_selection(http, secret, path, current, replacement, latency_change)
   latest = read_group(http, secret, path)
   return "策略组已更新，下轮重新检测" unless latest["now"] == current && latest["all"].include?(replacement)
 
@@ -138,6 +150,17 @@ def check(config, apply)
   return "切换后策略组再次更新，下轮重新检测" unless read_group(http, secret, path)["now"] == replacement
 
   "已从 #{current} 切换到 #{replacement}#{latency_change}"
+end
+
+def refresh_selection
+  config = YAML.safe_load(File.read(CONFIG), aliases: true)
+  message = check(config, true, refresh: true)
+  File.open(LOG, "a", 0o600) { |file| file.puts "[#{Time.now.strftime('%F %T')}] #{message}" }
+  puts message
+rescue SystemCallError, IOError, Net::OpenTimeout, Net::ReadTimeout, JSON::ParserError, Psych::Exception
+  puts "测速失败，请确认 FlClash 正在运行"
+rescue KeyError, RuntimeError => error
+  puts error.message
 end
 
 def run_monitor(mode)
@@ -185,9 +208,12 @@ def run_monitor(mode)
 end
 
 if $PROGRAM_NAME == __FILE__
-  unless ARGV.empty? || ARGV == ["--watch"] || ARGV == ["--background"]
-    abort "用法：ruby #{File.basename(__FILE__)} [--watch|--background]"
+  case ARGV
+  when ["--refresh"]
+    refresh_selection
+  when [], ["--watch"], ["--background"]
+    run_monitor(ARGV.first)
+  else
+    abort "用法：ruby #{File.basename(__FILE__)} [--watch|--background|--refresh]"
   end
-
-  run_monitor(ARGV.first)
 end
