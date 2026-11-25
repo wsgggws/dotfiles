@@ -6,6 +6,7 @@ require "yaml"
 CONFIG = File.expand_path("~/Library/Application Support/com.follow.clash/config.yaml")
 GROUP = "节点选择"
 INTERVAL = 120
+FLCLASH_START_RETRY = 5
 TIMEOUT_MS = 5_000
 TEST_URL = "https://www.gstatic.com/generate_204"
 HONG_KONG = /香港|Hong[ _-]*Kong|(?<![A-Za-z])HK(?![A-Za-z])|🇭🇰/i
@@ -88,24 +89,50 @@ def check(config, apply)
   "已从 #{current} 切换到 #{replacement}"
 end
 
-if $PROGRAM_NAME == __FILE__
-  abort "用法：ruby #{File.basename(__FILE__)} [--watch]" unless ARGV.empty? || ARGV == ["--watch"]
-  watch = ARGV == ["--watch"]
+def run_monitor(mode)
+  watch = !mode.nil?
+  background = mode == "--background"
+  last_message = nil
   $stdout.sync = true
 
   loop do
+    delay = INTERVAL
+    output = $stdout
     begin
       config = YAML.safe_load(File.read(CONFIG), aliases: true)
-      puts "[#{Time.now.strftime('%H:%M:%S')}] #{check(config, watch)}"
+      message = check(config, watch)
     rescue SystemCallError, IOError, Net::OpenTimeout, Net::ReadTimeout, JSON::ParserError, Psych::Exception => error
-      warn "暂时无法读取 FlClash 配置或连接控制器（#{error.class}）"
-      exit 1 unless watch
+      if background && (error.is_a?(Errno::ENOENT) || error.is_a?(Errno::ECONNREFUSED))
+        message = "等待 FlClash 启动"
+        delay = FLCLASH_START_RETRY
+      else
+        message = "暂时无法读取 FlClash 配置或连接控制器（#{error.class}）"
+        output = $stderr
+      end
     rescue KeyError, RuntimeError => error
-      warn error.message
-      exit 1 unless watch
+      message = error.message
+      output = $stderr
+    end
+
+    if output == $stderr && !watch
+      warn message
+      exit 1
+    end
+
+    if !background || message != last_message
+      output.puts "[#{Time.now.strftime('%F %T')}] #{message}"
+      last_message = message
     end
 
     break unless watch
-    sleep INTERVAL
+    sleep delay
   end
+end
+
+if $PROGRAM_NAME == __FILE__
+  unless ARGV.empty? || ARGV == ["--watch"] || ARGV == ["--background"]
+    abort "用法：ruby #{File.basename(__FILE__)} [--watch|--background]"
+  end
+
+  run_monitor(ARGV.first)
 end
