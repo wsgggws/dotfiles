@@ -15,6 +15,7 @@ PROBE_CONCURRENCY = 6
 TEST_URL = "https://www.gstatic.com/generate_204"
 HONG_KONG = /香港|Hong[ _-]*Kong|(?<![A-Za-z])HK(?![A-Za-z])|🇭🇰/i
 JAPAN = /日本|东京|東京|大阪|Japan|(?<![A-Za-z])JP(?![A-Za-z])|🇯🇵/i
+REGIONS = { "hk" => ["香港", HONG_KONG], "jp" => ["日本", JAPAN] }.freeze
 
 def proxy_path(name)
   "/proxies/#{URI.encode_www_form_component(name).gsub('+', '%20')}"
@@ -30,11 +31,15 @@ def request(http, secret, verb, path, body = nil)
   http.request(message)
 end
 
-def read_group(http, secret, path)
+def read_proxy(http, secret, path)
   response = request(http, secret, Net::HTTP::Get, path)
-  raise "读取策略组失败，HTTP #{response.code}" unless response.is_a?(Net::HTTPSuccess)
+  raise "读取节点状态失败，HTTP #{response.code}" unless response.is_a?(Net::HTTPSuccess)
 
-  group = JSON.parse(response.body)
+  JSON.parse(response.body)
+end
+
+def read_group(http, secret, path)
+  group = read_proxy(http, secret, path)
   raise "策略组需要保持手动选择类型" unless group["type"] == "Selector"
 
   group
@@ -98,7 +103,7 @@ def delay_label(delay)
   delay ? "#{delay} ms" : "超时"
 end
 
-def check(config, apply, refresh: false)
+def controller(config)
   binding = config.fetch("external-controller", "")
   host, port = binding.split(":", 2)
   unless host == "127.0.0.1" && port.to_s.match?(/\A\d+\z/) && (1..65535).cover?(port.to_i)
@@ -107,7 +112,45 @@ def check(config, apply, refresh: false)
   secret = config.fetch("secret", "").to_s
   raise "未找到 FlClash 控制器密钥" if secret.empty?
 
-  http = controller_http(host, port.to_i)
+  [controller_http(host, port.to_i), secret]
+end
+
+def active_node(http, secret)
+  name = GROUP
+  visited = []
+  loop do
+    raise "策略组循环引用" if visited.include?(name)
+
+    visited << name
+    proxy = read_proxy(http, secret, proxy_path(name))
+    selected = proxy["now"]
+    return name unless selected.is_a?(String) && !selected.empty?
+
+    name = selected
+  end
+end
+
+def live_status
+  config = YAML.safe_load(File.read(CONFIG), aliases: true)
+  http, secret = controller(config)
+  concrete_nodes = config.fetch("proxies", []).map { |proxy| proxy.fetch("name") }
+  node = active_node(http, secret)
+  2.times do
+    delay = measure_delay(http, secret, node) if concrete_nodes.include?(node)
+    current = active_node(http, secret)
+    if current == node
+      status = concrete_nodes.include?(node) ? (delay ? delay_label(delay) : "超时") : "未测速"
+      return { time: Time.now.strftime("%T"), node: node, status: status }
+    end
+    node = current
+  end
+  { node: node, status: "节点刚切换" }
+rescue SystemCallError, IOError, Net::OpenTimeout, Net::ReadTimeout, JSON::ParserError, Psych::Exception, KeyError, RuntimeError
+  { status: "实时检测失败" }
+end
+
+def check(config, apply, refresh: false, region: nil)
+  http, secret = controller(config)
   path = proxy_path(GROUP)
   group = read_group(http, secret, path)
   concrete_nodes = config.fetch("proxies", []).map { |proxy| proxy.fetch("name") }
@@ -115,10 +158,20 @@ def check(config, apply, refresh: false)
   nodes.reject! { |node| node.match?(/\A(?:剩余流量|套餐到期|到期时间)[：:]/) }
   current = group.fetch("now")
   if refresh
-    replacement, delay = select_candidate(candidate_delays(http, secret, nodes), nil)
-    return "本轮未找到可用节点" unless replacement
+    region_name, region_pattern = REGIONS.fetch(region) if region
+    nodes.select! { |node| region_pattern.match?(node) } if region_pattern
+    measurements = candidate_delays(http, secret, nodes)
+    replacement, delay = if region
+                           measurements.min_by { |name, latency| [latency, name] }
+                         else
+                           select_candidate(measurements, nil)
+                         end
+    return "本轮未找到可用#{region_name}节点" unless replacement
     return "当前节点可用，继续使用 #{current}（#{delay_label(delay)}）" if replacement == current
-    return apply_selection(http, secret, path, current, replacement, "（测速 → #{delay_label(delay)}）")
+    latency_change = "（测速 → #{delay_label(delay)}）"
+    return "预览结果，建议切到 #{replacement}#{latency_change}" unless apply
+
+    return apply_selection(http, secret, path, current, replacement, latency_change)
   end
   return "请在「节点选择」中选一个具体节点作为起点" unless nodes.include?(current)
 
@@ -152,9 +205,9 @@ def apply_selection(http, secret, path, current, replacement, latency_change)
   "已从 #{current} 切换到 #{replacement}#{latency_change}"
 end
 
-def refresh_selection
+def refresh_selection(region = nil)
   config = YAML.safe_load(File.read(CONFIG), aliases: true)
-  message = check(config, true, refresh: true)
+  message = check(config, true, refresh: true, region: region)
   File.open(LOG, "a", 0o600) { |file| file.puts "[#{Time.now.strftime('%F %T')}] #{message}" }
   puts message
 rescue SystemCallError, IOError, Net::OpenTimeout, Net::ReadTimeout, JSON::ParserError, Psych::Exception
@@ -209,11 +262,15 @@ end
 
 if $PROGRAM_NAME == __FILE__
   case ARGV
+  when ["--status"]
+    puts JSON.generate(live_status)
   when ["--refresh"]
     refresh_selection
+  when ["--refresh", "hk"], ["--refresh", "jp"]
+    refresh_selection(ARGV.last)
   when [], ["--watch"], ["--background"]
     run_monitor(ARGV.first)
   else
-    abort "用法：ruby #{File.basename(__FILE__)} [--watch|--background|--refresh]"
+    abort "用法：ruby #{File.basename(__FILE__)} [--watch|--background|--status|--refresh [hk|jp]]"
   end
 end

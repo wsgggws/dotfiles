@@ -47,6 +47,9 @@ launchctl kickstart -k "gui/$(id -u)/local.flclash-failover"
 ## 前台使用
 
 如需立即测速并更新主组节点，可在 Alfred 输入 `sys refresh` 并回车，或运行脚本的 `--refresh`。结果写入后台使用的同一份日志。
+输入 `sys jp` 或 `sys hk` 分别重新测速日本或香港候选，选择该地区最快的可用节点。终端对应的参数是 `--refresh jp` 和 `--refresh hk`。该地区全部超时时保留当前选择。
+
+`sys flclash` 通过脚本的 `--status` 查询实时生效节点并测速。
 
 在终端启动监控。每隔约 120 秒开始一轮检测。按 `Ctrl+C` 停止监控。运行期间保持 FlClash 和终端开启。
 
