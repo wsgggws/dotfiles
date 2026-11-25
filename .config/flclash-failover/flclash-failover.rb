@@ -8,6 +8,9 @@ GROUP = "节点选择"
 INTERVAL = 120
 FLCLASH_START_RETRY = 5
 TIMEOUT_MS = 5_000
+MAX_LATENCY_MS = 600
+REGION_MARGIN_MS = 50
+PROBE_CONCURRENCY = 6
 TEST_URL = "https://www.gstatic.com/generate_204"
 HONG_KONG = /香港|Hong[ _-]*Kong|(?<![A-Za-z])HK(?![A-Za-z])|🇭🇰/i
 JAPAN = /日本|东京|東京|大阪|Japan|(?<![A-Za-z])JP(?![A-Za-z])|🇯🇵/i
@@ -36,20 +39,62 @@ def read_group(http, secret, path)
   group
 end
 
-def healthy?(http, secret, proxy)
+def measure_delay(http, secret, proxy)
   query = URI.encode_www_form(url: TEST_URL, timeout: TIMEOUT_MS, expected: 204)
   response = request(http, secret, Net::HTTP::Get, "#{proxy_path(proxy)}/delay?#{query}")
-  return false if %w[503 504].include?(response.code)
+  return nil if %w[404 503 504].include?(response.code)
   raise "节点检测接口返回 HTTP #{response.code}" unless response.is_a?(Net::HTTPSuccess)
 
   delay = JSON.parse(response.body).fetch("delay")
-  delay.is_a?(Numeric) && delay.positive?
+  delay if delay.is_a?(Numeric) && delay.positive?
 end
 
-def candidates_in_order(nodes)
-  hong_kong, remaining = nodes.partition { |name| HONG_KONG.match?(name) }
-  japan, remaining = remaining.partition { |name| JAPAN.match?(name) }
-  hong_kong + japan + remaining
+def controller_http(host, port)
+  http = Net::HTTP.new(host, port, nil)
+  http.open_timeout = 2
+  http.read_timeout = 8
+  http
+end
+
+def candidate_delays(http, secret, nodes)
+  queue = Queue.new
+  workers = [nodes.length, PROBE_CONCURRENCY].min
+  nodes.each { |node| queue << node }
+  workers.times { queue << nil }
+  workers.times.map do
+    Thread.new do
+      Thread.current.report_on_exception = false
+      client = controller_http(http.address, http.port)
+      results = []
+      while (node = queue.pop)
+        delay = measure_delay(client, secret, node)
+        results << [node, delay] if delay
+      end
+      results
+    end
+  end.flat_map(&:value)
+end
+
+def region_rank(node)
+  return 0 if HONG_KONG.match?(node)
+  return 1 if JAPAN.match?(node)
+
+  2
+end
+
+def select_candidate(delays, current_delay)
+  faster = delays.select { |_, delay| !current_delay || delay < current_delay }
+  fastest = faster.map(&:last).min
+  return unless fastest
+
+  ceiling = fastest + REGION_MARGIN_MS
+  ceiling = [ceiling, MAX_LATENCY_MS].min if fastest <= MAX_LATENCY_MS
+  faster.select { |_, delay| delay <= ceiling }
+        .min_by { |name, delay| [region_rank(name), delay, name] }
+end
+
+def delay_label(delay)
+  delay ? "#{delay} ms" : "超时"
 end
 
 def check(config, apply)
@@ -61,9 +106,7 @@ def check(config, apply)
   secret = config.fetch("secret", "").to_s
   raise "未找到 FlClash 控制器密钥" if secret.empty?
 
-  http = Net::HTTP.new(host, port.to_i, nil)
-  http.open_timeout = 2
-  http.read_timeout = 8
+  http = controller_http(host, port.to_i)
   path = proxy_path(GROUP)
   group = read_group(http, secret, path)
   concrete_nodes = config.fetch("proxies", []).map { |proxy| proxy.fetch("name") }
@@ -71,13 +114,21 @@ def check(config, apply)
   current = group.fetch("now")
   return "请在「节点选择」中选一个具体节点作为起点" unless nodes.include?(current)
 
-  return "当前节点可用，继续使用 #{current}" if healthy?(http, secret, current)
+  current_delay = measure_delay(http, secret, current)
+  if current_delay && current_delay <= MAX_LATENCY_MS
+    return "当前节点可用，继续使用 #{current}（#{delay_label(current_delay)}）"
+  end
   sleep 2
-  return "当前节点复测可用，继续使用 #{current}" if healthy?(http, secret, current)
+  retry_delay = measure_delay(http, secret, current)
+  if retry_delay && retry_delay <= MAX_LATENCY_MS
+    return "当前节点复测可用，继续使用 #{current}（#{delay_label(retry_delay)}）"
+  end
+  current_delay = retry_delay
 
-  replacement = candidates_in_order(nodes - [current]).find { |node| healthy?(http, secret, node) }
-  return "本轮未找到可用节点" unless replacement
-  return "预览结果，建议切到 #{replacement}" unless apply
+  replacement, replacement_delay = select_candidate(candidate_delays(http, secret, nodes - [current]), current_delay)
+  return "当前节点 #{current}（#{delay_label(current_delay)}），暂无更快节点" unless replacement
+  latency_change = "（#{delay_label(current_delay)} → #{delay_label(replacement_delay)}）"
+  return "预览结果，建议切到 #{replacement}#{latency_change}" unless apply
 
   latest = read_group(http, secret, path)
   return "策略组已更新，下轮重新检测" unless latest["now"] == current && latest["all"].include?(replacement)
@@ -86,7 +137,7 @@ def check(config, apply)
   raise "切换失败，HTTP #{response.code}" unless response.is_a?(Net::HTTPSuccess)
   return "切换后策略组再次更新，下轮重新检测" unless read_group(http, secret, path)["now"] == replacement
 
-  "已从 #{current} 切换到 #{replacement}"
+  "已从 #{current} 切换到 #{replacement}#{latency_change}"
 end
 
 def run_monitor(mode)
