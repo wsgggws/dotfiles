@@ -1,21 +1,12 @@
-# 在终端、编辑器等应用中也默认使用中文；英文交给系统 ABC。
+# 中文使用鼠须管；系统输入源由 Fn 和 KeyboardHolder 管理。
 patch:
+  style/font_point: 16
   style/candidate_list_layout: linear
   style/text_orientation: horizontal
   style/show_paging: false
-  "app_options/com.apple.Spotlight/ascii_mode": false
-  "app_options/com.alfredapp.Alfred/ascii_mode": false
-  "app_options/com.runningwithcrayons.Alfred-2/ascii_mode": false
-  "app_options/com.blacktree.Quicksilver/ascii_mode": false
-  "app_options/com.apple.Terminal/ascii_mode": false
-  "app_options/com.googlecode.iterm2/ascii_mode": false
-  "app_options/org.vim.MacVim/ascii_mode": false
-  "app_options/com.apple.dt.Xcode/ascii_mode": false
-  "app_options/com.barebones.textwrangler/ascii_mode": false
-  "app_options/com.macromates.TextMate.preview/ascii_mode": false
-  "app_options/com.github.atom/ascii_mode": false
-  "app_options/com.microsoft.VSCode/ascii_mode": false
-  "app_options/com.sublimetext.2/ascii_mode": false
-  "app_options/org.gnu.Aquamacs/ascii_mode": false
-  "app_options/org.gnu.Emacs/ascii_mode": false
-  "app_options/co.zeit.hyper/ascii_mode": false
+  # 清除上游旧应用的内部英文/Vim 模式规则。
+  app_options: null
+  # 保留浏览器行内预编辑兼容设置。
+  "app_options/com.google.Chrome/inline": true
+  "app_options/com.microsoft.edgemac/inline": true
+  "app_options/ru.keepcoder.Telegram/inline": true

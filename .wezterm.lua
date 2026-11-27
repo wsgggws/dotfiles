@@ -19,7 +19,10 @@ config.color_scheme = "LuZhu"
 
 config.font_size = 16
 -- config.font_size = 22
-config.font = wezterm.font("Monaco")
+config.font = wezterm.font_with_fallback({
+	"Monaco",
+	{ family = "Maple Mono NF CN", weight = "Regular", style = "Normal" },
+})
 config.front_end = "Software"
 config.animation_fps = 2
 config.cursor_blink_rate = 800
